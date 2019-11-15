@@ -43,6 +43,11 @@ Setup
     movlw   .100
     call    Delay_ms
     
+    ;setup table
+    bcf	    EECON1, CFGS
+    bsf	    EECON1, EEPGD
+    
+    
     ;initialise
     call    SPI_MasterInit
     call    LCD_Initialisation

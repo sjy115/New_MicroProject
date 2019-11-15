@@ -246,18 +246,44 @@
 #define	scroll_yend_h		.1
     
 #define	scroll_speed		.2
-
+#define	test_good		.20
+#define	test_great		.10
+#define	test_perfect		.5
+    
+#define max_boxes		20
+    
 ;register 'Box' bit location
-#define	Box_x1	    0
-#define	Box_x2	    1
-#define	Box_x3	    2
-#define	Box_y1	    3
-#define	Box_y2	    4
-#define	Box_y3	    5
-#define	Box_colour  6
+#define	Box_x1	    4
+#define	Box_x2	    5
+#define	Box_x3	    6
+#define	Box_y1	    0
+#define	Box_y2	    1
+#define	Box_y3	    2
+#define	Box_colour  7
 
 #define	LYEN 0	; 0: layer 1 active, 1: layer 2 active
 
+#define	Boxes_enable	3
+    
+#define	keypad_0		b'10001000'
+#define	keypad_1		b'10000100'
+#define	keypad_2		b'10000010'
+#define	keypad_3		b'10000001'
+#define	keypad_4		b'00011000'
+#define	keypad_5		b'00010100'
+#define	keypad_6		b'00010010'
+#define	keypad_7		b'00010001'
+#define	keypad_8		b'01001000'
+#define	keypad_9		b'01000100'
+#define	keypad_10		b'01000010'
+#define	keypad_11		b'01000001'
+#define	keypad_12		b'00101000'
+#define	keypad_13		b'00100100'
+#define	keypad_14		b'00100010'
+#define	keypad_15		b'00100001'
+
+converter db	keypad_0,keypad_1,keypad_2,keypad_3,keypad_4,keypad_5,keypad_6,keypad_7,keypad_8,keypad_9,keypad_10,keypad_11,keypad_12,keypad_13,keypad_14,keypad_15
+		
 acs0    udata_acs   ; reserve data space in access ram
 input_cmd	    res 1
 input_data	    res 1
@@ -286,16 +312,75 @@ Scroll_d_l	    res 1
 Scroll_d_h	    res 1
 	    
 Control		    res 1
-		    
-LCD	code
+	
+Boxes		    res max_boxes
+tmp1		    res 1
+tmp2		    res 1
+Boxes_counter	    res 1
+	
+	    
+Box_score	    res 1
+Total_score_1	    res 1
+Total_score_2	    res 1
+Total_score_3	    res 1
+	    
+LCD code
 
+Save_Box
+    movwf   Box
+    lfsr    0, Boxes
+    clrf    Boxes_counter
+svlp
+    btfsc   INDF0, Boxes_enable
+    bra	    yes_box
+    ;set enable bit
+    bsf	    INDF0, Boxes_enable
+   
+    ;store x0, x1, x2, colour into INDF0[4:7}
+    movlw   0xF0
+    andwf   Box, W
+    iorwf   INDF0
+    
+    ;set dy
+    movlw   b'111'
+    andwf   Box, W			
+    mullw   box_yoffset
+    movlw   box_ystart
+    addwf   PRODL, F
+    movlw   .0
+    addwfc  PRODH, W
+    movwf   tmp1
+    
+    movf    Scroll_d_l,W
+    subwf   PRODL, F
+    movf    Scroll_d_h, W
+    subfwb  tmp1, F
+    
+    movlw   scroll_yend_l
+    subwf   PRODL, F
+    movlw   scroll_yend_h
+    subfwb  tmp1, F
+    
+    movlw   .1
+    movff   PRODL, PLUSW0
+    movf    tmp1, W
+    iorwf   INDF0
+    return
+	
+;temporary subroutine
+yes_box
+    incf    FSR0, F
+    incf    FSR0, F
+    bra	    svlp
+
+	
+	
 ;Create new box
 New_Box
-    movwf   Box
-    
+    call    Save_Box
     ;set colour
     btfss   Box, Box_colour		;Box[7]
-    bra	    Colour1			;red
+    bra	    set_blue			;red
     movlw   b'11000000'			;blue
 SetColour
     movwf   rect_colour
@@ -358,9 +443,126 @@ LYEN2
     call    SPI_writeREG
     return
     
-Colour1
+set_blue
     movlw   b'00000111'
     bra	    SetColour
+    
+Initialise_table
+    movlw   upper(converter)
+    movwf   TBLPTRU
+    movlw   high(converter)
+    movwf   TBLPTRH
+    movlw   low(converter)
+    movwf   TBLPTRL
+    return    
+    
+Box_test
+    lfsr    0, Boxes
+btlp
+    btfss   INDF0, Boxes_enable
+    bra	    no_box2
+    movlw   b'11'
+    andwf   INDF0, W
+    tstfsz  WREG
+    bra	    no_box2
+    
+    movlw   .1
+    movff   PLUSW0, tmp1
+    movlw   test_good
+    cpfslt  tmp1
+    bra	    no_box2
+    
+    ;qualified boxes
+    call    Convert_box
+    return
+    
+Convert_box
+    swapf   INDF0, W
+    andlw   0x0F, tmp1
+    call    Initialise_table
+
+cvlp
+    tblrd*+
+    decfsz  tmp1
+    bra	    cvlp
+    movff   TABLAT, tmp1
+
+    ;you get b'10000100' in tmp1
+    movf   tmp1, W
+    andwf  Keypad_output, W
+    cpfseq tmp1
+    return
+    call   Box_match
+    return
+    
+Box_match    
+    movlw   .1
+    movff   PLUSW0, tmp1
+    movlw   test_great
+    cpfslt  tmp1
+    bra	    box_good
+    movlw   test_perfect
+    cpfslt  tmp1
+    bra	    box_great
+    bra	    box_perfect  
+    
+    ;set score
+btlb
+    addwf   Total_score_1, F
+    movlw   .0
+    addwfc  Total_score_2, F
+    addwfc  Total_score_3, F
+    
+    call    Remove_box
+    ;flash screen and display text and update score in display and other shit
+    return
+    
+box_good
+    movlw   .25
+    bra	    btlb
+box_great
+    movlw   .50
+    bra	    btlb
+box_perfect
+    movlw   .100
+    bra	    btlb
+    
+no_box2
+    incf    FSR0, F
+    incf    FSR0, F
+    cpfslt  .max_boxes
+    return		    ;out of Get_key
+    bra	    gklp
+    
+Dec_dy
+    lfsr    0, Boxes
+dclp
+    btfss   INDF0, Boxes_enable
+    bra	    no_box
+    movlw   .1
+    decf    PLUSW0
+    bnc	    dclp2
+    
+no_box
+    incf    FSR0, F
+    incf    FSR0, F
+    bra	    dclp
+    
+dclp2
+    movlw   b'11'
+    andwf   INDF0, W
+    movwf   tmp1
+    movlw   .0
+    subwfb  tmp1, W
+    bn	    Remove_box
+    andwf   INDF0, F
+    return
+    
+Remove_box
+    clrf    INDF0
+    movlw   .1
+    clrf    PLUSW0
+    return
     
 ;Scroll next layer
 Scroll
@@ -371,11 +573,12 @@ Scroll
     movlw   0x00		; W=0	
 scrl
     call    LCD_ScrollY
+    call    Dec_dy
+    call    Box_test
     movlw   scroll_speed
     call    Delay_ms
     decf    Scroll_d_l, F	; borrow when 0x00 -> 0xff
     subwfb  Scroll_d_h, F	; no carry when 0x00 -> 0xff
-    ;call    test_keypad
     bc	    scrl
     
     btg	    Control, LYEN
