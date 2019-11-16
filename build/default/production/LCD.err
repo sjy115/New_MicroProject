@@ -1,16 +1,7 @@
-Error[150]   H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 285 : Labels must be defined in a code or data section when making an object file
-Error[152]   H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 285 : Executable code and data must be defined in an appropriate section
-Error[152]   H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 285 : Executable code and data must be defined in an appropriate section
-Warning[210] H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 285 : Extra ","
-Warning[207] H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 286 : Found label after column 1. (b)
-Error[108]   H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 286 : Illegal character (')
-Warning[207] H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 287 : Found label after column 1. (b)
-Error[108]   H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 287 : Illegal character (')
-Warning[207] H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 288 : Found label after column 1. (b)
-Error[108]   H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 288 : Illegal character (')
-Error[108]   H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 484 : Illegal character (,)
-Error[107]   H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 536 : Illegal digit
-Error[108]   H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 536 : Illegal character (m)
-Error[113]   H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 538 : Symbol not previously defined (gklp)
-Error[116]   H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 637 : Address label duplicated or different in second pass (tmp1)
-Error[116]   H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 643 : Address label duplicated or different in second pass (tmp2)
+Message[303] H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 1111 : Program word too large.  Truncated to core size. (6F726369)
+Message[303] H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 1111 : Program word too large.  Truncated to core size. (70696863)
+Message[303] H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 1111 : Program word too large.  Truncated to core size. (4C504D5C)
+Message[303] H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 1111 : Program word too large.  Truncated to core size. (5C584241)
+Message[303] H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 1111 : Program word too large.  Truncated to core size. (302E3576)
+Message[303] H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 1111 : Program word too large.  Truncated to core size. (706D5C35)
+Message[303] H:\DESKTOP\MICROPROCESSOR\MICROPROJECT\LCD.ASM 1111 : Program word too large.  Truncated to core size. (786D7361)

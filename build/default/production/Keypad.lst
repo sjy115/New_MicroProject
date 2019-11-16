@@ -1,4 +1,4 @@
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE  1
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -57,7 +57,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000036 D???           00038         bra     row2
 000038 0E02           00039         movlw   .2
 00003A 6E??           00040         movwf   key
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE  2
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -116,14 +116,22 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 00009C 0E00           00091         movlw   .0
                       00092         ;movwf  Keypad_fail_flag
 00009E 0012           00093         return
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE  3
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00094         end
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE  4
+Message[303]: Program word too large.  Truncated to core size. (6F726369)
+Message[303]: Program word too large.  Truncated to core size. (70696863)
+Message[303]: Program word too large.  Truncated to core size. (4C504D5C)
+Message[303]: Program word too large.  Truncated to core size. (5C584241)
+Message[303]: Program word too large.  Truncated to core size. (302E3576)
+Message[303]: Program word too large.  Truncated to core size. (706D5C35)
+Message[303]: Program word too large.  Truncated to core size. (786D7361)
+6369 6863 4D5C 4241 3500094         end
+       76 5C35 7361 
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE  4
 
 
 SYMBOL TABLE
@@ -182,7 +190,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE  5
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE  5
 
 
 SYMBOL TABLE
@@ -241,7 +249,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE  6
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE  6
 
 
 SYMBOL TABLE
@@ -300,7 +308,7 @@ C1TSEL0                           00000000
 C1TSEL1                           00000001
 C1TSEL2                           00000002
 C2INA                             00000004
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE  7
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE  7
 
 
 SYMBOL TABLE
@@ -359,7 +367,7 @@ CCP1IP                            00000001
 CCP1M0                            00000000
 CCP1M1                            00000001
 CCP1M2                            00000002
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE  8
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE  8
 
 
 SYMBOL TABLE
@@ -418,7 +426,7 @@ CCP5M0                            00000000
 CCP5M1                            00000001
 CCP5M2                            00000002
 CCP5M3                            00000003
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE  9
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE  9
 
 
 SYMBOL TABLE
@@ -477,7 +485,7 @@ CCP9IP                            00000006
 CCP9M0                            00000000
 CCP9M1                            00000001
 CCP9M2                            00000002
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 10
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 10
 
 
 SYMBOL TABLE
@@ -536,7 +544,7 @@ CHSN1                             00000001
 CHSN2                             00000002
 CK1                               00000006
 CK2                               00000001
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 11
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 11
 
 
 SYMBOL TABLE
@@ -595,7 +603,7 @@ CTMUIE                            00000003
 CTMUIF                            00000003
 CTMUIP                            00000003
 CTMUMD                            00000006
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 12
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 12
 
 
 SYMBOL TABLE
@@ -654,7 +662,7 @@ ECCP1AS0                          00000004
 ECCP1AS1                          00000005
 ECCP1AS2                          00000006
 ECCP1ASE                          00000007
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 13
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 13
 
 
 SYMBOL TABLE
@@ -713,7 +721,7 @@ FSR2                              00000002
 FSR2H                             00000FDA
 FSR2L                             00000FD9
 GCEN                              00000007
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 14
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 14
 
 
 SYMBOL TABLE
@@ -772,7 +780,7 @@ INT3E                             00000005
 INT3F                             00000002
 INT3IE                            00000005
 INT3IF                            00000002
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 15
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 15
 
 
 SYMBOL TABLE
@@ -831,7 +839,7 @@ LATB3                             00000003
 LATB4                             00000004
 LATB5                             00000005
 LATB6                             00000006
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 16
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 16
 
 
 SYMBOL TABLE
@@ -890,7 +898,7 @@ LATH6                             00000006
 LATH7                             00000007
 LATJ                              00000F91
 LATJ0                             00000000
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 17
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 17
 
 
 SYMBOL TABLE
@@ -949,7 +957,7 @@ OBF                               00000006
 ODCON1                            00000F29
 ODCON2                            00000F28
 ODCON3                            00000F27
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 18
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 18
 
 
 SYMBOL TABLE
@@ -1008,7 +1016,7 @@ P3DC4                             00000004
 P3DC5                             00000005
 P3DC6                             00000006
 P3M0                              00000006
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 19
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 19
 
 
 SYMBOL TABLE
@@ -1067,7 +1075,7 @@ PORTH                             00000F87
 PORTJ                             00000F88
 POSTDEC0                          00000FED
 POSTDEC1                          00000FE5
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 20
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 20
 
 
 SYMBOL TABLE
@@ -1126,7 +1134,7 @@ RA0                               00000000
 RA1                               00000001
 RA2                               00000002
 RA3                               00000003
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 21
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 21
 
 
 SYMBOL TABLE
@@ -1185,7 +1193,7 @@ RD2                               00000002
 RD3                               00000003
 RD4                               00000004
 RD5                               00000005
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 22
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 22
 
 
 SYMBOL TABLE
@@ -1244,7 +1252,7 @@ RODIV2                            00000002
 RODIV3                            00000003
 ROON                              00000007
 ROSEL                             00000004
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 23
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 23
 
 
 SYMBOL TABLE
@@ -1303,7 +1311,7 @@ SENDB2                            00000003
 SMP                               00000007
 SOSCEN                            00000003
 SOSCGO                            00000003
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 24
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 24
 
 
 SYMBOL TABLE
@@ -1362,7 +1370,7 @@ SSPIF                             00000003
 SSPIP                             00000003
 SSPM0                             00000000
 SSPM1                             00000001
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 25
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 25
 
 
 SYMBOL TABLE
@@ -1421,7 +1429,7 @@ T1GCON                            00000FAA
 T1GGO                             00000003
 T1GGO_NOT_T1DONE                  00000003
 T1GPOL                            00000006
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 26
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 26
 
 
 SYMBOL TABLE
@@ -1480,7 +1488,7 @@ T6CON                             00000F39
 T6OUTPS0                          00000003
 T6OUTPS1                          00000004
 T6OUTPS2                          00000005
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 27
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 27
 
 
 SYMBOL TABLE
@@ -1539,7 +1547,7 @@ TMR1CS1                           00000007
 TMR1GE                            00000007
 TMR1GIE                           00000002
 TMR1GIF                           00000002
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 28
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 28
 
 
 SYMBOL TABLE
@@ -1598,7 +1606,7 @@ TMR6IE                            00000002
 TMR6IF                            00000002
 TMR6IP                            00000002
 TMR6MD                            00000004
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 29
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 29
 
 
 SYMBOL TABLE
@@ -1657,7 +1665,7 @@ TRISC2                            00000002
 TRISC3                            00000003
 TRISC4                            00000004
 TRISC5                            00000005
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 30
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 30
 
 
 SYMBOL TABLE
@@ -1716,7 +1724,7 @@ TRISJ5                            00000005
 TRISJ6                            00000006
 TRISJ7                            00000007
 TRMT                              00000001
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 31
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 31
 
 
 SYMBOL TABLE
@@ -1775,7 +1783,7 @@ VDIRMAG                           00000007
 VNCFG                             00000003
 VREF_MINUS                        00000002
 VREF_PLUS                         00000003
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 32
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 32
 
 
 SYMBOL TABLE
@@ -1834,7 +1842,7 @@ _CONFIG7L                         0030000C
 _CP0_OFF_5L                       000000FF
 _CP0_ON_5L                        000000FE
 _CP1_OFF_5L                       000000FF
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 33
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 33
 
 
 SYMBOL TABLE
@@ -1893,7 +1901,7 @@ _FOSC_EC3IO_1H                    000000F4
 _FOSC_EC3_1H                      000000F5
 _FOSC_HS1_1H                      000000F3
 _FOSC_HS2_1H                      000000F2
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 34
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 34
 
 
 SYMBOL TABLE
@@ -1952,7 +1960,7 @@ _WDTPS_256_2H                     000000A3
 _WDTPS_262144_2H                  000000CB
 _WDTPS_2_2H                       00000087
 _WDTPS_32768_2H                   000000BF
-MPASM 5.81                        KEYPAD.ASM   11-15-2019  18:57:44         PAGE 35
+MPASM 5.81                        KEYPAD.ASM   11-16-2019  16:55:25         PAGE 35
 
 
 SYMBOL TABLE
@@ -2006,6 +2014,6 @@ row3                              0000004A
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed
-Messages :     0 reported,     0 suppressed
+Messages :     7 reported,     0 suppressed
 
 

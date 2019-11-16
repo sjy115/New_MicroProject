@@ -1,4 +1,4 @@
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE  1
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -57,7 +57,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000060 EC?? F???      00041     call    New_Box
 000064 EC?? F???      00042     call    Scroll
                       00043     
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE  2
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -99,170 +99,17 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0000C8 EC?? F???      00077     call    New_Box
 0000CC EC?? F???      00078     call    Scroll
                       00079     ;
-0000D0 0E00           00080     movlw   b'00000000'
-0000D2 EC?? F???      00081     call    New_Box
-0000D6 0E09           00082     movlw   b'00001001'
-0000D8 EC?? F???      00083     call    New_Box
-0000DC 0E12           00084     movlw   b'00010010'
-0000DE EC?? F???      00085     call    New_Box
-0000E2 0E1B           00086     movlw   b'00011011'
-0000E4 EC?? F???      00087     call    New_Box
-0000E8 0E24           00088     movlw   b'00100100'
-0000EA EC?? F???      00089     call    New_Box
-0000EE 0E2D           00090     movlw   b'00101101'
-0000F0 EC?? F???      00091     call    New_Box
-0000F4 0E36           00092     movlw   b'00110110'
-0000F6 EC?? F???      00093     call    New_Box
-0000FA 0E3F           00094     movlw   b'00111111'
-0000FC EC?? F???      00095     call    New_Box
-000100 EC?? F???      00096     call    Scroll
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE  3
-
-
-LOC  OBJECT CODE     LINE SOURCE TEXT
-  VALUE
-
-                      00097     
-000104 0E47           00098     movlw   b'01000111'
-000106 EC?? F???      00099     call    New_Box
-00010A 0E4E           00100     movlw   b'01001110'
-00010C EC?? F???      00101     call    New_Box
-000110 0E55           00102     movlw   b'01010101'
-000112 EC?? F???      00103     call    New_Box
-000116 0E5C           00104     movlw   b'01011100'
-000118 EC?? F???      00105     call    New_Box
-00011C 0E63           00106     movlw   b'01100011'
-00011E EC?? F???      00107     call    New_Box
-000122 0E6A           00108     movlw   b'01101010'
-000124 EC?? F???      00109     call    New_Box
-000128 0E71           00110     movlw   b'01110001'
-00012A EC?? F???      00111     call    New_Box
-00012E 0E78           00112     movlw   b'01111000'
-000130 EC?? F???      00113     call    New_Box
-000134 EC?? F???      00114     call    Scroll
-                      00115     
-000138 0E00           00116     movlw   b'00000000'
-00013A EC?? F???      00117     call    New_Box
-00013E 0E09           00118     movlw   b'00001001'
-000140 EC?? F???      00119     call    New_Box
-000144 0E12           00120     movlw   b'00010010'
-000146 EC?? F???      00121     call    New_Box
-00014A 0E1B           00122     movlw   b'00011011'
-00014C EC?? F???      00123     call    New_Box
-000150 0E24           00124     movlw   b'00100100'
-000152 EC?? F???      00125     call    New_Box
-000156 0E2D           00126     movlw   b'00101101'
-000158 EC?? F???      00127     call    New_Box
-00015C 0E36           00128     movlw   b'00110110'
-00015E EC?? F???      00129     call    New_Box
-000162 0E3F           00130     movlw   b'00111111'
-000164 EC?? F???      00131     call    New_Box
-000168 EC?? F???      00132     call    Scroll
-                      00133     
-00016C 0E47           00134     movlw   b'01000111'
-00016E EC?? F???      00135     call    New_Box
-000172 0E4E           00136     movlw   b'01001110'
-000174 EC?? F???      00137     call    New_Box
-000178 0E55           00138     movlw   b'01010101'
-00017A EC?? F???      00139     call    New_Box
-00017E 0E5C           00140     movlw   b'01011100'
-000180 EC?? F???      00141     call    New_Box
-000184 0E63           00142     movlw   b'01100011'
-000186 EC?? F???      00143     call    New_Box
-00018A 0E6A           00144     movlw   b'01101010'
-00018C EC?? F???      00145     call    New_Box
-000190 0E71           00146     movlw   b'01110001'
-000192 EC?? F???      00147     call    New_Box
-000196 0E78           00148     movlw   b'01111000'
-000198 EC?? F???      00149     call    New_Box
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE  4
-
-
-LOC  OBJECT CODE     LINE SOURCE TEXT
-  VALUE
-
-00019C EC?? F???      00150     call    Scroll
-                      00151     ;
-0001A0 0E00           00152     movlw   b'00000000'
-0001A2 EC?? F???      00153     call    New_Box
-0001A6 0E09           00154     movlw   b'00001001'
-0001A8 EC?? F???      00155     call    New_Box
-0001AC 0E12           00156     movlw   b'00010010'
-0001AE EC?? F???      00157     call    New_Box
-0001B2 0E1B           00158     movlw   b'00011011'
-0001B4 EC?? F???      00159     call    New_Box
-0001B8 0E24           00160     movlw   b'00100100'
-0001BA EC?? F???      00161     call    New_Box
-0001BE 0E2D           00162     movlw   b'00101101'
-0001C0 EC?? F???      00163     call    New_Box
-0001C4 0E36           00164     movlw   b'00110110'
-0001C6 EC?? F???      00165     call    New_Box
-0001CA 0E3F           00166     movlw   b'00111111'
-0001CC EC?? F???      00167     call    New_Box
-0001D0 EC?? F???      00168     call    Scroll
-                      00169     
-0001D4 0E47           00170     movlw   b'01000111'
-0001D6 EC?? F???      00171     call    New_Box
-0001DA 0E4E           00172     movlw   b'01001110'
-0001DC EC?? F???      00173     call    New_Box
-0001E0 0E55           00174     movlw   b'01010101'
-0001E2 EC?? F???      00175     call    New_Box
-0001E6 0E5C           00176     movlw   b'01011100'
-0001E8 EC?? F???      00177     call    New_Box
-0001EC 0E63           00178     movlw   b'01100011'
-0001EE EC?? F???      00179     call    New_Box
-0001F2 0E6A           00180     movlw   b'01101010'
-0001F4 EC?? F???      00181     call    New_Box
-0001F8 0E71           00182     movlw   b'01110001'
-0001FA EC?? F???      00183     call    New_Box
-0001FE 0E78           00184     movlw   b'01111000'
-000200 EC?? F???      00185     call    New_Box
-000204 EC?? F???      00186     call    Scroll
-                      00187     
-000208 0E00           00188     movlw   b'00000000'
-00020A EC?? F???      00189     call    New_Box
-00020E 0E09           00190     movlw   b'00001001'
-000210 EC?? F???      00191     call    New_Box
-000214 0E12           00192     movlw   b'00010010'
-000216 EC?? F???      00193     call    New_Box
-00021A 0E1B           00194     movlw   b'00011011'
-00021C EC?? F???      00195     call    New_Box
-000220 0E24           00196     movlw   b'00100100'
-000222 EC?? F???      00197     call    New_Box
-000226 0E2D           00198     movlw   b'00101101'
-000228 EC?? F???      00199     call    New_Box
-00022C 0E36           00200     movlw   b'00110110'
-00022E EC?? F???      00201     call    New_Box
-000232 0E3F           00202     movlw   b'00111111'
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE  5
-
-
-LOC  OBJECT CODE     LINE SOURCE TEXT
-  VALUE
-
-000234 EC?? F???      00203     call    New_Box
-000238 EC?? F???      00204     call    Scroll
-                      00205     
-00023C 0E47           00206     movlw   b'01000111'
-00023E EC?? F???      00207     call    New_Box
-000242 0E4E           00208     movlw   b'01001110'
-000244 EC?? F???      00209     call    New_Box
-000248 0E55           00210     movlw   b'01010101'
-00024A EC?? F???      00211     call    New_Box
-00024E 0E5C           00212     movlw   b'01011100'
-000250 EC?? F???      00213     call    New_Box
-000254 0E63           00214     movlw   b'01100011'
-000256 EC?? F???      00215     call    New_Box
-00025A 0E6A           00216     movlw   b'01101010'
-00025C EC?? F???      00217     call    New_Box
-000260 0E71           00218     movlw   b'01110001'
-000262 EC?? F???      00219     call    New_Box
-000266 0E78           00220     movlw   b'01111000'
-000268 EC?? F???      00221     call    New_Box
-00026C EC?? F???      00222     call    Scroll
-000270 0012           00223     return
-                      00224     end
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE  6
+0000D0 0012           00080     return
+Message[303]: Program word too large.  Truncated to core size. (6F726369)
+Message[303]: Program word too large.  Truncated to core size. (70696863)
+Message[303]: Program word too large.  Truncated to core size. (4C504D5C)
+Message[303]: Program word too large.  Truncated to core size. (5C584241)
+Message[303]: Program word too large.  Truncated to core size. (302E3576)
+Message[303]: Program word too large.  Truncated to core size. (706D5C35)
+Message[303]: Program word too large.  Truncated to core size. (786D7361)
+6369 6863 4D5C 4241 3500081     end
+       76 5C35 7361 
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE  3
 
 
 SYMBOL TABLE
@@ -321,7 +168,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE  7
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE  4
 
 
 SYMBOL TABLE
@@ -380,7 +227,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE  8
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE  5
 
 
 SYMBOL TABLE
@@ -439,7 +286,7 @@ C1TSEL0                           00000000
 C1TSEL1                           00000001
 C1TSEL2                           00000002
 C2INA                             00000004
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE  9
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE  6
 
 
 SYMBOL TABLE
@@ -498,7 +345,7 @@ CCP1IP                            00000001
 CCP1M0                            00000000
 CCP1M1                            00000001
 CCP1M2                            00000002
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 10
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE  7
 
 
 SYMBOL TABLE
@@ -557,7 +404,7 @@ CCP5M0                            00000000
 CCP5M1                            00000001
 CCP5M2                            00000002
 CCP5M3                            00000003
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 11
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE  8
 
 
 SYMBOL TABLE
@@ -616,7 +463,7 @@ CCP9IP                            00000006
 CCP9M0                            00000000
 CCP9M1                            00000001
 CCP9M2                            00000002
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 12
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE  9
 
 
 SYMBOL TABLE
@@ -675,7 +522,7 @@ CHSN1                             00000001
 CHSN2                             00000002
 CK1                               00000006
 CK2                               00000001
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 13
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 10
 
 
 SYMBOL TABLE
@@ -734,7 +581,7 @@ CTMUIE                            00000003
 CTMUIF                            00000003
 CTMUIP                            00000003
 CTMUMD                            00000006
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 14
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 11
 
 
 SYMBOL TABLE
@@ -793,7 +640,7 @@ ECCP1AS1                          00000005
 ECCP1AS2                          00000006
 ECCP1ASE                          00000007
 ECCP1CON                          00000FBB
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 15
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 12
 
 
 SYMBOL TABLE
@@ -852,7 +699,7 @@ FSR2H                             00000FDA
 FSR2L                             00000FD9
 GCEN                              00000007
 GIE                               00000007
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 16
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 13
 
 
 SYMBOL TABLE
@@ -911,7 +758,7 @@ INT3F                             00000002
 INT3IE                            00000005
 INT3IF                            00000002
 INT3IP                            00000001
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 17
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 14
 
 
 SYMBOL TABLE
@@ -970,7 +817,7 @@ LATB7                             00000007
 LATC                              00000F8B
 LATC0                             00000000
 LATC1                             00000001
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 18
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 15
 
 
 SYMBOL TABLE
@@ -1029,7 +876,7 @@ LATJ1                             00000001
 LATJ2                             00000002
 LATJ3                             00000003
 LATJ4                             00000004
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 19
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 16
 
 
 SYMBOL TABLE
@@ -1088,7 +935,7 @@ ODCON3                            00000F27
 OE                                00000001
 OERR                              00000001
 OERR1                             00000001
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 20
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 17
 
 
 SYMBOL TABLE
@@ -1147,7 +994,7 @@ P3M0                              00000006
 P3M1                              00000007
 P3RSEN                            00000007
 PA3                               00000000
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 21
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 18
 
 
 SYMBOL TABLE
@@ -1206,7 +1053,7 @@ POSTDEC1                          00000FE5
 POSTDEC2                          00000FDD
 POSTINC0                          00000FEE
 POSTINC1                          00000FE6
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 22
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 19
 
 
 SYMBOL TABLE
@@ -1265,7 +1112,7 @@ RA2                               00000002
 RA3                               00000003
 RA4                               00000004
 RA5                               00000005
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 23
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 20
 
 
 SYMBOL TABLE
@@ -1324,7 +1171,7 @@ RD4                               00000004
 RD5                               00000005
 RD6                               00000006
 RD7                               00000007
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 24
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 21
 
 
 SYMBOL TABLE
@@ -1383,7 +1230,7 @@ ROON                              00000007
 ROSEL                             00000004
 ROSSLP                            00000005
 RSEN                              00000001
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 25
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 22
 
 
 SYMBOL TABLE
@@ -1442,7 +1289,7 @@ SOSCEN                            00000003
 SOSCGO                            00000003
 SOSCI                             00000001
 SOSCO                             00000000
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 26
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 23
 
 
 SYMBOL TABLE
@@ -1501,7 +1348,7 @@ SSPM0                             00000000
 SSPM1                             00000001
 SSPM2                             00000002
 SSPM3                             00000003
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 27
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 24
 
 
 SYMBOL TABLE
@@ -1560,7 +1407,7 @@ T1GGO                             00000003
 T1GGO_NOT_T1DONE                  00000003
 T1GPOL                            00000006
 T1GSPM                            00000004
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 28
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 25
 
 
 SYMBOL TABLE
@@ -1619,7 +1466,7 @@ T6OUTPS0                          00000003
 T6OUTPS1                          00000004
 T6OUTPS2                          00000005
 T6OUTPS3                          00000006
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 29
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 26
 
 
 SYMBOL TABLE
@@ -1678,7 +1525,7 @@ TMR1GE                            00000007
 TMR1GIE                           00000002
 TMR1GIF                           00000002
 TMR1GIP                           00000002
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 30
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 27
 
 
 SYMBOL TABLE
@@ -1737,7 +1584,7 @@ TMR6IF                            00000002
 TMR6IP                            00000002
 TMR6MD                            00000004
 TMR6ON                            00000002
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 31
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 28
 
 
 SYMBOL TABLE
@@ -1796,7 +1643,7 @@ TRISC3                            00000003
 TRISC4                            00000004
 TRISC5                            00000005
 TRISC6                            00000006
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 32
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 29
 
 
 SYMBOL TABLE
@@ -1855,7 +1702,7 @@ TRISJ6                            00000006
 TRISJ7                            00000007
 TRMT                              00000001
 TRMT1                             00000001
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 33
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 30
 
 
 SYMBOL TABLE
@@ -1914,7 +1761,7 @@ VNCFG                             00000003
 VREF_MINUS                        00000002
 VREF_PLUS                         00000003
 W                                 00000000
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 34
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 31
 
 
 SYMBOL TABLE
@@ -1973,7 +1820,7 @@ _CP0_OFF_5L                       000000FF
 _CP0_ON_5L                        000000FE
 _CP1_OFF_5L                       000000FF
 _CP1_ON_5L                        000000FD
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 35
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 32
 
 
 SYMBOL TABLE
@@ -2032,7 +1879,7 @@ _FOSC_EC3_1H                      000000F5
 _FOSC_HS1_1H                      000000F3
 _FOSC_HS2_1H                      000000F2
 _FOSC_INTIO1_1H                   000000F9
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 36
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 33
 
 
 SYMBOL TABLE
@@ -2091,7 +1938,7 @@ _WDTPS_262144_2H                  000000CB
 _WDTPS_2_2H                       00000087
 _WDTPS_32768_2H                   000000BF
 _WDTPS_32_2H                      00000097
-MPASM 5.81                      GAMEDATA.ASM   11-15-2019  18:57:44         PAGE 37
+MPASM 5.81                      GAMEDATA.ASM   11-16-2019  16:55:25         PAGE 34
 
 
 SYMBOL TABLE
@@ -2133,6 +1980,6 @@ __18F87K22                        00000001
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed
-Messages :     0 reported,     0 suppressed
+Messages :     7 reported,     0 suppressed
 
 

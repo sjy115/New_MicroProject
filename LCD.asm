@@ -1,24 +1,13 @@
 #include p18f87k22.inc
     
-    global LCD_Initialisation, input_cmd, input_data, New_Box, Scroll
+    global LCD_Initialisation, input_cmd, input_data, Scroll
     extern Delay_ms, SPI_writeREG, Keypad_getKey, Keypad_output
 
 ;Data sheet definition (register array, pin, constant)
-; Colors (RGB565)
-#define	RA8875_BLACK            0x0000 ;< Black Color
-#define	RA8875_BLUE             0x001F ;< Blue Color
-#define	RA8875_RED              0xF800 ;< Red Color
-#define	RA8875_GREEN            0x07E0 ;< Green Color
-#define RA8875_CYAN             0x07FF ;< Cyan Color
-#define RA8875_MAGENTA          0xF81F ;< Magenta Color
-#define RA8875_YELLOW           0xFFE0 ;< Yellow Color
-#define RA8875_WHITE            0xFFFF ;< White Color
 
 ; Command/Data pins for SPI
 #define RA8875_DATAWRITE        0x00
-#define RA8875_DATAREAD         0x40
 #define RA8875_CMDWRITE         0x80
-#define RA8875_CMDREAD          0xC0
 
 ; Registers & bits
 #define RA8875_PWRR             0x01
@@ -244,51 +233,18 @@
     
 #define	scroll_yend_l		.144
 #define	scroll_yend_h		.1
-    
 #define	scroll_speed		.2
-#define	test_good		.20
-#define	test_great		.10
-#define	test_perfect		.5
-    
-#define max_boxes		20
-    
-;register 'Box' bit location
-#define	Box_x1	    4
-#define	Box_x2	    5
-#define	Box_x3	    6
-#define	Box_y1	    0
-#define	Box_y2	    1
-#define	Box_y3	    2
-#define	Box_colour  7
-
-#define	LYEN 0	; 0: layer 1 active, 1: layer 2 active
-
-#define	Boxes_enable	3
-    
-#define	keypad_0		b'10001000'
-#define	keypad_1		b'10000100'
-#define	keypad_2		b'10000010'
-#define	keypad_3		b'10000001'
-#define	keypad_4		b'00011000'
-#define	keypad_5		b'00010100'
-#define	keypad_6		b'00010010'
-#define	keypad_7		b'00010001'
-#define	keypad_8		b'01001000'
-#define	keypad_9		b'01000100'
-#define	keypad_10		b'01000010'
-#define	keypad_11		b'01000001'
-#define	keypad_12		b'00101000'
-#define	keypad_13		b'00100100'
-#define	keypad_14		b'00100010'
-#define	keypad_15		b'00100001'
-
-converter db	keypad_0,keypad_1,keypad_2,keypad_3,keypad_4,keypad_5,keypad_6,keypad_7,keypad_8,keypad_9,keypad_10,keypad_11,keypad_12,keypad_13,keypad_14,keypad_15
+#define	LYEN			0	;Control bit location, layer enable
 		
 acs0    udata_acs   ; reserve data space in access ram
 input_cmd	    res 1
 input_data	    res 1
 	    
-Box		    res 1
+Scroll_d_l	    res 1
+Scroll_d_h	    res 1
+	    
+Control		    res 1
+;global parameters for LCD_RectHelper
 rect_x1_h	    res 1
 rect_y1_h	    res 1
 rect_x2_h	    res 1
@@ -297,273 +253,11 @@ rect_x1_l	    res 1
 rect_y1_l	    res 1
 rect_x2_l	    res 1
 rect_y2_l	    res 1
-rect_colour	    res 1
-	    
-line_x1_h	    res 1
-line_y1_h	    res 1
-line_x2_h	    res 1
-line_y2_h	    res 1
-line_x1_l	    res 1
-line_y1_l	    res 1
-line_x2_l	    res 1
-line_y2_l	    res 1
-	    
-Scroll_d_l	    res 1
-Scroll_d_h	    res 1
-	    
-Control		    res 1
-	
-Boxes		    res max_boxes
-tmp1		    res 1
-tmp2		    res 1
-Boxes_counter	    res 1
-	
-	    
-Box_score	    res 1
-Total_score_1	    res 1
-Total_score_2	    res 1
-Total_score_3	    res 1
-	    
+rect_colour	    res 1	
+    
 LCD code
+converter db	0x88, 0x84, 0x83, 0x81, 0x18, 0x14, 0x12, 0x11, 0x48, 0x44, 0x42, 0x41, 0x28, 0x24, 0x22, 0x21
 
-Save_Box
-    movwf   Box
-    lfsr    0, Boxes
-    clrf    Boxes_counter
-svlp
-    btfsc   INDF0, Boxes_enable
-    bra	    yes_box
-    ;set enable bit
-    bsf	    INDF0, Boxes_enable
-   
-    ;store x0, x1, x2, colour into INDF0[4:7}
-    movlw   0xF0
-    andwf   Box, W
-    iorwf   INDF0
-    
-    ;set dy
-    movlw   b'111'
-    andwf   Box, W			
-    mullw   box_yoffset
-    movlw   box_ystart
-    addwf   PRODL, F
-    movlw   .0
-    addwfc  PRODH, W
-    movwf   tmp1
-    
-    movf    Scroll_d_l,W
-    subwf   PRODL, F
-    movf    Scroll_d_h, W
-    subfwb  tmp1, F
-    
-    movlw   scroll_yend_l
-    subwf   PRODL, F
-    movlw   scroll_yend_h
-    subfwb  tmp1, F
-    
-    movlw   .1
-    movff   PRODL, PLUSW0
-    movf    tmp1, W
-    iorwf   INDF0
-    return
-	
-;temporary subroutine
-yes_box
-    incf    FSR0, F
-    incf    FSR0, F
-    bra	    svlp
-
-	
-	
-;Create new box
-New_Box
-    call    Save_Box
-    ;set colour
-    btfss   Box, Box_colour		;Box[7]
-    bra	    set_blue			;red
-    movlw   b'11000000'			;blue
-SetColour
-    movwf   rect_colour
-    
-    ;set x position
-    movlw   b'111'
-    andwf   Box, W			;Box[0:2]
-    mullw   box_xoffset
-    movlw   box_xstart
-    addwf   PRODL, W
-    movwf   rect_x1_l
-    movwf   rect_x2_l
-    movlw   .0
-    addwfc  PRODH, W
-    movwf   rect_x1_h
-    movwf   rect_x2_h
-    
-    movlw   box_width
-    addwf   rect_x2_l
-    movlw   .0
-    addwfc  rect_x2_h
-    
-    ;set y position
-    rrncf   Box, F
-    rrncf   Box, F
-    rrncf   Box, W
-    andlw   b'111'			;Box[3:5]			
-    mullw   box_yoffset
-    movlw   box_ystart
-    addwf   PRODL, W
-    movwf   rect_y1_l
-    movwf   rect_y2_l
-    movlw   .0
-    addwfc  PRODH, W
-    movwf   rect_y1_h
-    movwf   rect_y2_h
-    
-    movlw   box_height
-    addwf   rect_y2_l
-    movlw   .0
-    addwfc  rect_y2_h
-    
-    call    LCD_RectHelper
-    return
-
-;temporary subroutine
-LYEN1
-    movlw   0x41
-    movwf   input_cmd
-    movlw   .0				;layer 1
-    movwf   input_data
-    call    SPI_writeREG
-    return
-    
-LYEN2
-    movlw   0x41
-    movwf   input_cmd
-    movlw   .1				;layer 2
-    movwf   input_data
-    call    SPI_writeREG
-    return
-    
-set_blue
-    movlw   b'00000111'
-    bra	    SetColour
-    
-Initialise_table
-    movlw   upper(converter)
-    movwf   TBLPTRU
-    movlw   high(converter)
-    movwf   TBLPTRH
-    movlw   low(converter)
-    movwf   TBLPTRL
-    return    
-    
-Box_test
-    lfsr    0, Boxes
-btlp
-    btfss   INDF0, Boxes_enable
-    bra	    no_box2
-    movlw   b'11'
-    andwf   INDF0, W
-    tstfsz  WREG
-    bra	    no_box2
-    
-    movlw   .1
-    movff   PLUSW0, tmp1
-    movlw   test_good
-    cpfslt  tmp1
-    bra	    no_box2
-    
-    ;qualified boxes
-    call    Convert_box
-    return
-    
-Convert_box
-    swapf   INDF0, W
-    andlw   0x0F, tmp1
-    call    Initialise_table
-
-cvlp
-    tblrd*+
-    decfsz  tmp1
-    bra	    cvlp
-    movff   TABLAT, tmp1
-
-    ;you get b'10000100' in tmp1
-    movf   tmp1, W
-    andwf  Keypad_output, W
-    cpfseq tmp1
-    return
-    call   Box_match
-    return
-    
-Box_match    
-    movlw   .1
-    movff   PLUSW0, tmp1
-    movlw   test_great
-    cpfslt  tmp1
-    bra	    box_good
-    movlw   test_perfect
-    cpfslt  tmp1
-    bra	    box_great
-    bra	    box_perfect  
-    
-    ;set score
-btlb
-    addwf   Total_score_1, F
-    movlw   .0
-    addwfc  Total_score_2, F
-    addwfc  Total_score_3, F
-    
-    call    Remove_box
-    ;flash screen and display text and update score in display and other shit
-    return
-    
-box_good
-    movlw   .25
-    bra	    btlb
-box_great
-    movlw   .50
-    bra	    btlb
-box_perfect
-    movlw   .100
-    bra	    btlb
-    
-no_box2
-    incf    FSR0, F
-    incf    FSR0, F
-    cpfslt  .max_boxes
-    return		    ;out of Get_key
-    bra	    gklp
-    
-Dec_dy
-    lfsr    0, Boxes
-dclp
-    btfss   INDF0, Boxes_enable
-    bra	    no_box
-    movlw   .1
-    decf    PLUSW0
-    bnc	    dclp2
-    
-no_box
-    incf    FSR0, F
-    incf    FSR0, F
-    bra	    dclp
-    
-dclp2
-    movlw   b'11'
-    andwf   INDF0, W
-    movwf   tmp1
-    movlw   .0
-    subwfb  tmp1, W
-    bn	    Remove_box
-    andwf   INDF0, F
-    return
-    
-Remove_box
-    clrf    INDF0
-    movlw   .1
-    clrf    PLUSW0
-    return
-    
 ;Scroll next layer
 Scroll
     movlw   scroll_yend_l
@@ -621,23 +315,23 @@ LCD_ScrollY
     movwf   input_cmd
     movff   Scroll_d_l, input_data
     btfsc   Control, LYEN
-    call    tmp1
+    call    scrl1
     call    SPI_writeREG
     movlw   0x27
     movwf   input_cmd
     movff   Scroll_d_h, input_data
     btfsc   Control, LYEN
-    call    tmp2
+    call    scrl2
     call    SPI_writeREG
     return
     
-tmp1
+scrl1
     movlw   scroll_yend_l
     addwf   Scroll_d_l, W
     movwf   input_data
     return
     
-tmp2
+scrl2
     movlw   scroll_yend_h
     addwfc  Scroll_d_h, W
     movwf   input_data
@@ -645,6 +339,7 @@ tmp2
 
     
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;write to register funcitons
 LCD_RectHelper
     ;/* Set X1 */
     movlw   0x91
@@ -842,6 +537,16 @@ LCD_LineHelper
     return
     
 LCD_Initialisation
+    ;reset display
+    bcf	    LATD, RST
+    movlw   .100
+    call    Delay_ms
+    bsf	    LATD, RST
+    movlw   .100
+    call    Delay_ms
+    
+    call    SPI_MasterInit
+    
     call    LCD_PLLinit
     
     movlw   RA8875_SYSR
@@ -1107,6 +812,62 @@ LCD_TwoLayers
     movlw   b'10000000'
     movwf   input_data
     call    SPI_writeREG
+    return
+
+LYEN1
+    movlw   0x41
+    movwf   input_cmd
+    movlw   .0				;layer 1
+    movwf   input_data
+    call    SPI_writeREG
+    return
+    
+LYEN2
+    movlw   0x41
+    movwf   input_cmd
+    movlw   .1				;layer 2
+    movwf   input_data
+    call    SPI_writeREG
+    return
+    
+SPI_writeREG
+    call    SPI_writeCMD
+    call    SPI_writeDATA
+    return
+
+    
+SPI_writeCMD
+    bcf	    LATD, CS
+    movlw   RA8875_CMDWRITE
+    call    SPI_MasterTransmit
+    movf    input_cmd, W
+    call    SPI_MasterTransmit
+    bsf	    LATD, CS
+    return
+    
+SPI_writeDATA
+    bcf	    LATD, CS
+    movlw   RA8875_DATAWRITE
+    call    SPI_MasterTransmit
+    movf    input_data, W
+    call    SPI_MasterTransmit
+    bsf	    LATD, CS    
+    return
+    
+SPI_MasterInit ; Set Clock edge to negative
+    bcf SSP2STAT, CKE
+    ; MSSP enable; CKP=1; SPI master, clock=Fosc/64 (1MHz)
+    movlw (1<<SSPEN)|(1<<CKP)|(0x02)
+    movwf SSP2CON1
+    return
+    
+SPI_MasterTransmit ; Start transmission of data (held in W)
+    movwf SSP2BUF
+    
+Wait_Transmit ; Wait for transmission to complete
+    btfss PIR2, SSP2IF
+    bra Wait_Transmit
+    bcf PIR2, SSP2IF ; clear interrupt flag
     return
     end
 

@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=GameData.asm Keypad.asm LCD.asm Main.asm Music.asm config.asm
+SOURCEFILES_QUOTED_IF_SPACED=GameData.asm Keypad.asm LCD.asm Main.asm Music.asm config.asm Run.asm
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/GameData.o ${OBJECTDIR}/Keypad.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Main.o ${OBJECTDIR}/Music.o ${OBJECTDIR}/config.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/GameData.o.d ${OBJECTDIR}/Keypad.o.d ${OBJECTDIR}/LCD.o.d ${OBJECTDIR}/Main.o.d ${OBJECTDIR}/Music.o.d ${OBJECTDIR}/config.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/GameData.o ${OBJECTDIR}/Keypad.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Main.o ${OBJECTDIR}/Music.o ${OBJECTDIR}/config.o ${OBJECTDIR}/Run.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/GameData.o.d ${OBJECTDIR}/Keypad.o.d ${OBJECTDIR}/LCD.o.d ${OBJECTDIR}/Main.o.d ${OBJECTDIR}/Music.o.d ${OBJECTDIR}/config.o.d ${OBJECTDIR}/Run.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/GameData.o ${OBJECTDIR}/Keypad.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Main.o ${OBJECTDIR}/Music.o ${OBJECTDIR}/config.o
+OBJECTFILES=${OBJECTDIR}/GameData.o ${OBJECTDIR}/Keypad.o ${OBJECTDIR}/LCD.o ${OBJECTDIR}/Main.o ${OBJECTDIR}/Music.o ${OBJECTDIR}/config.o ${OBJECTDIR}/Run.o
 
 # Source Files
-SOURCEFILES=GameData.asm Keypad.asm LCD.asm Main.asm Music.asm config.asm
+SOURCEFILES=GameData.asm Keypad.asm LCD.asm Main.asm Music.asm config.asm Run.asm
 
 
 CFLAGS=
@@ -142,6 +142,14 @@ ${OBJECTDIR}/config.o: config.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${DEP_GEN} -d "${OBJECTDIR}/config.o"
 	@${FIXDEPS} "${OBJECTDIR}/config.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
+${OBJECTDIR}/Run.o: Run.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/Run.o.d 
+	@${RM} ${OBJECTDIR}/Run.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/Run.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -d__DEBUG -d__MPLAB_DEBUGGER_ICD3=1 -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/Run.lst\" -e\"${OBJECTDIR}/Run.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/Run.o\" \"Run.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/Run.o"
+	@${FIXDEPS} "${OBJECTDIR}/Run.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
 else
 ${OBJECTDIR}/GameData.o: GameData.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -190,6 +198,14 @@ ${OBJECTDIR}/config.o: config.asm  nbproject/Makefile-${CND_CONF}.mk
 	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/config.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/config.lst\" -e\"${OBJECTDIR}/config.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/config.o\" \"config.asm\" 
 	@${DEP_GEN} -d "${OBJECTDIR}/config.o"
 	@${FIXDEPS} "${OBJECTDIR}/config.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
+	
+${OBJECTDIR}/Run.o: Run.asm  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/Run.o.d 
+	@${RM} ${OBJECTDIR}/Run.o 
+	@${FIXDEPS} dummy.d -e "${OBJECTDIR}/Run.err" $(SILENT) -c ${MP_AS} $(MP_EXTRA_AS_PRE) -q -p$(MP_PROCESSOR_OPTION)  -l\"${OBJECTDIR}/Run.lst\" -e\"${OBJECTDIR}/Run.err\" $(ASM_OPTIONS)    -o\"${OBJECTDIR}/Run.o\" \"Run.asm\" 
+	@${DEP_GEN} -d "${OBJECTDIR}/Run.o"
+	@${FIXDEPS} "${OBJECTDIR}/Run.o.d" $(SILENT) -rsi ${MP_AS_DIR} -c18 
 	
 endif
 
