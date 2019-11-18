@@ -1,25 +1,11 @@
 #include p18f87k22.inc
 
-    extern LCD_Initialisation, Keypad_Setup, Music_Setup, Play
-
-#define	RST		0
-#define	MOSI		4
-;#define	MISO		5
-#define	SCK		6
-#define CS		7
+    extern LCD_Initialisation, Keypad_Setup, Music_Setup, Play_Avengers
     
 Run    code	0
     
 Setup
-    ;set pins
-    clrf    LATD
-    bsf	    LATD, CS
-    bsf	    LATD, MOSI
-    bsf	    LATD, SCK
-    clrf    TRISD
-    bsf	    TRISD, MISO
-    
-    ;setup table
+    ;setup program memory table
     bcf	    EECON1, CFGS
     bsf	    EECON1, EEPGD
     
@@ -28,9 +14,10 @@ Setup
     call    Keypad_Setup
     call    Music_Setup
     
+Main
     ;Play Avengers
     call    Play_Avengers
-    
+    goto    $
     end
 
 

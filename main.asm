@@ -1,32 +1,52 @@
 #include p18f87k22.inc
-    global New_box, Decrement_dy
-    extern  Keypad_output
-	
-#define	Box_colour		7		;Current_Box bit location
-#define	Boxes_enable		3		;Boxes bit location
-#define max_boxes		.20		;number of max_boxes
-#define	box_test_good		.20
-#define	box_test_great		.10
-#define	box_test_perfect	.5
+    global  New_box, Box_test, Decrement_dy, Delay_ms
+    ;Global variable from Keypad.asm
+    extern  Keypad_getKey, Keypad_output
+    ;Global variable from LCD.asm
+    extern  rect_x1_l, rect_x1_h, rect_y1_l, rect_y1_h, rect_x2_l, rect_x2_h,rect_y2_l, rect_y2_h, rect_colour, Scroll_d_l, Scroll_d_h, LCD_RectHelper
+    ;Global variable from GameData.asm
+    extern  Play_Avengers
     
+
+#define max_boxes		.20		;number of max_boxes
+#define	Boxes_colour		7		;Boxes bit location
+#define	Boxes_enable		3		;Boxes bit location
+
+    
+;Score values
+#define	score_good		.20
+#define	score_great		.10
+#define	score_perfect		.5
+
+;LCD pixel values
+#define	box_xstart		.10
+#define	box_ystart		.20
+#define	box_width		.80
+#define	box_height		.10
+#define	box_xoffset		.100
+#define	box_yoffset		.50
+
+#define	scroll_yend_l		.144
+#define	scroll_yend_h		.1
     
 acs0    udata_acs   ; reserve data space in access ram
 Boxes		    res 20			;4 times max_boxes
 current_Box	    res 1
 	    
-Box_score	    res 1
+
 ;could be in banked
 Total_score_1	    res 1
 Total_score_2	    res 1
 Total_score_3	    res 1
 
 acs1    access_ovr
-Delay_cnt_l	res 1   ; reserve 1 byte for variable LCD_cnt_l
-Delay_cnt_h	res 1   ; reserve 1 byte for variable LCD_cnt_h
-Delay_cnt_ms	res 1   ; reserve 1 byte for ms counter
+Delay_ms_cnt	    res 1   ; reserve 1 byte for variable LCD_cnt_l
+Delay_x4us_cnt_h    res 1   ; reserve 1 byte for variable LCD_cnt_h
+Delay_x4us_cnt_l    res 1   ; reserve 1 byte for ms counter
+tmp1		    res 1
 	
 main    code
-
+converter db	0x88, 0x84, 0x83, 0x81, 0x18, 0x14, 0x12, 0x11, 0x48, 0x44, 0x42, 0x41, 0x28, 0x24, 0x22, 0x21
 
 ;Save box data in Box[0:15] in reserved access ram bytes
 New_box
@@ -57,7 +77,7 @@ new_box_loop
     addwfc  rect_x2_h
     
     ;set colour
-    btfss   current_Box, Box_colour		;current_Box[7]
+    btfss   INDF0, Boxes_colour		;current_Box[7]
     bra	    new_box_set_red			;red
     movlw   b'00000011'				;blue
 new_box_set_colour
@@ -127,7 +147,7 @@ box_test_loop
     
     movlw   .1
     movff   PLUSW0, tmp1			;store lower byte of dy into tmp1
-    movlw   box_test_good				
+    movlw   score_good				
     cpfslt  tmp1				;test lower byte
     bra	    box_test_next_box			;if greater than 'good', no score
     
@@ -157,10 +177,10 @@ box_test_loop
     ;correct button pressed
     movlw   .1					
     movff   PLUSW0, tmp1			;load dy in tmp1
-    movlw   box_test_great
+    movlw   score_great
     cpfslt  tmp1				;test for 'great'
     bra	    box_test_good			;if not, 'good'
-    movlw   box_test_perfect			
+    movlw   score_perfect			
     cpfslt  tmp1				;test for 'perfect'
     bra	    box_test_great			;if not, 'great'
     bra	    box_test_perfect			;if yes, 'perfect'
@@ -258,8 +278,8 @@ Delay_x4us
 delay				; Delay routine	4 instruction loop == 250ns	    
 	movlw 	0x00		; W=0
 delay_loop
-	decf 	Delay_cnt_l,F	; no carry when 0x00 -> 0xff
-	subwfb 	Delay_cnt_h,F	; no carry when 0x00 -> 0xff
+	decf 	Delay_x4us_cnt_l,F	; no carry when 0x00 -> 0xff
+	subwfb 	Delay_x4us_cnt_h,F	; no carry when 0x00 -> 0xff
 	bc 	delay_loop	; carry, then loop again
 	return			; carry reset so return
     end
