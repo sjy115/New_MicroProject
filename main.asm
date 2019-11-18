@@ -8,9 +8,10 @@
     extern  Play_Avengers
     
 
-
-#define	Boxes_colour		7		;Boxes bit location
-#define	Boxes_enable		3		;Boxes bit location
+;Boxes bit location
+#define	Boxes_colour		7
+#define	Boxes_enable		3
+#define	Boxes_negative		2
 
     
 ;Score values
@@ -31,7 +32,7 @@
     
 #define max_boxes		.10		;number of max_boxes
 acs_main    udata_acs   ; reserve data space in access ram
-Boxes		    res max_boxes*2			;2 times max_boxes
+Boxes		    res 20			;2 times max_boxes
 Boxes_end	    res 1
 ;could be in banked
 Total_score_1	    res 1
@@ -52,9 +53,10 @@ converter db	0x88, 0x84, 0x83, 0x81, 0x18, 0x14, 0x12, 0x11, 0x48, 0x44, 0x42, 0
 
 Main_Initialise
     movlw   Boxes
-    addlw   max_boxes
-    addlw   max_boxes
     movwf   Boxes_end
+    movlw   max_boxes
+    addwf   Boxes_end, F
+    addwf   Boxes_end, F
     
     ;Clear Boxes
     lfsr    0, Boxes
@@ -71,7 +73,6 @@ Main_Initialise_loop
     
 ;Save box data in Box[0:15] in reserved access ram bytes
 New_box
-
     movwf   current_Box
     lfsr    0, Boxes	
 new_box_loop
@@ -149,9 +150,9 @@ new_box_next_box
     incf    FSR0L
     incf    FSR0L
     movf    Boxes_end, W
-    cpfslt  FSR0L
+    cpfseq  FSR0L
+    bra	    new_box_loop
     return
-    bra	    new_box_loop  
 new_box_set_red
     movlw   b'00000111'	
     bra	    new_box_set_colour
@@ -227,9 +228,9 @@ box_test_next_box
     incf    FSR0L
     incf    FSR0L
     movf    Boxes_end, W
-    cpfslt  FSR0L
-    return
+    cpfseq  FSR0L
     bra	    box_test_loop
+    return
 box_test_good
     movlw   .25
     bra	    box_test_add_score
@@ -250,25 +251,21 @@ decrement_dy_loop
     bra	    decrement_dy_next_box		;if empty, try next memory location
     movlw   .1					;if occupied, decrement lower byte of dy
     decf    PLUSW0
-    movlw   b'11'
-    andwf   INDF0, W
-    movwf   tmp1				;load higher byte of dy in tmp1
-    movlw   .0
-    subwfb  tmp1, W				;subtract borrow from the bigher byte
-    bnc	    decrement_dy_negative		;if dy is negative, remove box and decrement next box
-    iorwf   INDF0, F				;if not, save dy and decrement next box
+    bnc	    decrement_dy_higher_byte		;if there was a borrow
 decrement_dy_next_box
     incf    FSR0L
     incf    FSR0L
     movf    Boxes_end, W
-    cpfslt  FSR0L
-    return
+    cpfseq  FSR0L
     bra	    decrement_dy_loop
+    return
     ;temporary subroutine
-decrement_dy_negative
-    call    Remove_box
-    bra	    decrement_dy_next_box
-
+decrement_dy_higher_byte
+    decf    INDF0
+    btfsc   INDF0, Boxes_negative
+    call    Remove_box				;if not, save dy and decrement next box
+    bra	    decrement_next_box
+    
     
 ;Remove box from memory
 Remove_box

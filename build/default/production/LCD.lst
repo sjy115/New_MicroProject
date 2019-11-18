@@ -1,4 +1,4 @@
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE  1
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -57,7 +57,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00040 #define RA8875_SYSR_MCU8        0x00
                       00041 #define RA8875_SYSR_MCU16       0x03
                       00042 
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE  2
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -116,7 +116,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00093 #define RA8875_DCR_LINESQUTRI_STATUS  0x80
                       00094 #define RA8875_DCR_CIRCLE_START       0x40
                       00095 #define RA8875_DCR_CIRCLE_STATUS      0x40
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE  3
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -175,7 +175,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00146     
                       00147 ;pre-defined constants
                       00148 #define LCD_width               800
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE  4
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -234,7 +234,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00199     ;call    Box_test
 000010 0E0A           00200     movlw   scroll_speed
 000012 EC?? F???      00201     call    Delay_ms
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE  5
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -293,7 +293,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000080 0E27           00252     movlw   0x27
 000082 6E??           00253     movwf   input_cmd
 000084 C??? F???      00254     movff   Scroll_d_h, input_data
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE  6
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -352,7 +352,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0000E8 0E97           00305     movlw   0x97
 0000EA 6E??           00306     movwf   input_cmd
 0000EC C??? F???      00307     movff   rect_y2_l, input_data
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE  7
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE  7
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -411,7 +411,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 00015A 42??           00358     rrncf   rect_colour, F
 00015C 0E03           00359     movlw   b'11'
 00015E 14??           00360     andwf   rect_colour, W
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE  8
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE  8
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -470,7 +470,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00411     ; Horizontal settings registers 
 0001BC 0E14           00412     movlw   RA8875_HDWR
 0001BE 6E??           00413     movwf   input_cmd
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE  9
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE  9
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -529,7 +529,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000234 0E1E           00464     movlw   RA8875_VSTR1
 000236 6E??           00465     movwf   input_cmd
 000238 0E00           00466     movlw   .0;  vsync_start >> 8);
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 10
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 10
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -588,7 +588,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0002A8 EC?? F???      00517     call    SPI_writeREG
                       00518 
                       00519     ; Clear the entire window
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 11
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 11
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -647,7 +647,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000322                00570 LCD_GPIOX
 000322 0EC7           00571     movlw   RA8875_GPIOX
 000324 6E??           00572     movwf   input_cmd
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 12
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 12
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -706,7 +706,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000382 6E??           00623     movwf   input_data
 000384 EC?? F???      00624     call    SPI_writeREG
 000388 0E3D           00625     movlw   0x3D
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 13
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 13
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -765,7 +765,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0003E8 EC?? F???      00676     call    SPI_writeREG
 0003EC 0012           00677     return
                       00678     
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 14
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 14
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -810,8 +810,16 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000428 D???           00715     bra Wait_Transmit
 00042A 9AA1           00716     bcf PIR2, SSP2IF ; clear interrupt flag
 00042C 0012           00717     return
-                      00718     end
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 15
+Message[303]: Program word too large.  Truncated to core size. (6F726369)
+Message[303]: Program word too large.  Truncated to core size. (70696863)
+Message[303]: Program word too large.  Truncated to core size. (4C504D5C)
+Message[303]: Program word too large.  Truncated to core size. (5C584241)
+Message[303]: Program word too large.  Truncated to core size. (302E3576)
+Message[303]: Program word too large.  Truncated to core size. (706D5C35)
+Message[303]: Program word too large.  Truncated to core size. (786D7361)
+6369 6863 4D5C 4241 3500718     end
+       76 5C35 7361 
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 15
 
 
 SYMBOL TABLE
@@ -870,7 +878,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 16
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 16
 
 
 SYMBOL TABLE
@@ -929,7 +937,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 17
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 17
 
 
 SYMBOL TABLE
@@ -988,7 +996,7 @@ C1OUT                             00000002
 C1TSEL0                           00000000
 C1TSEL1                           00000001
 C1TSEL2                           00000002
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 18
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 18
 
 
 SYMBOL TABLE
@@ -1047,7 +1055,7 @@ CCP1IF                            00000001
 CCP1IP                            00000001
 CCP1M0                            00000000
 CCP1M1                            00000001
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 19
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 19
 
 
 SYMBOL TABLE
@@ -1106,7 +1114,7 @@ CCP5IP                            00000002
 CCP5M0                            00000000
 CCP5M1                            00000001
 CCP5M2                            00000002
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 20
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 20
 
 
 SYMBOL TABLE
@@ -1165,7 +1173,7 @@ CCP9IF                            00000006
 CCP9IP                            00000006
 CCP9M0                            00000000
 CCP9M1                            00000001
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 21
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 21
 
 
 SYMBOL TABLE
@@ -1224,7 +1232,7 @@ CHSN0                             00000000
 CHSN1                             00000001
 CHSN2                             00000002
 CK1                               00000006
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 22
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 22
 
 
 SYMBOL TABLE
@@ -1283,7 +1291,7 @@ CTMUI                             00000003
 CTMUICON                          00000F55
 CTMUIE                            00000003
 CTMUIF                            00000003
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 23
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 23
 
 
 SYMBOL TABLE
@@ -1342,7 +1350,7 @@ D_NOT_A                           00000005
 Decrement_dy                      00000000
 Delay_ms                          00000000
 EBDIS                             00000007
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 24
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 24
 
 
 SYMBOL TABLE
@@ -1401,7 +1409,7 @@ FSR0H                             00000FEA
 FSR0L                             00000FE9
 FSR1                              00000001
 FSR1H                             00000FE2
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 25
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 25
 
 
 SYMBOL TABLE
@@ -1460,7 +1468,7 @@ INT2IE                            00000004
 INT2IF                            00000001
 INT2IP                            00000007
 INT2P                             00000007
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 26
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 26
 
 
 SYMBOL TABLE
@@ -1519,7 +1527,7 @@ LATB                              00000F8A
 LATB0                             00000000
 LATB1                             00000001
 LATB2                             00000002
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 27
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 27
 
 
 SYMBOL TABLE
@@ -1578,7 +1586,7 @@ LATH2                             00000002
 LATH3                             00000003
 LATH4                             00000004
 LATH5                             00000005
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 28
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 28
 
 
 SYMBOL TABLE
@@ -1637,7 +1645,7 @@ NOT_DONE                          00000001
 NOT_PD                            00000002
 NOT_POR                           00000001
 NOT_RBPU                          00000007
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 29
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 29
 
 
 SYMBOL TABLE
@@ -1696,7 +1704,7 @@ P2A_PORTC                         00000001
 P2A_PORTE                         00000007
 P2B                               00000002
 P2C                               00000001
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 30
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 30
 
 
 SYMBOL TABLE
@@ -1755,7 +1763,7 @@ PIR2                              00000FA1
 PIR3                              00000FA4
 PIR4                              00000FB7
 PIR5                              00000FBA
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 31
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 31
 
 
 SYMBOL TABLE
@@ -1814,7 +1822,7 @@ PSPIP                             00000007
 PSPMD                             00000007
 PSPMODE                           00000004
 PSS1AC0                           00000002
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 32
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 32
 
 
 SYMBOL TABLE
@@ -1873,7 +1881,7 @@ RA8875_HNDFTR_DE_HIGH             0x00
 RA8875_HNDFTR_DE_LOW              0x80
 RA8875_HNDR                       0x16
 RA8875_HPWR                       0x18
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 33
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 33
 
 
 SYMBOL TABLE
@@ -1932,7 +1940,7 @@ RA8875_PLLC2_DIV8                 0x03
 RA8875_PWM_CLK_DIV1024            0x0A
 RA8875_PWRR                       0x01
 RA8875_PWRR_DISPOFF               0x00
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 34
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 34
 
 
 SYMBOL TABLE
@@ -1991,7 +1999,7 @@ RC4                               00000004
 RC5                               00000005
 RC6                               00000006
 RC7                               00000007
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 35
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 35
 
 
 SYMBOL TABLE
@@ -2050,7 +2058,7 @@ RG3                               00000003
 RG4                               00000004
 RG5                               00000005
 RH0                               00000000
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 36
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 36
 
 
 SYMBOL TABLE
@@ -2109,7 +2117,7 @@ RX9D                              00000000
 RX9D1                             00000000
 RX9D2                             00000000
 RXDTP                             00000005
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 37
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 37
 
 
 SYMBOL TABLE
@@ -2168,7 +2176,7 @@ SREN1                             00000005
 SREN2                             00000005
 SRETEN                            00000004
 SS1                               00000007
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 38
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 38
 
 
 SYMBOL TABLE
@@ -2227,7 +2235,7 @@ Scroll                            00000000
 Scroll_d_h                        00000001
 Scroll_d_l                        00000000
 T08BIT                            00000006
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 39
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 39
 
 
 SYMBOL TABLE
@@ -2286,7 +2294,7 @@ T3G                               00000005
 T3GCON                            00000FB0
 T3GGO                             00000003
 T3GGO_NOT_T3DONE                  00000003
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 40
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 40
 
 
 SYMBOL TABLE
@@ -2345,7 +2353,7 @@ T8CKPS1                           00000001
 T8CON                             00000F36
 T8OUTPS0                          00000003
 T8OUTPS1                          00000004
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 41
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 41
 
 
 SYMBOL TABLE
@@ -2404,7 +2412,7 @@ TMR3CS1                           00000007
 TMR3GE                            00000007
 TMR3GIE                           00000000
 TMR3GIF                           00000000
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 42
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 42
 
 
 SYMBOL TABLE
@@ -2463,7 +2471,7 @@ TMR8IE                            00000004
 TMR8IF                            00000004
 TMR8IP                            00000004
 TMR8MD                            00000006
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 43
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 43
 
 
 SYMBOL TABLE
@@ -2522,7 +2530,7 @@ TRISE4                            00000004
 TRISE5                            00000005
 TRISE6                            00000006
 TRISE7                            00000007
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 44
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 44
 
 
 SYMBOL TABLE
@@ -2581,7 +2589,7 @@ TX8_9                             00000006
 TX9                               00000006
 TX91                              00000006
 TX92                              00000006
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 45
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 45
 
 
 SYMBOL TABLE
@@ -2640,7 +2648,7 @@ _ABW_MM_3L                        000000FF
 _ABW_XM12_3L                      000000EF
 _ABW_XM16_3L                      000000DF
 _ABW_XM20_3L                      000000CF
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 46
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 46
 
 
 SYMBOL TABLE
@@ -2699,7 +2707,7 @@ _CPD_OFF_5H                       000000FF
 _CPD_ON_5H                        0000007F
 _DEBUG_OFF_4L                     000000FF
 _DEBUG_ON_4L                      0000007F
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 47
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 47
 
 
 SYMBOL TABLE
@@ -2758,7 +2766,7 @@ _IESO_ON_1H                       000000FF
 _INTOSCSEL_HIGH_1L                000000FF
 _INTOSCSEL_LOW_1L                 000000FB
 _MCLRE_OFF_3H                     0000007F
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 48
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 48
 
 
 SYMBOL TABLE
@@ -2817,7 +2825,7 @@ _WRT3_OFF_6L                      000000FF
 _WRT3_ON_6L                       000000F7
 _WRT4_OFF_6L                      000000FF
 _WRT4_ON_6L                       000000EF
-MPASM 5.81                           LCD.ASM   11-18-2019  17:30:58         PAGE 49
+MPASM 5.81                           LCD.ASM   11-18-2019  17:54:27         PAGE 49
 
 
 SYMBOL TABLE
@@ -2861,6 +2869,6 @@ scroll_yend_l                     .144
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed
-Messages :     0 reported,     0 suppressed
+Messages :     7 reported,     0 suppressed
 
 

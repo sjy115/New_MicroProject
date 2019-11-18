@@ -171,8 +171,7 @@ Control		    res 1
 ;global parameters for LCD_RectHelper
 acs_ovr		access_ovr
 input_cmd	    res 1
-input_data	    res 1
-	    
+input_data	    res 1  
 rect_x1_h	    res 1
 rect_y1_h	    res 1
 rect_x2_h	    res 1
@@ -190,13 +189,17 @@ LCD code
 Scroll
     movlw   scroll_yend_l
     movwf   Scroll_d_l
+    btfsc   Control, LYEN
+    addwf   Scroll_d_l,F
     movlw   scroll_yend_h
     movwf   Scroll_d_h
+    btfsc   Control, LYEN
+    addwfc  Scroll_d_h,F
     
-scrl
+scrl	    
+    ;call    Box_test
     call    LCD_ScrollY
     call    Decrement_dy
-    ;call    Box_test
     movlw   scroll_speed
     call    Delay_ms
     decf    Scroll_d_l, F	; borrow when 0x00 -> 0xff
@@ -246,14 +249,10 @@ LCD_ScrollY
     movlw   0x26
     movwf   input_cmd
     movff   Scroll_d_l, input_data
-    btfsc   Control, LYEN
-    call    scrl1
     call    SPI_writeREG
     movlw   0x27
     movwf   input_cmd
     movff   Scroll_d_h, input_data
-    btfsc   Control, LYEN
-    call    scrl2
     call    SPI_writeREG
     return
     
