@@ -40,9 +40,9 @@ Total_score_2	    res 1
 Total_score_3	    res 1
 
 acs1    access_ovr
-Delay_ms_cnt	    res 1   ; reserve 1 byte for variable LCD_cnt_l
+Delay_ms_cnt	    res 1   ; ; reserve 1 byte for ms counter
 Delay_x4us_cnt_h    res 1   ; reserve 1 byte for variable LCD_cnt_h
-Delay_x4us_cnt_l    res 1   ; reserve 1 byte for ms counter
+Delay_x4us_cnt_l    res 1   ; reserve 1 byte for variable LCD_cnt_l
 tmp1		    res 1
 	
 main    code
