@@ -6,81 +6,31 @@
 GameData    code
     
 Play_Avengers
-    call    Music_Avengers
+    ;call    Music_Avengers
+;Section 1 - Both hands Play
     
+
     movlw   b'00000000'
     call    New_box
-    movlw   b'00001001'
+    movlw   b'00000001'
     call    New_box
-    movlw   b'00010010'
+    movlw   b'00000010'
     call    New_box
-    movlw   b'00011011'
-    call    New_box
-    movlw   b'00100100'
-    call    New_box
-    movlw   b'00101101'
-    call    New_box
-    movlw   b'00110110'
-    call    New_box
-    movlw   b'00111111'
+    movlw   b'00000011'
     call    New_box
     call    Scroll
     
-    movlw   b'01000111'
+    movlw   b'11000000'
     call    New_box
-    movlw   b'01001110'
+    movlw   b'11000001'
     call    New_box
-    movlw   b'01010101'
+    movlw   b'11000011'
     call    New_box
-    movlw   b'01011100'
-    call    New_box
-    movlw   b'01100011'
-    call    New_box
-    movlw   b'01101010'
-    call    New_box
-    movlw   b'01110001'
-    call    New_box
-    movlw   b'01111000'
+    movlw   b'11000010'
     call    New_box
     call    Scroll
     
-    movlw   b'00000000'
-    call    New_box
-    movlw   b'00001001'
-    call    New_box
-    movlw   b'00010010'
-    call    New_box
-    movlw   b'00011011'
-    call    New_box
-    movlw   b'00100100'
-    call    New_box
-    movlw   b'00101101'
-    call    New_box
-    movlw   b'00110110'
-    call    New_box
-    movlw   b'00111111'
-    call    New_box
-    call    Scroll
     
-    movlw   b'01000111'
-    call    New_box
-    movlw   b'01001110'
-    call    New_box
-    movlw   b'01010101'
-    call    New_box
-    movlw   b'01011100'
-    call    New_box
-    movlw   b'01100011'
-    call    New_box
-    movlw   b'01101010'
-    call    New_box
-    movlw   b'01110001'
-    call    New_box
-    movlw   b'01111000'
-    call    New_box
-    call    Scroll
+  
     return
     end
-    
-
-

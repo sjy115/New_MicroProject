@@ -1,12 +1,18 @@
     #include p18f87k22.inc
     
-    global Keypad_Setup, Keypad_getKey, Keypad_output
+    
+    global Keypad_Setup, Keypad_getKey, Keypad_output,input_cmd,input_data
     extern Delay_ms
 
-    
-acs0    udata_acs   ; reserve data space in access ram
-key	res 1
+#define	RST		0
+#define	MOSI		4
+#define	MISO		5
+#define	SCK		6
+#define CS		7
+acs_keypad    udata_acs   ; reserve data space in access ram
 Keypad_output res 1
+input_cmd	    res 1
+input_data	    res 1
 	
 Keypad  code
 	

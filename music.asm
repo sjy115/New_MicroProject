@@ -1,7 +1,10 @@
 #include p18f87k22.inc
 
     global  Music_Setup, Music_Avengers
-
+    extern  Delay_ms
+    
+#define	music_RST   5
+    
 Music    code
     
 Music_Avengers
@@ -26,6 +29,14 @@ Music_Setup
     movlw   .103	    ; gives 9600 Baud rate (actually 9615)
     movwf   SPBRG1
     bsf	    TRISC, TX1	    ; TX1 pin as output
+    
+    bcf	    LATC, music_RST
+    bcf	    TRISC, music_RST
+    movlw   .250
+    call    Delay_ms
+    bsf	    LATC, music_RST
+    movlw   .250
+    call    Delay_ms
     return
 
 UART_Transmit_Byte	    ; Transmits byte stored in W

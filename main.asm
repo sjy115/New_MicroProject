@@ -1,5 +1,5 @@
 #include p18f87k22.inc
-    global  New_box, Box_test, Decrement_dy, Delay_ms
+    global  Main_Initialise, New_box, Box_test, Decrement_dy, Delay_ms
     ;Global variable from Keypad.asm
     extern  Keypad_getKey, Keypad_output
     ;Global variable from LCD.asm
@@ -8,7 +8,7 @@
     extern  Play_Avengers
     
 
-#define max_boxes		.20		;number of max_boxes
+
 #define	Boxes_colour		7		;Boxes bit location
 #define	Boxes_enable		3		;Boxes bit location
 
@@ -29,9 +29,10 @@
 #define	scroll_yend_l		.144
 #define	scroll_yend_h		.1
     
+#define max_boxes		.10		;number of max_boxes
 acs_main    udata_acs   ; reserve data space in access ram
-Boxes		    res 20			;4 times max_boxes
-
+Boxes		    res max_boxes*2			;2 times max_boxes
+Boxes_end	    res 1
 ;could be in banked
 Total_score_1	    res 1
 Total_score_2	    res 1
@@ -46,11 +47,31 @@ acs_ovr    access_ovr
 tmp1		    res 1
 current_Box	    res 1
 	    
-main    code
+Main    code
 converter db	0x88, 0x84, 0x83, 0x81, 0x18, 0x14, 0x12, 0x11, 0x48, 0x44, 0x42, 0x41, 0x28, 0x24, 0x22, 0x21
 
+Main_Initialise
+    movlw   Boxes
+    addlw   max_boxes
+    addlw   max_boxes
+    movwf   Boxes_end
+    
+    ;Clear Boxes
+    lfsr    0, Boxes
+Main_Initialise_loop
+    clrf    POSTINC0
+    cpfseq  FSR0L
+    bra	    Main_Initialise_loop
+    
+    ;Clear Total score
+    clrf    Total_score_1
+    clrf    Total_score_2
+    clrf    Total_score_3
+    return
+    
 ;Save box data in Box[0:15] in reserved access ram bytes
 New_box
+
     movwf   current_Box
     lfsr    0, Boxes	
 new_box_loop
@@ -63,6 +84,8 @@ new_box_loop
     movlw   0xF0				
     andwf   current_Box, W			;x index[x0, x1, x2] : 0~7 and colour bit
     iorwf   INDF0				;save in Box[12:15]
+    bcf	    WREG, Boxes_colour			;clear colour bit
+    swapf   WREG, W				;move x index to lower nibble
     mullw   box_xoffset				;x on drawing layer x_l = start + index * offset
     movlw   box_xstart
     addwf   PRODL, W				;lower byte of x_l
@@ -82,7 +105,7 @@ new_box_loop
     bra	    new_box_set_red			;red
     movlw   b'11000000'				;blue
 new_box_set_colour
-    movwf   rect_colour				;R[5:7] G[2:4] B[0:1]
+    movwf   rect_colour				;R[0:2] G[3:5] B[6:7]
     
     ;set vertical parameters
     movlw   b'111'			
@@ -119,15 +142,14 @@ new_box_set_colour
     iorwf   INDF0
     
     ;draw the box
-
     call    LCD_RectHelper
     return
     ;temporary subroutine
 new_box_next_box
-    incf    FSR0, F
-    incf    FSR0, F
-    movlw   Boxes+max_boxes
-    cpfslt  FSR0
+    incf    FSR0L
+    incf    FSR0L
+    movf    Boxes_end, W
+    cpfslt  FSR0L
     return
     bra	    new_box_loop  
 new_box_set_red
@@ -202,10 +224,10 @@ box_test_add_score
     return
     ;temporary subroutine
 box_test_next_box
-    incf    FSR0, F
-    incf    FSR0, F
-    movlw   Boxes+max_boxes
-    cpfslt  FSR0
+    incf    FSR0L
+    incf    FSR0L
+    movf    Boxes_end, W
+    cpfslt  FSR0L
     return
     bra	    box_test_loop
 box_test_good
@@ -236,10 +258,10 @@ decrement_dy_loop
     bnc	    decrement_dy_negative		;if dy is negative, remove box and decrement next box
     iorwf   INDF0, F				;if not, save dy and decrement next box
 decrement_dy_next_box
-    incf    FSR0, F
-    incf    FSR0, F
-    movlw   Boxes+max_boxes
-    cpfslt  FSR0
+    incf    FSR0L
+    incf    FSR0L
+    movf    Boxes_end, W
+    cpfslt  FSR0L
     return
     bra	    decrement_dy_loop
     ;temporary subroutine

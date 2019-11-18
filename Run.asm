@@ -1,6 +1,10 @@
 #include p18f87k22.inc
-
-    extern LCD_Initialisation, Keypad_Setup, Music_Setup, Play_Avengers
+    ;Setup
+    extern LCD_Initialisation, Keypad_Setup, Music_Setup
+    ;Main
+    extern Main_Initialise
+    ;GameData
+    extern Play_Avengers
     
 Run    code	0
     
@@ -10,6 +14,7 @@ Setup
     bsf	    EECON1, EEPGD
     
     ;initialise
+    call    Main_Initialise
     call    LCD_Initialisation
     call    Keypad_Setup
     call    Music_Setup
