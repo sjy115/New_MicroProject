@@ -1,18 +1,13 @@
     #include p18f87k22.inc
     
-    
-    global Keypad_Setup, Keypad_getKey, Keypad_output,input_cmd,input_data
+    global Keypad_Setup, Keypad_getKey, Keypad_output
+    ;Global variables from Keypad.asm
     extern Delay_ms
-
-#define	RST		0
-#define	MOSI		4
-#define	MISO		5
-#define	SCK		6
-#define CS		7
-acs_keypad    udata_acs   ; reserve data space in access ram
-Keypad_output res 1
-input_cmd	    res 1
-input_data	    res 1
+    
+    
+acs0    udata_acs   ; reserve data space in access ram
+    
+Keypad_output res 1	    ; reserve 1 byte for button presed on keypad
 	
 Keypad  code
 	
@@ -23,15 +18,19 @@ Keypad_Setup
 	
 	
 Keypad_getKey
-    setf    Keypad_output
-    ;get row input
+    setf    Keypad_output	    ; set byte to 11111111
+    ;get row input		    ;setup for row test
     clrf    LATE
     movlw   0x0F
     movwf   TRISE
     movlw   .100
     call    Delay_ms
     
-    ;row0
+    ;; Program sets byte to 11111111 and then tests to see which button is pressed.
+    ;; clears all unpressed bits.
+    ;; low bits if byte indicate row number, high bits indicate column number.
+    
+    ;row0			    ;check to see which row contains the pressed button
     movlw   b'1110'
     cpfseq  PORTE
     bcf     Keypad_output, 0
@@ -48,14 +47,14 @@ Keypad_getKey
     cpfseq  PORTE
     bcf	    Keypad_output, 3
     
-    ;get column input
+    ;get column input		;setup for column test
     clrf    LATE
     movlw   0xF0
     movwf   TRISE
     movlw   .100
     call    Delay_ms
     
-    ;column0
+    ;column0			;check to see which column contains the pressed button
     movlw   b'11100000'
     cpfseq  PORTE
     bcf     Keypad_output, 4

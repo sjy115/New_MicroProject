@@ -13,52 +13,26 @@
 ; Registers & bits
 #define RA8875_PWRR             0x01
 #define RA8875_PWRR_DISPON      0x80
-#define RA8875_PWRR_DISPOFF     0x00
-#define RA8875_PWRR_SLEEP       0x02
 #define RA8875_PWRR_NORMAL      0x00
-#define RA8875_PWRR_SOFTRESET   0x01
 
 #define RA8875_GPIOX            0xC7
 
 #define RA8875_PLLC1            0x88
-#define RA8875_PLLC1_PLLDIV2    0x80
 #define RA8875_PLLC1_PLLDIV1    0x00
 
 #define RA8875_PLLC2            0x89
-#define RA8875_PLLC2_DIV1       0x00
-#define RA8875_PLLC2_DIV2       0x01
 #define RA8875_PLLC2_DIV4       0x02
-#define RA8875_PLLC2_DIV8       0x03
-#define RA8875_PLLC2_DIV16      0x04
-#define RA8875_PLLC2_DIV32      0x05
-#define RA8875_PLLC2_DIV64      0x06
-#define RA8875_PLLC2_DIV128     0x07
-
 #define RA8875_SYSR             0x10
-#define RA8875_SYSR_8BPP        0x00
 #define RA8875_SYSR_16BPP       0x0C
 #define RA8875_SYSR_MCU8        0x00
-#define RA8875_SYSR_MCU16       0x03
 
-#define RA8875_PCSR             0x04
-#define RA8875_PCSR_PDATR       0x00
-#define RA8875_PCSR_PDATL       0x80
-#define RA8875_PCSR_CLK         0x00
-#define RA8875_PCSR_2CLK        0x01
-#define RA8875_PCSR_4CLK        0x02
-#define RA8875_PCSR_8CLK        0x03
-
-#define RA8875_HDWR             0x14
 
 #define RA8875_HNDFTR           0x15
 #define RA8875_HNDFTR_DE_HIGH   0x00
-#define RA8875_HNDFTR_DE_LOW    0x80
 
 #define RA8875_HNDR             0x16
 #define RA8875_HSTR             0x17
 #define RA8875_HPWR             0x18
-#define RA8875_HPWR_LOW         0x00
-#define RA8875_HPWR_HIGH        0x80
 
 #define RA8875_VDHR0            0x19
 #define RA8875_VDHR1            0x1A
@@ -67,8 +41,6 @@
 #define RA8875_VSTR0            0x1D
 #define RA8875_VSTR1            0x1E
 #define RA8875_VPWR             0x1F
-#define RA8875_VPWR_LOW         0x00
-#define RA8875_VPWR_HIGH        0x80
 
 #define RA8875_HSAW0            0x30
 #define RA8875_HSAW1            0x31
@@ -81,39 +53,10 @@
 #define RA8875_VEAW1            0x37
 
 #define RA8875_MCLR             0x8E
-#define RA8875_MCLR_START       0x80
-#define RA8875_MCLR_STOP        0x00
-#define RA8875_MCLR_READSTATUS  0x80
-#define RA8875_MCLR_FULL        0x00
-#define RA8875_MCLR_ACTIVE      0x40
-
-#define RA8875_DCR                    0x90
-#define RA8875_DCR_LINESQUTRI_START   0x80
-#define RA8875_DCR_LINESQUTRI_STOP    0x00
-#define RA8875_DCR_LINESQUTRI_STATUS  0x80
-#define RA8875_DCR_CIRCLE_START       0x40
-#define RA8875_DCR_CIRCLE_STATUS      0x40
-#define RA8875_DCR_CIRCLE_STOP        0x00
-#define RA8875_DCR_FILL               0x20
-#define RA8875_DCR_NOFILL             0x00
-#define RA8875_DCR_DRAWLINE           0x00
-#define RA8875_DCR_DRAWTRIANGLE       0x01
-#define RA8875_DCR_DRAWSQUARE         0x10
 
 #define RA8875_ELLIPSE                0xA0
-#define RA8875_ELLIPSE_STATUS         0x80
 
 #define RA8875_MWCR0            0x40
-#define RA8875_MWCR0_GFXMODE    0x00
-#define RA8875_MWCR0_TXTMODE    0x80
-#define RA8875_MWCR0_CURSOR     0x40
-#define RA8875_MWCR0_BLINK      0x20
-
-#define RA8875_MWCR0_DIRMASK    0x0C ;< Bitmask for Write Direction
-#define RA8875_MWCR0_LRTD       0x00 ;< Left->Right then Top->Down
-#define RA8875_MWCR0_RLTD       0x04 ;< Right->Left then Top->Down
-#define RA8875_MWCR0_TDLR       0x08 ;< Top->Down then Left->Right
-#define RA8875_MWCR0_DTLR       0x0C ;< Down->Top then Left->Right
 
 #define RA8875_MWCR1            0x40
     
@@ -121,9 +64,6 @@
 ;PWM1 Control register
 #define RA8875_P1CR             0x8A
 #define RA8875_P1CR_ENABLE      0x80
-#define RA8875_P1CR_DISABLE     0x00
-#define RA8875_P1CR_CLKOUT      0x10
-#define RA8875_P1CR_PWMOUT      0x00
 
 #define RA8875_P1DCR            0x8B
 
@@ -202,6 +142,11 @@ scrl
     call    Decrement_dy
     movlw   scroll_speed
     call    Delay_ms
+    movlw   .125
+    movwf   Delay_x4us_cnt_l
+    movlw   .0
+    movwf   Delay_x4us_cnt_h
+    call    Delay_x4us		; delay for total of 2.5ms for every pixel
     decf    Scroll_d_l, F	; borrow when 0x00 -> 0xff
     movlw   0x00		; W=0	
     subwfb  Scroll_d_h, F	; no carry when 0x00 -> 0xff
