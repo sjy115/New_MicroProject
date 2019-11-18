@@ -1,4 +1,4 @@
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE  1
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -57,7 +57,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00041 
 00003E                00042 UART_Transmit_Byte          ; Transmits byte stored in W
 00003E A89E           00043     btfss   PIR1,TX1IF      ; TX1IF is set when TXREG1 is empty
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE  2
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -67,7 +67,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000042 6EAD           00045     movwf   TXREG1
 000044 0012           00046     return
                       00047     end
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE  3
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE  3
 
 
 SYMBOL TABLE
@@ -126,7 +126,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE  4
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE  4
 
 
 SYMBOL TABLE
@@ -185,7 +185,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE  5
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE  5
 
 
 SYMBOL TABLE
@@ -244,7 +244,7 @@ C1TSEL0                           00000000
 C1TSEL1                           00000001
 C1TSEL2                           00000002
 C2INA                             00000004
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE  6
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE  6
 
 
 SYMBOL TABLE
@@ -303,7 +303,7 @@ CCP1IP                            00000001
 CCP1M0                            00000000
 CCP1M1                            00000001
 CCP1M2                            00000002
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE  7
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE  7
 
 
 SYMBOL TABLE
@@ -362,7 +362,7 @@ CCP5M0                            00000000
 CCP5M1                            00000001
 CCP5M2                            00000002
 CCP5M3                            00000003
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE  8
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE  8
 
 
 SYMBOL TABLE
@@ -421,7 +421,7 @@ CCP9IP                            00000006
 CCP9M0                            00000000
 CCP9M1                            00000001
 CCP9M2                            00000002
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE  9
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE  9
 
 
 SYMBOL TABLE
@@ -480,7 +480,7 @@ CHSN1                             00000001
 CHSN2                             00000002
 CK1                               00000006
 CK2                               00000001
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 10
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 10
 
 
 SYMBOL TABLE
@@ -539,7 +539,7 @@ CTMUIE                            00000003
 CTMUIF                            00000003
 CTMUIP                            00000003
 CTMUMD                            00000006
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 11
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 11
 
 
 SYMBOL TABLE
@@ -598,7 +598,7 @@ ECCP1AS0                          00000004
 ECCP1AS1                          00000005
 ECCP1AS2                          00000006
 ECCP1ASE                          00000007
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 12
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 12
 
 
 SYMBOL TABLE
@@ -657,7 +657,7 @@ FSR2                              00000002
 FSR2H                             00000FDA
 FSR2L                             00000FD9
 GCEN                              00000007
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 13
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 13
 
 
 SYMBOL TABLE
@@ -716,7 +716,7 @@ INT3E                             00000005
 INT3F                             00000002
 INT3IE                            00000005
 INT3IF                            00000002
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 14
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 14
 
 
 SYMBOL TABLE
@@ -775,7 +775,7 @@ LATB6                             00000006
 LATB7                             00000007
 LATC                              00000F8B
 LATC0                             00000000
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 15
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 15
 
 
 SYMBOL TABLE
@@ -834,7 +834,7 @@ LATJ0                             00000000
 LATJ1                             00000001
 LATJ2                             00000002
 LATJ3                             00000003
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 16
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 16
 
 
 SYMBOL TABLE
@@ -893,7 +893,7 @@ ODCON1                            00000F29
 ODCON2                            00000F28
 ODCON3                            00000F27
 OE                                00000001
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 17
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 17
 
 
 SYMBOL TABLE
@@ -952,7 +952,7 @@ P3DC5                             00000005
 P3DC6                             00000006
 P3M0                              00000006
 P3M1                              00000007
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 18
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 18
 
 
 SYMBOL TABLE
@@ -1011,7 +1011,7 @@ PORTJ                             00000F88
 POSTDEC0                          00000FED
 POSTDEC1                          00000FE5
 POSTDEC2                          00000FDD
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 19
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 19
 
 
 SYMBOL TABLE
@@ -1070,7 +1070,7 @@ RA1                               00000001
 RA2                               00000002
 RA3                               00000003
 RA4                               00000004
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 20
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 20
 
 
 SYMBOL TABLE
@@ -1129,7 +1129,7 @@ RD3                               00000003
 RD4                               00000004
 RD5                               00000005
 RD6                               00000006
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 21
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 21
 
 
 SYMBOL TABLE
@@ -1188,7 +1188,7 @@ RODIV3                            00000003
 ROON                              00000007
 ROSEL                             00000004
 ROSSLP                            00000005
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 22
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 22
 
 
 SYMBOL TABLE
@@ -1247,7 +1247,7 @@ SMP                               00000007
 SOSCEN                            00000003
 SOSCGO                            00000003
 SOSCI                             00000001
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 23
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 23
 
 
 SYMBOL TABLE
@@ -1306,7 +1306,7 @@ SSPIP                             00000003
 SSPM0                             00000000
 SSPM1                             00000001
 SSPM2                             00000002
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 24
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 24
 
 
 SYMBOL TABLE
@@ -1365,7 +1365,7 @@ T1GGO                             00000003
 T1GGO_NOT_T1DONE                  00000003
 T1GPOL                            00000006
 T1GSPM                            00000004
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 25
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 25
 
 
 SYMBOL TABLE
@@ -1424,7 +1424,7 @@ T6OUTPS0                          00000003
 T6OUTPS1                          00000004
 T6OUTPS2                          00000005
 T6OUTPS3                          00000006
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 26
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 26
 
 
 SYMBOL TABLE
@@ -1483,7 +1483,7 @@ TMR1GE                            00000007
 TMR1GIE                           00000002
 TMR1GIF                           00000002
 TMR1GIP                           00000002
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 27
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 27
 
 
 SYMBOL TABLE
@@ -1542,7 +1542,7 @@ TMR6IF                            00000002
 TMR6IP                            00000002
 TMR6MD                            00000004
 TMR6ON                            00000002
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 28
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 28
 
 
 SYMBOL TABLE
@@ -1601,7 +1601,7 @@ TRISC3                            00000003
 TRISC4                            00000004
 TRISC5                            00000005
 TRISC6                            00000006
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 29
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 29
 
 
 SYMBOL TABLE
@@ -1660,7 +1660,7 @@ TRISJ6                            00000006
 TRISJ7                            00000007
 TRMT                              00000001
 TRMT1                             00000001
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 30
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 30
 
 
 SYMBOL TABLE
@@ -1719,7 +1719,7 @@ VDIRMAG                           00000007
 VNCFG                             00000003
 VREF_MINUS                        00000002
 VREF_PLUS                         00000003
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 31
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 31
 
 
 SYMBOL TABLE
@@ -1778,7 +1778,7 @@ _CONFIG7L                         0030000C
 _CP0_OFF_5L                       000000FF
 _CP0_ON_5L                        000000FE
 _CP1_OFF_5L                       000000FF
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 32
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 32
 
 
 SYMBOL TABLE
@@ -1837,7 +1837,7 @@ _FOSC_EC3IO_1H                    000000F4
 _FOSC_EC3_1H                      000000F5
 _FOSC_HS1_1H                      000000F3
 _FOSC_HS2_1H                      000000F2
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 33
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 33
 
 
 SYMBOL TABLE
@@ -1896,7 +1896,7 @@ _WDTPS_256_2H                     000000A3
 _WDTPS_262144_2H                  000000CB
 _WDTPS_2_2H                       00000087
 _WDTPS_32768_2H                   000000BF
-MPASM 5.81                         MUSIC.ASM   11-18-2019  17:23:48         PAGE 34
+MPASM 5.81                         MUSIC.ASM   11-18-2019  17:30:58         PAGE 34
 
 
 SYMBOL TABLE
