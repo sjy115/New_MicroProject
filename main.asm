@@ -29,22 +29,23 @@
 #define	scroll_yend_l		.144
 #define	scroll_yend_h		.1
     
-acs0    udata_acs   ; reserve data space in access ram
+acs_main    udata_acs   ; reserve data space in access ram
 Boxes		    res 20			;4 times max_boxes
-current_Box	    res 1
-	    
 
 ;could be in banked
 Total_score_1	    res 1
 Total_score_2	    res 1
 Total_score_3	    res 1
 
-acs1    access_ovr
+acs_ovr    access_ovr
 Delay_ms_cnt	    res 1   ; reserve 1 byte for variable LCD_cnt_l
 Delay_x4us_cnt_h    res 1   ; reserve 1 byte for variable LCD_cnt_h
 Delay_x4us_cnt_l    res 1   ; reserve 1 byte for ms counter
+    
+acs_ovr    access_ovr  
 tmp1		    res 1
-	
+current_Box	    res 1
+	    
 main    code
 converter db	0x88, 0x84, 0x83, 0x81, 0x18, 0x14, 0x12, 0x11, 0x48, 0x44, 0x42, 0x41, 0x28, 0x24, 0x22, 0x21
 
@@ -79,7 +80,7 @@ new_box_loop
     ;set colour
     btfss   INDF0, Boxes_colour		;current_Box[7]
     bra	    new_box_set_red			;red
-    movlw   b'00000011'				;blue
+    movlw   b'11000000'				;blue
 new_box_set_colour
     movwf   rect_colour				;R[5:7] G[2:4] B[0:1]
     
@@ -118,6 +119,7 @@ new_box_set_colour
     iorwf   INDF0
     
     ;draw the box
+
     call    LCD_RectHelper
     return
     ;temporary subroutine
@@ -129,7 +131,7 @@ new_box_next_box
     return
     bra	    new_box_loop  
 new_box_set_red
-    movlw   b'11100000'	
+    movlw   b'00000111'	
     bra	    new_box_set_colour
     
     
@@ -167,8 +169,8 @@ box_test_loop
     movlw   .0
     addwfc  TBLPTRH, F
     addwfc  TBLPTRU, F
-    tblrd*					;load box value in W and tmp1
-    movf    TABLAT, W
+    tblrd*					
+    movf    TABLAT, W				;load box value in W and tmp1
     movwf   tmp1
     andwf   Keypad_output, W
     cpfseq  tmp1				;if box value is in keypad output
