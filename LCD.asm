@@ -153,25 +153,26 @@
     
 #define	scroll_yend_l		.144
 #define	scroll_yend_h		.1
-#define	scroll_speed		.2
+#define	scroll_speed		.10
 #define	LYEN			0	;Control bit location, layer enable
 
 #define	RST		0
 #define	MOSI		4
-;#define	MISO		5
+#define	MISO		5
 #define	SCK		6
 #define CS		7
     
-acs0    udata_acs   ; reserve data space in access ram
-input_cmd	    res 1
-input_data	    res 1
-	    
+acs_lcd    udata_acs   ; reserve data space in access ram
 Scroll_d_l	    res 1
 Scroll_d_h	    res 1
-	    
+	  	    
 Control		    res 1
 		    
 ;global parameters for LCD_RectHelper
+acs_ovr		access_ovr
+input_cmd	    res 1
+input_data	    res 1
+	    
 rect_x1_h	    res 1
 rect_y1_h	    res 1
 rect_x2_h	    res 1
@@ -180,8 +181,8 @@ rect_x1_l	    res 1
 rect_y1_l	    res 1
 rect_x2_l	    res 1
 rect_y2_l	    res 1
-rect_colour	    res 1	
-    
+rect_colour	    res 1
+	    
 LCD code
 
 
@@ -191,22 +192,26 @@ Scroll
     movwf   Scroll_d_l
     movlw   scroll_yend_h
     movwf   Scroll_d_h
-    movlw   0x00		; W=0	
+    
 scrl
     call    LCD_ScrollY
     call    Decrement_dy
-    call    Box_test
+    ;call    Box_test
     movlw   scroll_speed
     call    Delay_ms
     decf    Scroll_d_l, F	; borrow when 0x00 -> 0xff
+    movlw   0x00		; W=0	
     subwfb  Scroll_d_h, F	; no carry when 0x00 -> 0xff
     bc	    scrl
-    
     btg	    Control, LYEN
     btfss   Control, LYEN
     bra	    ly1
     call    LYEN2
+    movlw   .255
+    call    Delay_ms
 cly call    Clear_Layer
+    movlw   .255
+    call    Delay_ms
     return
 
 ;temporary subroutine
@@ -232,7 +237,7 @@ Clear_Layer
     movwf   rect_y2_h
     clrf    rect_colour
     call    LCD_RectHelper
-    movlw   .5
+    movlw   .10
     call    Delay_ms
     return
 
@@ -254,14 +259,12 @@ LCD_ScrollY
     
 scrl1
     movlw   scroll_yend_l
-    addwf   Scroll_d_l, W
-    movwf   input_data
+    addwf   input_data, F
     return
     
 scrl2
     movlw   scroll_yend_h
-    addwfc  Scroll_d_h, W
-    movwf   input_data
+    addwfc  input_data, F
     return
 
     
@@ -352,6 +355,7 @@ LCD_RectHelper
     movwf   input_cmd
     rrncf   rect_colour, F
     rrncf   rect_colour, F
+    rrncf   rect_colour, F
     movlw   b'11'
     andwf   rect_colour, W
     movwf   input_data
@@ -371,28 +375,28 @@ LCD_RectHelper
 
     
 LCD_Initialisation
-    ;reset display
-    bcf	    LATD, RST
-    movlw   .100
-    call    Delay_ms
-    bsf	    LATD, RST
-    movlw   .100
-    call    Delay_ms
     ;set pins
     clrf    LATD
     bsf	    LATD, CS
     bsf	    LATD, MOSI
     bsf	    LATD, SCK
     clrf    TRISD
-    ;bsf	    TRISD, MISO
+    bsf	    TRISD, MISO
+
+    ;reset
+    bcf	    LATD, RST
+    movlw   .100
+    call    Delay_ms
+    bsf	    LATD, RST
+    movlw   .100
+    call    Delay_ms
     
     call    SPI_MasterInit
-    
     call    LCD_PLLinit
     
     movlw   RA8875_SYSR
     movwf   input_cmd
-    movlw   (RA8875_SYSR_16BPP | RA8875_SYSR_MCU8)
+    movlw   (RA8875_SYSR_8BPP | RA8875_SYSR_MCU8)
     movwf   input_data
     call    SPI_writeREG
 
@@ -407,7 +411,7 @@ LCD_Initialisation
     ; Horizontal settings registers 
     movlw   RA8875_HDWR
     movwf   input_cmd
-    movlw   .99
+    movlw   .99						;(LCD_width / 8) - 1)
     movwf   input_data
     call    SPI_writeREG
     movlw   RA8875_HNDFTR
@@ -417,106 +421,112 @@ LCD_Initialisation
     call    SPI_writeREG
     movlw   RA8875_HNDR
     movwf   input_cmd
-    movlw   .3
+    movlw   .3		    ;  (hsync_nondisp - hsync_finetune - 2)/8)
     movwf   input_data
     call    SPI_writeREG
     movlw   RA8875_HSTR
     movwf   input_cmd
-    movlw   .3
+    movlw   .3;  hsync_start/8 - 1)
     movwf   input_data
     call    SPI_writeREG
     movlw   RA8875_HPWR
     movwf   input_cmd
-    movlw   .11
+    movlw   .11;  RA8875_HPWR_LOW + (hsync_pw/8 - 1))
     movwf   input_data
     call    SPI_writeREG
 
     ; Vertical settings registers ;
     movlw   RA8875_VDHR0
     movwf   input_cmd
-    movlw   .223
+    movlw   .223;(LCD_height - 1 + _voffset) & 0xFF
     movwf   input_data
     call    SPI_writeREG
     movlw   RA8875_VDHR1
     movwf   input_cmd
-    movlw   .1
+    movlw   .1;  (uint16_t)(LCD_height - 1 + _voffset) >> 8);
     movwf   input_data
     call    SPI_writeREG
     movlw   RA8875_VNDR0
     movwf   input_cmd
-    movlw   .31                       
+    movlw   .31;  vsync_nondisp-1);                          
     movwf   input_data
     call    SPI_writeREG
     movlw   RA8875_VNDR1
     movwf   input_cmd
-    clrf    input_data
+    movlw   .0; vsync_nondisp >> 8);
+    movwf   input_data
     call    SPI_writeREG
     movlw   RA8875_VSTR0
     movwf   input_cmd
-    movlw   .22
+    movlw   .22;  vsync_start-1);                            ; Vsync start position = VSTR + 1
     movwf   input_data
     call    SPI_writeREG
     movlw   RA8875_VSTR1
     movwf   input_cmd
-    clrf    input_data
+    movlw   .0;  vsync_start >> 8);
+    movwf   input_data
     call    SPI_writeREG
     movlw   RA8875_VPWR
     movwf   input_cmd
-    movlw   .1
+    movlw   .1;  RA8875_VPWR_LOW + vsync_pw - 1);            ; Vsync pulse width = VPWR + 1
     movwf   input_data
     call    SPI_writeREG
 
     ; Set active window X ;
     movlw   RA8875_HSAW0
     movwf   input_cmd
-    clrf    input_data
+    movlw   .0; ; horizontal start point
+    movwf   input_data
     call    SPI_writeREG
     movlw   RA8875_HSAW1
     movwf   input_cmd
-    clrf    input_data
+    movlw   .0;
+    movwf   input_data
     call    SPI_writeREG
     movlw   RA8875_HEAW0
     movwf   input_cmd
-    movlw   .31
+    movlw   .31;(LCD_width - 1) & 0xFF);            ; horizontal end point
     movwf   input_data
     call    SPI_writeREG
     movlw   RA8875_HEAW1
     movwf   input_cmd
-    movlw   .3
+    movlw   .3;  (uint16_t)(LCD_width - 1) >> 8);
     movwf   input_data
     call    SPI_writeREG
 
     ; Set active window Y ;
     movlw   RA8875_VSAW0
     movwf   input_cmd
-    clrf    input_data
+    movlw   .0;  0 + _voffset);                              ; vertical start point
+    movwf   input_data
     call    SPI_writeREG
     movlw   RA8875_VSAW1
     movwf   input_cmd
-    clrf    input_data
+    movlw   .0;  0 + _voffset);
+    movwf   input_data
     call    SPI_writeREG
     movlw   RA8875_VEAW0
     movwf   input_cmd
-    movlw   .223
+    movlw   .223;  (uint16_t)(LCD_height - 1 + _voffset) & 0xFF); ; vertical end point
     movwf   input_data
     call    SPI_writeREG
     movlw   RA8875_VEAW1
     movwf   input_cmd
-    movlw   .1
+    movlw   .1;  (uint16_t)(LCD_height - 1 + _voffset) >> 8);
     movwf   input_data
     call    SPI_writeREG
 
     ; Clear the entire window
     movlw   RA8875_MCLR
     movwf   input_cmd
-    movlw   b'10000000';
+    movlw   b'11000000';
     movwf   input_data
     call    SPI_writeREG
     movlw   .250
     call    Delay_ms
     movlw   .250
     call    Delay_ms
-    
+
     call    LCD_DisplayOn
     call    LCD_GPIOX		;// Enable TFT - display enable tied to GPIOX
     call    LCD_PWM1config	; // PWM output for backlight
@@ -583,64 +593,68 @@ LCD_PWM1out
 
 LCD_SetScrollWindow
     ;// Horizontal Start point of Scroll Window
-    movlw   RA8875_HSSW0
+    movlw   0x38
     movwf   input_cmd
-    clrf    input_data
+    movlw   .0
+    movwf   input_data
     call    SPI_writeREG
-    movlw   RA8875_HSSW1
+    movlw   0x39
     movwf   input_cmd
-    clrf    input_data
+    movlw   .0
+    movwf   input_data
     call    SPI_writeREG
    
     ;// Vertical Start Point of Scroll Window
-    movlw   RA8875_VSSW0
+    movlw   0x3A
     movwf   input_cmd
-    clrf    input_data
+    movlw   .0
+    movwf   input_data
     call    SPI_writeREG
-    movlw   RA8875_VSSW1
+    movlw   0x3B
     movwf   input_cmd
-    clrf    input_data
+    movlw   .0
+    movwf   input_data
     call    SPI_writeREG
     
     ;// Horizontal End Point of Scroll Window
-    movlw   RA8875_HESW0
+    movlw   0x3C
     movwf   input_cmd
     movlw   .31
     movwf   input_data
     call    SPI_writeREG
-    movlw   RA8875_HESW1
+    movlw   0x3D
     movwf   input_cmd
     movlw   .3
     movwf   input_data
     call    SPI_writeREG
     
     ;// Vertical End Point of Scroll Window
-    movlw   RA8875_VESW0
+    movlw   0x3E
     movwf   input_cmd
     movlw   scroll_yend_l
     movwf   input_data
     call    SPI_writeREG
-    movlw   RA8875_VESW1
+    movlw   0x3F
     movwf   input_cmd
     movlw   scroll_yend_h
     movwf   input_data
     call    SPI_writeREG
 
     ;// Scroll function setting
-    movlw   RA8875_LTPR0
+    movlw   0x52
     movwf   input_cmd
-    movlw   RA8875_SCROLL_BUFFER
+    movlw   b'11000000'		    ;buffer scroll[7:6] : b'11'
     movwf   input_data
     call    SPI_writeREG
     return 
     
 LCD_TwoLayers
-    movlw   RA8875_DPCR
+    movlw   0x20
     movwf   input_cmd
     movlw   b'10000000'		    ;two layer mode[7] : b'1'
     movwf   input_data
     call    SPI_writeREG
-    movlw   RA8875_MWCR0
+    movlw   0x40
     movwf   input_cmd		    ;text mode[7] : b'1'
     movlw   b'10000000'
     movwf   input_data
