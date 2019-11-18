@@ -1,6 +1,6 @@
 #include p18f87k22.inc
 
-    global  Music_Setup, Music_00
+    global  Music_Setup, Music_Avengers
 
 Music    code
     
