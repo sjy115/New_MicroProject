@@ -1,10 +1,10 @@
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE  1
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00001 #include p18f87k22.inc
+                      00001     #include p18f87k22.inc
                       00001         LIST
                       00002 
                       00003 ;==========================================================================
@@ -15,59 +15,87 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00008 ;==========================================================================
                       00009 
                       02986         LIST
-                      00002 
-  0000                00003     global  Music_Setup, Music_Avengers
-  0000                00004     extern  Delay_ms
-                      00005     
-                      00006 #define music_RST   5
+                      00002     
+  0000                00003     global Keypad_Setup, Keypad_getKey
+                      00004     ;Global variables from Keypad.asm
+  0000                00005     extern Delay_x4us
+                      00006     
                       00007     
-                      00008 Music    code
+                      00008 acs0    udata_acs   ; reserve data space in access ram
                       00009     
-000000                00010 Music_Avengers
-000000 0E23           00011     movlw   '#'
-000002 EC?? F???      00012     call    UART_Transmit_Byte
-000006 0E30           00013     movlw   '0'
-000008 EC?? F???      00014     call    UART_Transmit_Byte
-00000C 0E30           00015     movlw   '0'
-00000E EC?? F???      00016     call    UART_Transmit_Byte
-000012 0E0A           00017     movlw   '\n'
-000014 EC?? F???      00018     call    UART_Transmit_Byte
-000018 0012           00019     return
-                      00020     
-00001A                00021 Music_Setup
-00001A 8EAB           00022     bsf     RCSTA1, SPEN    ; enable
-                      00023     ;bsf            RCSTA1, CREN    ; enable
-                      00024     ;bcf            RCSTA1, RX9     ; 8-bit reception
-00001C 98AC           00025     bcf     TXSTA1, SYNC    ; asynchronous
-00001E 94AC           00026     bcf     TXSTA1, BRGH    ; slow speed
-000020 8AAC           00027     bsf     TXSTA1, TXEN    ; enable transmit
-000022 9665           00028     bcf     BAUDCON1, BRG16 ; 8-bit generator only
-000024 0E67           00029     movlw   .103            ; gives 9600 Baud rate (actually 9615)
-000026 6EAF           00030     movwf   SPBRG1
-000028 8C94           00031     bsf     TRISC, TX1      ; TX1 pin as output
+000000                00010 Keypad_output res 1         ; reserve 1 byte for button presed on keypad
+                      00011         
+                      00012 Keypad  code
+                      00013         
+000000                00014 Keypad_Setup
+000000 010F           00015     banksel     PADCFG1
+000002 8D53           00016     bsf         PADCFG1,REPU,BANKED
+000004 0012           00017     return
+                      00018         
+                      00019         
+000006                00020 Keypad_getKey
+000006 68??           00021     setf    Keypad_output           ; set byte to 11111111
+                      00022     ;get row input                  ;setup for row test
+000008 6A8D           00023     clrf    LATE
+00000A 0E0F           00024     movlw   0x0F
+00000C 6E96           00025     movwf   TRISE
+00000E 0E01           00026     movlw   .1
+000010 EC?? F???      00027     call    Delay_x4us
+                      00028     
+                      00029     ;; Program sets byte to 11111111 and then tests to see which button is pressed.
+                      00030     ;; clears all unpressed bits.
+                      00031     ;; low bits if byte indicate row number, high bits indicate column number.
                       00032     
-00002A 9A8B           00033     bcf     LATC, music_RST
-00002C 9A94           00034     bcf     TRISC, music_RST
-00002E 0EFA           00035     movlw   .250
-000030 EC?? F???      00036     call    Delay_ms
-000034 8A8B           00037     bsf     LATC, music_RST
-000036 0EFA           00038     movlw   .250
-000038 EC?? F???      00039     call    Delay_ms
-00003C 0012           00040     return
-                      00041 
-00003E                00042 UART_Transmit_Byte          ; Transmits byte stored in W
-00003E A89E           00043     btfss   PIR1,TX1IF      ; TX1IF is set when TXREG1 is empty
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE  2
+                      00033     ;row0                           ;check to see which row contains the pressed button
+000014 0E0E           00034     movlw   b'1110'
+000016 6284           00035     cpfseq  PORTE
+000018 90??           00036     bcf     Keypad_output, 0
+                      00037     ;row1    
+00001A 0E0D           00038     movlw   b'1101'
+00001C 6284           00039     cpfseq  PORTE
+00001E 92??           00040     bcf     Keypad_output, 1
+                      00041     ;row2      
+000020 0E0B           00042     movlw   b'1011'
+000022 6284           00043     cpfseq  PORTE
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000040 D???           00044     bra     UART_Transmit_Byte
-000042 6EAD           00045     movwf   TXREG1
-000044 0012           00046     return
-                      00047     end
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE  3
+000024 94??           00044     bcf     Keypad_output, 2
+                      00045     ;row3
+000026 0E07           00046     movlw   b'0111'
+000028 6284           00047     cpfseq  PORTE
+00002A 96??           00048     bcf     Keypad_output, 3
+                      00049     
+                      00050     ;get column input           ;setup for column test
+00002C 6A8D           00051     clrf    LATE
+00002E 0EF0           00052     movlw   0xF0
+000030 6E96           00053     movwf   TRISE
+000032 0E01           00054     movlw   .1
+000034 EC?? F???      00055     call    Delay_x4us
+                      00056     
+                      00057     ;column0                    ;check to see which column contains the pressed button
+000038 0EE0           00058     movlw   b'11100000'
+00003A 6284           00059     cpfseq  PORTE
+00003C 98??           00060     bcf     Keypad_output, 4
+                      00061     ;column1
+00003E 0ED0           00062     movlw   b'11010000'
+000040 6284           00063     cpfseq  PORTE
+000042 9A??           00064     bcf     Keypad_output, 5
+                      00065     ;column2
+000044 0EB0           00066     movlw   b'10110000'
+000046 6284           00067     cpfseq  PORTE
+000048 9C??           00068     bcf     Keypad_output, 6
+                      00069     ;column3
+00004A 0E70           00070     movlw   b'01110000'
+00004C 6284           00071     cpfseq  PORTE
+00004E 9E??           00072     bcf     Keypad_output, 7
+000050 50??           00073     movf    Keypad_output, W
+000052 0012           00074     return
+                      00075     end
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE  3
 
 
 SYMBOL TABLE
@@ -126,7 +154,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE  4
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE  4
 
 
 SYMBOL TABLE
@@ -185,7 +213,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE  5
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE  5
 
 
 SYMBOL TABLE
@@ -244,7 +272,7 @@ C1TSEL0                           00000000
 C1TSEL1                           00000001
 C1TSEL2                           00000002
 C2INA                             00000004
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE  6
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE  6
 
 
 SYMBOL TABLE
@@ -303,7 +331,7 @@ CCP1IP                            00000001
 CCP1M0                            00000000
 CCP1M1                            00000001
 CCP1M2                            00000002
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE  7
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE  7
 
 
 SYMBOL TABLE
@@ -362,7 +390,7 @@ CCP5M0                            00000000
 CCP5M1                            00000001
 CCP5M2                            00000002
 CCP5M3                            00000003
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE  8
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE  8
 
 
 SYMBOL TABLE
@@ -421,7 +449,7 @@ CCP9IP                            00000006
 CCP9M0                            00000000
 CCP9M1                            00000001
 CCP9M2                            00000002
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE  9
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE  9
 
 
 SYMBOL TABLE
@@ -480,7 +508,7 @@ CHSN1                             00000001
 CHSN2                             00000002
 CK1                               00000006
 CK2                               00000001
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 10
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 10
 
 
 SYMBOL TABLE
@@ -539,7 +567,7 @@ CTMUIE                            00000003
 CTMUIF                            00000003
 CTMUIP                            00000003
 CTMUMD                            00000006
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 11
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 11
 
 
 SYMBOL TABLE
@@ -591,14 +619,14 @@ DT1                               00000007
 DT2                               00000002
 D_A                               00000005
 D_NOT_A                           00000005
-Delay_ms                          00000000
+Delay_x4us                        00000000
 EBDIS                             00000007
 ECCP1AS                           00000FBF
 ECCP1AS0                          00000004
 ECCP1AS1                          00000005
 ECCP1AS2                          00000006
 ECCP1ASE                          00000007
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 12
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 12
 
 
 SYMBOL TABLE
@@ -657,7 +685,7 @@ FSR2                              00000002
 FSR2H                             00000FDA
 FSR2L                             00000FD9
 GCEN                              00000007
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 13
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 13
 
 
 SYMBOL TABLE
@@ -716,7 +744,7 @@ INT3E                             00000005
 INT3F                             00000002
 INT3IE                            00000005
 INT3IF                            00000002
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 14
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 14
 
 
 SYMBOL TABLE
@@ -755,6 +783,9 @@ KBI0                              00000004
 KBI1                              00000005
 KBI2                              00000006
 KBI3                              00000007
+Keypad_Setup                      00000000
+Keypad_getKey                     00000006
+Keypad_output                     00000000
 LATA                              00000F89
 LATA0                             00000000
 LATA1                             00000001
@@ -772,15 +803,15 @@ LATB3                             00000003
 LATB4                             00000004
 LATB5                             00000005
 LATB6                             00000006
-LATB7                             00000007
-LATC                              00000F8B
-LATC0                             00000000
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 15
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 15
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+LATB7                             00000007
+LATC                              00000F8B
+LATC0                             00000000
 LATC1                             00000001
 LATC2                             00000002
 LATC3                             00000003
@@ -831,15 +862,15 @@ LATH6                             00000006
 LATH7                             00000007
 LATJ                              00000F91
 LATJ0                             00000000
-LATJ1                             00000001
-LATJ2                             00000002
-LATJ3                             00000003
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 16
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 16
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+LATJ1                             00000001
+LATJ2                             00000002
+LATJ3                             00000003
 LATJ4                             00000004
 LATJ5                             00000005
 LATJ6                             00000006
@@ -859,8 +890,6 @@ MSK4                              00000004
 MSK5                              00000005
 MSK6                              00000006
 MSK7                              00000007
-Music_Avengers                    00000000
-Music_Setup                       0000001A
 N                                 00000004
 NOT_A                             00000005
 NOT_ADDRESS                       00000005
@@ -892,13 +921,13 @@ OBF                               00000006
 ODCON1                            00000F29
 ODCON2                            00000F28
 ODCON3                            00000F27
-OE                                00000001
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 17
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 17
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+OE                                00000001
 OERR                              00000001
 OERR1                             00000001
 OERR2                             00000001
@@ -951,13 +980,13 @@ P3DC4                             00000004
 P3DC5                             00000005
 P3DC6                             00000006
 P3M0                              00000006
-P3M1                              00000007
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 18
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 18
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+P3M1                              00000007
 P3RSEN                            00000007
 PA3                               00000000
 PADCFG1                           00000F53
@@ -1010,13 +1039,13 @@ PORTH                             00000F87
 PORTJ                             00000F88
 POSTDEC0                          00000FED
 POSTDEC1                          00000FE5
-POSTDEC2                          00000FDD
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 19
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 19
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+POSTDEC2                          00000FDD
 POSTINC0                          00000FEE
 POSTINC1                          00000FE6
 POSTINC2                          00000FDE
@@ -1069,13 +1098,13 @@ RA0                               00000000
 RA1                               00000001
 RA2                               00000002
 RA3                               00000003
-RA4                               00000004
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 20
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 20
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+RA4                               00000004
 RA5                               00000005
 RA6                               00000006
 RA7                               00000007
@@ -1128,13 +1157,13 @@ RD2                               00000002
 RD3                               00000003
 RD4                               00000004
 RD5                               00000005
-RD6                               00000006
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 21
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 21
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+RD6                               00000006
 RD7                               00000007
 RDPU                              00000007
 RE0                               00000000
@@ -1187,13 +1216,13 @@ RODIV2                            00000002
 RODIV3                            00000003
 ROON                              00000007
 ROSEL                             00000004
-ROSSLP                            00000005
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 22
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 22
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+ROSSLP                            00000005
 RSEN                              00000001
 RTCC                              00000004
 RTCCAL                            00000F5E
@@ -1246,13 +1275,13 @@ SENDB2                            00000003
 SMP                               00000007
 SOSCEN                            00000003
 SOSCGO                            00000003
-SOSCI                             00000001
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 23
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 23
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+SOSCI                             00000001
 SOSCO                             00000000
 SOSCRUN                           00000006
 SP0                               00000000
@@ -1305,13 +1334,13 @@ SSPIF                             00000003
 SSPIP                             00000003
 SSPM0                             00000000
 SSPM1                             00000001
-SSPM2                             00000002
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 24
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 24
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+SSPM2                             00000002
 SSPM3                             00000003
 SSPOV                             00000006
 SSPSTAT                           00000FC7
@@ -1364,13 +1393,13 @@ T1GCON                            00000FAA
 T1GGO                             00000003
 T1GGO_NOT_T1DONE                  00000003
 T1GPOL                            00000006
-T1GSPM                            00000004
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 25
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 25
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+T1GSPM                            00000004
 T1GSS0                            00000000
 T1GSS1                            00000001
 T1GTM                             00000005
@@ -1423,13 +1452,13 @@ T6CON                             00000F39
 T6OUTPS0                          00000003
 T6OUTPS1                          00000004
 T6OUTPS2                          00000005
-T6OUTPS3                          00000006
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 26
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 26
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+T6OUTPS3                          00000006
 T7CKI                             00000004
 T7CKPS0                           00000004
 T7CKPS1                           00000005
@@ -1482,13 +1511,13 @@ TMR1CS1                           00000007
 TMR1GE                            00000007
 TMR1GIE                           00000002
 TMR1GIF                           00000002
-TMR1GIP                           00000002
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 27
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 27
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TMR1GIP                           00000002
 TMR1H                             00000FCF
 TMR1IE                            00000000
 TMR1IF                            00000000
@@ -1541,13 +1570,13 @@ TMR6IE                            00000002
 TMR6IF                            00000002
 TMR6IP                            00000002
 TMR6MD                            00000004
-TMR6ON                            00000002
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 28
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 28
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TMR6ON                            00000002
 TMR7                              00000F3E
 TMR7CS0                           00000006
 TMR7CS1                           00000007
@@ -1600,13 +1629,13 @@ TRISC2                            00000002
 TRISC3                            00000003
 TRISC4                            00000004
 TRISC5                            00000005
-TRISC6                            00000006
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 29
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 29
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TRISC6                            00000006
 TRISC7                            00000007
 TRISD                             00000F95
 TRISD0                            00000000
@@ -1659,13 +1688,13 @@ TRISJ5                            00000005
 TRISJ6                            00000006
 TRISJ7                            00000007
 TRMT                              00000001
-TRMT1                             00000001
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 30
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 30
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TRMT1                             00000001
 TRMT2                             00000001
 TUN0                              00000000
 TUN1                              00000001
@@ -1707,7 +1736,6 @@ U2OD                              00000007
 UA                                00000001
 UART1MD                           00000003
 UART2MD                           00000004
-UART_Transmit_Byte                0000003E
 UB                                00000007
 ULPEN                             00000002
 ULPLVL                            00000005
@@ -1719,7 +1747,7 @@ VDIRMAG                           00000007
 VNCFG                             00000003
 VREF_MINUS                        00000002
 VREF_PLUS                         00000003
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 31
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 31
 
 
 SYMBOL TABLE
@@ -1778,7 +1806,7 @@ _CONFIG7L                         0030000C
 _CP0_OFF_5L                       000000FF
 _CP0_ON_5L                        000000FE
 _CP1_OFF_5L                       000000FF
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 32
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 32
 
 
 SYMBOL TABLE
@@ -1837,7 +1865,7 @@ _FOSC_EC3IO_1H                    000000F4
 _FOSC_EC3_1H                      000000F5
 _FOSC_HS1_1H                      000000F3
 _FOSC_HS2_1H                      000000F2
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 33
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 33
 
 
 SYMBOL TABLE
@@ -1896,7 +1924,7 @@ _WDTPS_256_2H                     000000A3
 _WDTPS_262144_2H                  000000CB
 _WDTPS_2_2H                       00000087
 _WDTPS_32768_2H                   000000BF
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 34
+MPASM 5.81                        KEYPAD.ASM   11-19-2019  15:51:45         PAGE 34
 
 
 SYMBOL TABLE
@@ -1936,7 +1964,8 @@ _WRTD_ON_6H                       0000007F
 _XINST_OFF_1L                     000000BF
 _XINST_ON_1L                      000000FF
 __18F87K22                        00000001
-music_RST                         5
+__DEBUG                           
+__MPLAB_DEBUGGER_ICD3             1
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed

@@ -1,9 +1,10 @@
 #include p18f87k22.inc
-    global  Main_Initialise, New_box, Box_test, Decrement_dy, Delay_ms
+    global  Main_Initialise, New_box, Box_test, Decrement_dy, Delay_ms, Delay_x4us
     ;Global variable from Keypad.asm
-    extern  Keypad_getKey, Keypad_output
+    extern  Keypad_getKey
     ;Global variable from LCD.asm
-    extern  rect_x1_l, rect_x1_h, rect_y1_l, rect_y1_h, rect_x2_l, rect_x2_h,rect_y2_l, rect_y2_h, rect_colour, Scroll_d_l, Scroll_d_h, LCD_RectHelper
+    extern  LCD_RectHelper, rect_x1_l, rect_x1_h, rect_y1_l, rect_y1_h, rect_x2_l, rect_x2_h,rect_y2_l, rect_y2_h, rect_colour
+    extern  Scroll_d_l, Scroll_d_h, Text_offset, Update_score,Set_colour_white
     ;Global variable from GameData.asm
     extern  Play_Avengers
     
@@ -30,9 +31,9 @@
 #define	scroll_yend_l		.144
 #define	scroll_yend_h		.1
     
-#define max_boxes		.10		;number of max_boxes
+#define max_boxes		.20		;number of max_boxes
 acs_main    udata_acs   ; reserve data space in access ram
-Boxes		    res 20			;2 times max_boxes
+Boxes		    res 40			;2 times max_boxes
 Boxes_end	    res 1
 ;could be in banked
 Total_score_1	    res 1
@@ -47,9 +48,11 @@ Delay_x4us_cnt_l    res 1   ; reserve 1 byte for ms counter
 acs_ovr    access_ovr  
 tmp1		    res 1
 current_Box	    res 1
+key		    res 1
+
 	    
 Main    code
-converter db	0x88, 0x84, 0x83, 0x81, 0x18, 0x14, 0x12, 0x11, 0x48, 0x44, 0x42, 0x41, 0x28, 0x24, 0x22, 0x21
+converter db	0x11, 0x21, 0x41, 0x81, 0x18, 0x28, 0x48, 0x88, 0x14, 0x24, 0x44, 0x84, 0x12, 0x22, 0x42, 0x82
 
 Main_Initialise
     movlw   Boxes
@@ -184,7 +187,8 @@ box_test_loop
     movwf   TBLPTRH
     movlw   low(converter)
     movwf   TBLPTRL
-    
+    call    Keypad_getKey
+    movwf   key
     ;move TBLPTR to the corresponding keypad value
     swapf   INDF0, W
     andlw   0x0F				;[x0, x1, x2, colour] : 0~15
@@ -195,10 +199,11 @@ box_test_loop
     tblrd*					
     movf    TABLAT, W				;load box value in W and tmp1
     movwf   tmp1
-    andwf   Keypad_output, W
+    andwf   key, W
     cpfseq  tmp1				;if box value is in keypad output
     bra	    box_test_next_box			;if not, try next box
     
+here
     ;correct button pressed
     movlw   .1					
     movff   PLUSW0, tmp1			;load dy in tmp1
@@ -210,19 +215,68 @@ box_test_loop
     bra	    box_test_great			;if not, 'great'
     bra	    box_test_perfect			;if yes, 'perfect'
     
-    ;add score
+    ;add score in BCD
 box_test_add_score
-    addwf   Total_score_1, F
+    addwf   Total_score_1, W
+    DAW
+    movwf   Total_score_1
     movlw   .0
-    addwfc  Total_score_2, F
-    addwfc  Total_score_3, F
+    addwfc  Total_score_2, W
+    DAW
+    movwf   Total_score_2
+    movlw   .0
+    addwfc  Total_score_3, W
+    DAW
+    movwf   Total_score_3
+    
+    movlw   .96
+    movwf   Text_offset
+    call    Set_colour_white
+    movlw   0xF0
+    andwf   Total_score_3, W
+    swapf   WREG, W
+    Call    Update_score
+    
+    movlw   .16
+    addwf   Text_offset, F
+    movlw   0x0F
+    andwf   Total_score_3, W
+    Call    Update_score
+   
+    movlw   .16
+    addwf   Text_offset, F
+    movlw   0xF0
+    andwf   Total_score_2, W
+    swapf   WREG, W
+    Call    Update_score    
+    
+    movlw   .16
+    addwf   Text_offset, F
+    movlw   0x0F
+    andwf   Total_score_2, W
+    Call    Update_score
+    
+    movlw   .16
+    addwf   Text_offset, F
+    movlw   0xF0
+    andwf   Total_score_1, W
+    swapf   WREG, W
+    Call    Update_score
+    
+    movlw   .16
+    addwf   Text_offset, F
+    movlw   0x0F
+    andwf   Total_score_1, W
+    Call    Update_score
 
+    
+    
     ;remove box from memory
     call    Remove_box
     
     ;flash screen and display text and update score in display and other shit
-    
     return
+    
     ;temporary subroutine
 box_test_next_box
     incf    FSR0L
@@ -232,13 +286,13 @@ box_test_next_box
     bra	    box_test_loop
     return
 box_test_good
-    movlw   .25
+    movlw   b'00010000'		    ;10 in BCD
     bra	    box_test_add_score
 box_test_great
-    movlw   .50
+    movlw   b'00100101'		    ;25 in BCD
     bra	    box_test_add_score
 box_test_perfect
-    movlw   .100
+    movlw   b'01010000'		    ;50	in BCD
     bra	    box_test_add_score
     
     
@@ -264,7 +318,7 @@ decrement_dy_higher_byte
     decf    INDF0
     btfsc   INDF0, Boxes_negative
     call    Remove_box				;if not, save dy and decrement next box
-    bra	    decrement_next_box
+    bra	    decrement_dy_next_box
     
     
 ;Remove box from memory

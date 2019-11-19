@@ -1,10 +1,14 @@
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE  1
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00001 #include p18f87k22.inc
+                      00001 ; PIC18F87K22 Configuration Bit Settings
+                      00002 
+                      00003 ; Assembly source line config statements
+                      00004 
+                      00005 #include "p18f87k22.inc"
                       00001         LIST
                       00002 
                       00003 ;==========================================================================
@@ -15,59 +19,98 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00008 ;==========================================================================
                       00009 
                       02986         LIST
-                      00002 
-  0000                00003     global  Music_Setup, Music_Avengers
-  0000                00004     extern  Delay_ms
-                      00005     
-                      00006 #define music_RST   5
-                      00007     
-                      00008 Music    code
-                      00009     
-000000                00010 Music_Avengers
-000000 0E23           00011     movlw   '#'
-000002 EC?? F???      00012     call    UART_Transmit_Byte
-000006 0E30           00013     movlw   '0'
-000008 EC?? F???      00014     call    UART_Transmit_Byte
-00000C 0E30           00015     movlw   '0'
-00000E EC?? F???      00016     call    UART_Transmit_Byte
-000012 0E0A           00017     movlw   '\n'
-000014 EC?? F???      00018     call    UART_Transmit_Byte
-000018 0012           00019     return
-                      00020     
-00001A                00021 Music_Setup
-00001A 8EAB           00022     bsf     RCSTA1, SPEN    ; enable
-                      00023     ;bsf            RCSTA1, CREN    ; enable
-                      00024     ;bcf            RCSTA1, RX9     ; 8-bit reception
-00001C 98AC           00025     bcf     TXSTA1, SYNC    ; asynchronous
-00001E 94AC           00026     bcf     TXSTA1, BRGH    ; slow speed
-000020 8AAC           00027     bsf     TXSTA1, TXEN    ; enable transmit
-000022 9665           00028     bcf     BAUDCON1, BRG16 ; 8-bit generator only
-000024 0E67           00029     movlw   .103            ; gives 9600 Baud rate (actually 9615)
-000026 6EAF           00030     movwf   SPBRG1
-000028 8C94           00031     bsf     TRISC, TX1      ; TX1 pin as output
-                      00032     
-00002A 9A8B           00033     bcf     LATC, music_RST
-00002C 9A94           00034     bcf     TRISC, music_RST
-00002E 0EFA           00035     movlw   .250
-000030 EC?? F???      00036     call    Delay_ms
-000034 8A8B           00037     bsf     LATC, music_RST
-000036 0EFA           00038     movlw   .250
-000038 EC?? F???      00039     call    Delay_ms
-00003C 0012           00040     return
+                      00006 
+                      00007 ; CONFIG1L
+                      00008   CONFIG  RETEN = ON            ; VREG Sleep Enable bit (Enabled)
+                      00009   CONFIG  INTOSCSEL = HIGH      ; LF-INTOSC Low-power Enable bit (LF-INTOSC in High-power mode during Sl
+                            eep)
+                      00010   CONFIG  SOSCSEL = DIG         ; SOSC Power Selection and mode Configuration bits (Digital IO selected)
+                      00011   CONFIG  XINST = OFF           ; Extended Instruction Set (Disabled)
+                      00012 
+                      00013 ; CONFIG1H
+                      00014   CONFIG  FOSC = HS1            ; Oscillator (HS oscillator (Medium power, 4 MHz - 16 MHz))
+                      00015   CONFIG  PLLCFG = ON           ; PLL x4 Enable bit (Enabled)
+                      00016   CONFIG  FCMEN = OFF           ; Fail-Safe Clock Monitor (Disabled)
+                      00017   CONFIG  IESO = OFF            ; Internal External Oscillator Switch Over Mode (Disabled)
+                      00018 
+                      00019 ; CONFIG2L
+                      00020   CONFIG  PWRTEN = OFF          ; Power Up Timer (Disabled)
+                      00021   CONFIG  BOREN = SBORDIS       ; Brown Out Detect (Enabled in hardware, SBOREN disabled)
+                      00022   CONFIG  BORV = 3              ; Brown-out Reset Voltage bits (1.8V)
+                      00023   CONFIG  BORPWR = ZPBORMV      ; BORMV Power level (ZPBORMV instead of BORMV is selected)
+                      00024 
+                      00025 ; CONFIG2H
+                      00026   CONFIG  WDTEN = SWDTDIS       ; Watchdog Timer (WDT enabled in hardware; SWDTEN bit disabled)
+                      00027   CONFIG  WDTPS = 1048576       ; Watchdog Postscaler (1:1048576)
+                      00028 
+                      00029 ; CONFIG3L
+                      00030   CONFIG  RTCOSC = SOSCREF      ; RTCC Clock Select (RTCC uses SOSC)
+                      00031   CONFIG  EASHFT = ON           ; External Address Shift bit (Address Shifting enabled)
+                      00032   CONFIG  ABW = MM              ; Address Bus Width Select bits (8-bit address bus)
+                      00033   CONFIG  BW = 16               ; Data Bus Width (16-bit external bus mode)
+                      00034   CONFIG  WAIT = OFF            ; External Bus Wait (Disabled)
+                      00035 
+                      00036 ; CONFIG3H
+                      00037   CONFIG  CCP2MX = PORTC        ; CCP2 Mux (RC1)
+                      00038   CONFIG  ECCPMX = PORTE        ; ECCP Mux (Enhanced CCP1/3 [P1B/P1C/P3B/P3C] muxed with RE6/RE5/RE4/RE3
+                            )
+                      00039   CONFIG  MSSPMSK = MSK7        ; MSSP address masking (7 Bit address masking mode)
+                      00040   CONFIG  MCLRE = ON            ; Master Clear Enable (MCLR Enabled, RG5 Disabled)
                       00041 
-00003E                00042 UART_Transmit_Byte          ; Transmits byte stored in W
-00003E A89E           00043     btfss   PIR1,TX1IF      ; TX1IF is set when TXREG1 is empty
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE  2
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-000040 D???           00044     bra     UART_Transmit_Byte
-000042 6EAD           00045     movwf   TXREG1
-000044 0012           00046     return
-                      00047     end
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE  3
+                      00042 ; CONFIG4L
+                      00043   CONFIG  STVREN = ON           ; Stack Overflow Reset (Enabled)
+                      00044   CONFIG  BBSIZ = BB2K          ; Boot Block Size (2K word Boot Block size)
+                      00045 
+                      00046 ; CONFIG5L
+                      00047   CONFIG  CP0 = OFF             ; Code Protect 00800-03FFF (Disabled)
+                      00048   CONFIG  CP1 = OFF             ; Code Protect 04000-07FFF (Disabled)
+                      00049   CONFIG  CP2 = OFF             ; Code Protect 08000-0BFFF (Disabled)
+                      00050   CONFIG  CP3 = OFF             ; Code Protect 0C000-0FFFF (Disabled)
+                      00051   CONFIG  CP4 = OFF             ; Code Protect 10000-13FFF (Disabled)
+                      00052   CONFIG  CP5 = OFF             ; Code Protect 14000-17FFF (Disabled)
+                      00053   CONFIG  CP6 = OFF             ; Code Protect 18000-1BFFF (Disabled)
+                      00054   CONFIG  CP7 = OFF             ; Code Protect 1C000-1FFFF (Disabled)
+                      00055 
+                      00056 ; CONFIG5H
+                      00057   CONFIG  CPB = OFF             ; Code Protect Boot (Disabled)
+                      00058   CONFIG  CPD = OFF             ; Data EE Read Protect (Disabled)
+                      00059 
+                      00060 ; CONFIG6L
+                      00061   CONFIG  WRT0 = OFF            ; Table Write Protect 00800-03FFF (Disabled)
+                      00062   CONFIG  WRT1 = OFF            ; Table Write Protect 04000-07FFF (Disabled)
+                      00063   CONFIG  WRT2 = OFF            ; Table Write Protect 08000-0BFFF (Disabled)
+                      00064   CONFIG  WRT3 = OFF            ; Table Write Protect 0C000-0FFFF (Disabled)
+                      00065   CONFIG  WRT4 = OFF            ; Table Write Protect 10000-13FFF (Disabled)
+                      00066   CONFIG  WRT5 = OFF            ; Table Write Protect 14000-17FFF (Disabled)
+                      00067   CONFIG  WRT6 = OFF            ; Table Write Protect 18000-1BFFF (Disabled)
+                      00068   CONFIG  WRT7 = OFF            ; Table Write Protect 1C000-1FFFF (Disabled)
+                      00069 
+                      00070 ; CONFIG6H
+                      00071   CONFIG  WRTC = OFF            ; Config. Write Protect (Disabled)
+                      00072   CONFIG  WRTB = OFF            ; Table Write Protect Boot (Disabled)
+                      00073   CONFIG  WRTD = OFF            ; Data EE Write Protect (Disabled)
+                      00074 
+                      00075 ; CONFIG7L
+                      00076   CONFIG  EBRT0 = OFF           ; Table Read Protect 00800-03FFF (Disabled)
+                      00077   CONFIG  EBRT1 = OFF           ; Table Read Protect 04000-07FFF (Disabled)
+                      00078   CONFIG  EBRT2 = OFF           ; Table Read Protect 08000-0BFFF (Disabled)
+                      00079   CONFIG  EBRT3 = OFF           ; Table Read Protect 0C000-0FFFF (Disabled)
+                      00080   CONFIG  EBRT4 = OFF           ; Table Read Protect 10000-13FFF (Disabled)
+                      00081   CONFIG  EBRT5 = OFF           ; Table Read Protect 14000-17FFF (Disabled)
+                      00082   CONFIG  EBRT6 = OFF           ; Table Read Protect 18000-1BFFF (Disabled)
+                      00083   CONFIG  EBRT7 = OFF           ; Table Read Protect 1C000-1FFFF (Disabled)
+                      00084 
+                      00085 ; CONFIG7H
+                      00086   CONFIG  EBRTB = OFF           ; Table Read Protect Boot (Disabled)
+                      00087 
+                      00088   end
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE  3
 
 
 SYMBOL TABLE
@@ -126,7 +169,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE  4
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE  4
 
 
 SYMBOL TABLE
@@ -185,7 +228,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE  5
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE  5
 
 
 SYMBOL TABLE
@@ -244,7 +287,7 @@ C1TSEL0                           00000000
 C1TSEL1                           00000001
 C1TSEL2                           00000002
 C2INA                             00000004
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE  6
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE  6
 
 
 SYMBOL TABLE
@@ -303,7 +346,7 @@ CCP1IP                            00000001
 CCP1M0                            00000000
 CCP1M1                            00000001
 CCP1M2                            00000002
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE  7
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE  7
 
 
 SYMBOL TABLE
@@ -362,7 +405,7 @@ CCP5M0                            00000000
 CCP5M1                            00000001
 CCP5M2                            00000002
 CCP5M3                            00000003
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE  8
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE  8
 
 
 SYMBOL TABLE
@@ -421,7 +464,7 @@ CCP9IP                            00000006
 CCP9M0                            00000000
 CCP9M1                            00000001
 CCP9M2                            00000002
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE  9
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE  9
 
 
 SYMBOL TABLE
@@ -480,7 +523,7 @@ CHSN1                             00000001
 CHSN2                             00000002
 CK1                               00000006
 CK2                               00000001
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 10
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 10
 
 
 SYMBOL TABLE
@@ -539,7 +582,7 @@ CTMUIE                            00000003
 CTMUIF                            00000003
 CTMUIP                            00000003
 CTMUMD                            00000006
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 11
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 11
 
 
 SYMBOL TABLE
@@ -591,20 +634,19 @@ DT1                               00000007
 DT2                               00000002
 D_A                               00000005
 D_NOT_A                           00000005
-Delay_ms                          00000000
 EBDIS                             00000007
 ECCP1AS                           00000FBF
 ECCP1AS0                          00000004
 ECCP1AS1                          00000005
 ECCP1AS2                          00000006
 ECCP1ASE                          00000007
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 12
+ECCP1CON                          00000FBB
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 12
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-ECCP1CON                          00000FBB
 ECCP1DEL                          00000FBE
 ECCP2AS                           00000F52
 ECCP2AS0                          00000004
@@ -657,13 +699,13 @@ FSR2                              00000002
 FSR2H                             00000FDA
 FSR2L                             00000FD9
 GCEN                              00000007
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 13
+GIE                               00000007
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 13
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-GIE                               00000007
 GIEH                              00000007
 GIEL                              00000006
 GIE_GIEH                          00000007
@@ -716,13 +758,13 @@ INT3E                             00000005
 INT3F                             00000002
 INT3IE                            00000005
 INT3IF                            00000002
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 14
+INT3IP                            00000001
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 14
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-INT3IP                            00000001
 INT3P                             00000001
 INTCON                            00000FF2
 INTCON2                           00000FF1
@@ -775,13 +817,13 @@ LATB6                             00000006
 LATB7                             00000007
 LATC                              00000F8B
 LATC0                             00000000
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 15
+LATC1                             00000001
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 15
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-LATC1                             00000001
 LATC2                             00000002
 LATC3                             00000003
 LATC4                             00000004
@@ -834,13 +876,13 @@ LATJ0                             00000000
 LATJ1                             00000001
 LATJ2                             00000002
 LATJ3                             00000003
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 16
+LATJ4                             00000004
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 16
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-LATJ4                             00000004
 LATJ5                             00000005
 LATJ6                             00000006
 LATJ7                             00000007
@@ -859,8 +901,6 @@ MSK4                              00000004
 MSK5                              00000005
 MSK6                              00000006
 MSK7                              00000007
-Music_Avengers                    00000000
-Music_Setup                       0000001A
 N                                 00000004
 NOT_A                             00000005
 NOT_ADDRESS                       00000005
@@ -893,15 +933,15 @@ ODCON1                            00000F29
 ODCON2                            00000F28
 ODCON3                            00000F27
 OE                                00000001
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 17
+OERR                              00000001
+OERR1                             00000001
+OERR2                             00000001
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 17
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-OERR                              00000001
-OERR1                             00000001
-OERR2                             00000001
 OSC1                              00000007
 OSC2                              00000006
 OSCCON                            00000FD3
@@ -952,15 +992,15 @@ P3DC5                             00000005
 P3DC6                             00000006
 P3M0                              00000006
 P3M1                              00000007
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 18
+P3RSEN                            00000007
+PA3                               00000000
+PADCFG1                           00000F53
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 18
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-P3RSEN                            00000007
-PA3                               00000000
-PADCFG1                           00000F53
 PB1                               00000007
 PB3                               00000005
 PC                                00000FF9
@@ -1011,15 +1051,15 @@ PORTJ                             00000F88
 POSTDEC0                          00000FED
 POSTDEC1                          00000FE5
 POSTDEC2                          00000FDD
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 19
+POSTINC0                          00000FEE
+POSTINC1                          00000FE6
+POSTINC2                          00000FDE
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 19
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-POSTINC0                          00000FEE
-POSTINC1                          00000FE6
-POSTINC2                          00000FDE
 PR10                              00000F34
 PR12                              00000F31
 PR2                               00000FCB
@@ -1070,15 +1110,15 @@ RA1                               00000001
 RA2                               00000002
 RA3                               00000003
 RA4                               00000004
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 20
+RA5                               00000005
+RA6                               00000006
+RA7                               00000007
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 20
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-RA5                               00000005
-RA6                               00000006
-RA7                               00000007
 RB0                               00000000
 RB1                               00000001
 RB2                               00000002
@@ -1129,15 +1169,15 @@ RD3                               00000003
 RD4                               00000004
 RD5                               00000005
 RD6                               00000006
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 21
+RD7                               00000007
+RDPU                              00000007
+RE0                               00000000
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 21
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-RD7                               00000007
-RDPU                              00000007
-RE0                               00000000
 RE1                               00000001
 RE2                               00000002
 RE3                               00000003
@@ -1188,15 +1228,15 @@ RODIV3                            00000003
 ROON                              00000007
 ROSEL                             00000004
 ROSSLP                            00000005
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 22
+RSEN                              00000001
+RTCC                              00000004
+RTCCAL                            00000F5E
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 22
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-RSEN                              00000001
-RTCC                              00000004
-RTCCAL                            00000F5E
 RTCCFG                            00000F5F
 RTCCIE                            00000000
 RTCCIF                            00000000
@@ -1247,15 +1287,15 @@ SMP                               00000007
 SOSCEN                            00000003
 SOSCGO                            00000003
 SOSCI                             00000001
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 23
+SOSCO                             00000000
+SOSCRUN                           00000006
+SP0                               00000000
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 23
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-SOSCO                             00000000
-SOSCRUN                           00000006
-SP0                               00000000
 SP1                               00000001
 SP2                               00000002
 SP3                               00000003
@@ -1306,15 +1346,15 @@ SSPIP                             00000003
 SSPM0                             00000000
 SSPM1                             00000001
 SSPM2                             00000002
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 24
+SSPM3                             00000003
+SSPOV                             00000006
+SSPSTAT                           00000FC7
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 24
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-SSPM3                             00000003
-SSPOV                             00000006
-SSPSTAT                           00000FC7
 STATUS                            00000FD8
 STKFUL                            00000007
 STKOVF                            00000007
@@ -1365,15 +1405,15 @@ T1GGO                             00000003
 T1GGO_NOT_T1DONE                  00000003
 T1GPOL                            00000006
 T1GSPM                            00000004
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 25
+T1GSS0                            00000000
+T1GSS1                            00000001
+T1GTM                             00000005
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 25
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-T1GSS0                            00000000
-T1GSS1                            00000001
-T1GTM                             00000005
 T1GVAL                            00000002
 T2CKPS0                           00000000
 T2CKPS1                           00000001
@@ -1424,15 +1464,15 @@ T6OUTPS0                          00000003
 T6OUTPS1                          00000004
 T6OUTPS2                          00000005
 T6OUTPS3                          00000006
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 26
+T7CKI                             00000004
+T7CKPS0                           00000004
+T7CKPS1                           00000005
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 26
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-T7CKI                             00000004
-T7CKPS0                           00000004
-T7CKPS1                           00000005
 T7CON                             00000F3D
 T7G                               00000001
 T7GCON                            00000F3C
@@ -1483,15 +1523,15 @@ TMR1GE                            00000007
 TMR1GIE                           00000002
 TMR1GIF                           00000002
 TMR1GIP                           00000002
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 27
+TMR1H                             00000FCF
+TMR1IE                            00000000
+TMR1IF                            00000000
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 27
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-TMR1H                             00000FCF
-TMR1IE                            00000000
-TMR1IF                            00000000
 TMR1IP                            00000000
 TMR1L                             00000FCE
 TMR1MD                            00000001
@@ -1542,15 +1582,15 @@ TMR6IF                            00000002
 TMR6IP                            00000002
 TMR6MD                            00000004
 TMR6ON                            00000002
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 28
+TMR7                              00000F3E
+TMR7CS0                           00000006
+TMR7CS1                           00000007
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 28
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-TMR7                              00000F3E
-TMR7CS0                           00000006
-TMR7CS1                           00000007
 TMR7GE                            00000007
 TMR7GIE                           00000007
 TMR7GIF                           00000007
@@ -1601,15 +1641,15 @@ TRISC3                            00000003
 TRISC4                            00000004
 TRISC5                            00000005
 TRISC6                            00000006
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 29
+TRISC7                            00000007
+TRISD                             00000F95
+TRISD0                            00000000
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 29
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-TRISC7                            00000007
-TRISD                             00000F95
-TRISD0                            00000000
 TRISD1                            00000001
 TRISD2                            00000002
 TRISD3                            00000003
@@ -1660,15 +1700,15 @@ TRISJ6                            00000006
 TRISJ7                            00000007
 TRMT                              00000001
 TRMT1                             00000001
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 30
+TRMT2                             00000001
+TUN0                              00000000
+TUN1                              00000001
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 30
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-TRMT2                             00000001
-TUN0                              00000000
-TUN1                              00000001
 TUN2                              00000002
 TUN3                              00000003
 TUN4                              00000004
@@ -1707,7 +1747,6 @@ U2OD                              00000007
 UA                                00000001
 UART1MD                           00000003
 UART2MD                           00000004
-UART_Transmit_Byte                0000003E
 UB                                00000007
 ULPEN                             00000002
 ULPLVL                            00000005
@@ -1719,16 +1758,16 @@ VDIRMAG                           00000007
 VNCFG                             00000003
 VREF_MINUS                        00000002
 VREF_PLUS                         00000003
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 31
+W                                 00000000
+WAIT0                             00000004
+WAIT1                             00000005
+WCOL                              00000007
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 31
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-W                                 00000000
-WAIT0                             00000004
-WAIT1                             00000005
-WCOL                              00000007
 WDTCON                            00000FD1
 WM0                               00000000
 WM1                               00000001
@@ -1778,16 +1817,16 @@ _CONFIG7L                         0030000C
 _CP0_OFF_5L                       000000FF
 _CP0_ON_5L                        000000FE
 _CP1_OFF_5L                       000000FF
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 32
+_CP1_ON_5L                        000000FD
+_CP2_OFF_5L                       000000FF
+_CP2_ON_5L                        000000FB
+_CP3_OFF_5L                       000000FF
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 32
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-_CP1_ON_5L                        000000FD
-_CP2_OFF_5L                       000000FF
-_CP2_ON_5L                        000000FB
-_CP3_OFF_5L                       000000FF
 _CP3_ON_5L                        000000F7
 _CP4_OFF_5L                       000000FF
 _CP4_ON_5L                        000000EF
@@ -1837,16 +1876,16 @@ _FOSC_EC3IO_1H                    000000F4
 _FOSC_EC3_1H                      000000F5
 _FOSC_HS1_1H                      000000F3
 _FOSC_HS2_1H                      000000F2
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 33
+_FOSC_INTIO1_1H                   000000F9
+_FOSC_INTIO2_1H                   000000F8
+_FOSC_LP_1H                       000000F0
+_FOSC_RCIO_1H                     000000F7
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 33
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-_FOSC_INTIO1_1H                   000000F9
-_FOSC_INTIO2_1H                   000000F8
-_FOSC_LP_1H                       000000F0
-_FOSC_RCIO_1H                     000000F7
 _FOSC_RC_1H                       000000F6
 _FOSC_XT_1H                       000000F1
 _IDLOC0                           00200000
@@ -1896,16 +1935,16 @@ _WDTPS_256_2H                     000000A3
 _WDTPS_262144_2H                  000000CB
 _WDTPS_2_2H                       00000087
 _WDTPS_32768_2H                   000000BF
-MPASM 5.81                         MUSIC.ASM   11-19-2019  15:44:42         PAGE 34
+_WDTPS_32_2H                      00000097
+_WDTPS_4096_2H                    000000B3
+_WDTPS_4_2H                       0000008B
+_WDTPS_512_2H                     000000A7
+MPASM 5.81                        CONFIG.ASM   11-19-2019  15:51:45         PAGE 34
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-_WDTPS_32_2H                      00000097
-_WDTPS_4096_2H                    000000B3
-_WDTPS_4_2H                       0000008B
-_WDTPS_512_2H                     000000A7
 _WDTPS_524288_2H                  000000CF
 _WDTPS_64_2H                      0000009B
 _WDTPS_65536_2H                   000000C3
@@ -1936,7 +1975,8 @@ _WRTD_ON_6H                       0000007F
 _XINST_OFF_1L                     000000BF
 _XINST_ON_1L                      000000FF
 __18F87K22                        00000001
-music_RST                         5
+__DEBUG                           
+__MPLAB_DEBUGGER_ICD3             1
 
 Errors   :     0
 Warnings :     0 reported,     0 suppressed
