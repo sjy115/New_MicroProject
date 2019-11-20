@@ -4,7 +4,7 @@
     extern  Keypad_getKey
     ;Global variable from LCD.asm
     extern  LCD_RectHelper, rect_x1_l, rect_x1_h, rect_y1_l, rect_y1_h, rect_x2_l, rect_x2_h,rect_y2_l, rect_y2_h, rect_colour
-    extern  Scroll_d_l, Scroll_d_h, Text_offset, Update_score,Set_colour_white
+    extern  Scroll_d_l, Scroll_d_h, Text_offset, Update_score,Set_text_update
     ;Global variable from GameData.asm
     extern  Play_Avengers
     
@@ -39,14 +39,16 @@ Boxes_end	    res 1
 Total_score_1	    res 1
 Total_score_2	    res 1
 Total_score_3	    res 1
-
+tmp1		    res 1
+tmp2		    res 1
+		    
 acs_ovr    access_ovr
 Delay_ms_cnt	    res 1   ; reserve 1 byte for variable LCD_cnt_l
 Delay_x4us_cnt_h    res 1   ; reserve 1 byte for variable LCD_cnt_h
 Delay_x4us_cnt_l    res 1   ; reserve 1 byte for ms counter
     
 acs_ovr    access_ovr  
-tmp1		    res 1
+
 current_Box	    res 1
 key		    res 1
 
@@ -59,13 +61,13 @@ Main_Initialise
     movwf   Boxes_end
     movlw   max_boxes
     addwf   Boxes_end, F
-    addwf   Boxes_end, F
-    
+    addwf   Boxes_end, W
+    movwf   Boxes_end
     ;Clear Boxes
     lfsr    0, Boxes
 Main_Initialise_loop
     clrf    POSTINC0
-    cpfseq  FSR0L
+    cpfsgt  FSR0L
     bra	    Main_Initialise_loop
     
     ;Clear Total score
@@ -112,6 +114,13 @@ new_box_set_colour
     movwf   rect_colour				;R[0:2] G[3:5] B[6:7]
     
     ;set vertical parameters
+    movlw   scroll_yend_l
+    movwf   tmp1
+    addwf   tmp1, F
+    movlw   scroll_yend_h
+    movwf   tmp2
+    addwfc  tmp2, F
+    
     movlw   b'111'			
     andwf   current_Box, W			;y index[y0, y1, y2] : 0~7
     mullw   box_yoffset				;y on drawing layer, y_l = start + index * offset
@@ -130,19 +139,14 @@ new_box_set_colour
     movlw   .0
     addwfc  rect_y2_h
     
-    movf    Scroll_d_l,W			;y on display, y_d = y_l - scroll
-    subwf   PRODL, F
-    movf    Scroll_d_h, W
-    subfwb  PRODH, F
-
-    movlw   scroll_yend_l			;distance from the goal, dy = y_d - goal
-    subwf   PRODL, F
-    movlw   scroll_yend_h
-    subfwb  PRODH, F
+    movf    PRODL, W
+    subwf   tmp1, F
+    movf    PRODH, W
+    subwfb  tmp2, F
     
     movlw   .1					;store the lower byte into FSR0 + 1
-    movff   PRODL, PLUSW0			
-    movf    PRODH, W				;store the higher bits [8:9] into FSR0
+    movff   tmp1, PLUSW0			
+    movf    tmp2, W				;store the higher bits [8:9] into FSR0
     iorwf   INDF0
     
     ;draw the box
@@ -188,6 +192,7 @@ box_test_loop
     movlw   low(converter)
     movwf   TBLPTRL
     call    Keypad_getKey
+    movlw   0xFF
     movwf   key
     ;move TBLPTR to the corresponding keypad value
     swapf   INDF0, W
@@ -231,7 +236,8 @@ box_test_add_score
     
     movlw   .96
     movwf   Text_offset
-    call    Set_colour_white
+    call    Set_text_update
+    
     movlw   0xF0
     andwf   Total_score_3, W
     swapf   WREG, W

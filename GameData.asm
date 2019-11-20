@@ -8,16 +8,7 @@ GameData    code
 Play_Avengers
     call    Music_Avengers
     call    Scroll
-    call    Scroll
     movlw   b'00000111'
-    call    New_box
-    movlw   b'00000110'
-    call    New_box
-    movlw   b'00000101'
-    call    New_box
-    movlw   b'00000100'
-    call    New_box
-    movlw   b'00000011'
     call    New_box
     movlw   b'00000010'
     call    New_box
@@ -26,16 +17,7 @@ Play_Avengers
     movlw   b'00000000'
     call    New_box
     call    Scroll
-    
     movlw   b'00000111'
-    call    New_box
-    movlw   b'00000110'
-    call    New_box
-    movlw   b'00000101'
-    call    New_box
-    movlw   b'00000100'
-    call    New_box
-    movlw   b'00000011'
     call    New_box
     movlw   b'00000010'
     call    New_box
@@ -44,6 +26,14 @@ Play_Avengers
     movlw   b'00000000'
     call    New_box
     call    Scroll
+    movlw   b'00000111'
+    call    New_box
+    movlw   b'00000010'
+    call    New_box
+    movlw   b'00000001'
+    call    New_box
+    movlw   b'00000000'
+    call    New_box
     call    Scroll
     call    Scroll
     return
