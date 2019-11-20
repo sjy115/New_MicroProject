@@ -1,6 +1,6 @@
 #include p18f87k22.inc
     
-    global  LCD_Initialisation, Scroll, Scroll_d_l, Scroll_d_h, Text_offset, Update_score, Set_colour_white
+    global  LCD_Initialisation, Scroll, Scroll_d_l, Scroll_d_h, Text_offset, Update_score, Set_text_update
     global  LCD_RectHelper, rect_x1_l, rect_x1_h, rect_y1_l, rect_y1_h, rect_x2_l, rect_x2_h,rect_y2_l, rect_y2_h, rect_colour
     extern  Delay_ms, Box_test, Decrement_dy
 
@@ -96,13 +96,23 @@
 #define	LCD_height		480
 #define pixclk			(RA8875_PCSR_PDATL | RA8875_PCSR_2CLK)
 
-
+#define tri_y1_l	    .175
+#define tri_y1_h            .1
+#define tri_y2_l	    .175
+#define tri_y2_h            .1 
+#define tri_y3_l	    .145  
+#define tri_y3_h	    .1
+#define tri_xoffset	    .100
+    
+#define tri_x1_start	    .33
+#define tri_x3_start	    .50
+#define tri_base	    .34
     
 #define	scroll_yend_l		.144
 #define	scroll_yend_h		.1
-#define	scroll_speed		.2
+#define	scroll_speed		.5
 #define	LYEN			7	;Control bit location, layer enable
-
+#define	FLASH			6
     
 #define	RST		0
 #define	MOSI		4
@@ -113,7 +123,7 @@
 acs_lcd    udata_acs   ; reserve data space in access ram
 Scroll_d_l	    res 1
 Scroll_d_h	    res 1
-	  	    
+Flash_counter	    res 1	  	    
 Control		    res 1
 		    
 ;global parameters for LCD_RectHelper
@@ -131,7 +141,17 @@ rect_y2_l	    res 1
 rect_colour	    res 1
 tmp1		    res 1
 Text_offset	    res 1
-		    
+
+    
+tri_x1_l	    res 1
+tri_x1_h	    res 1
+tri_x2_l	    res 1
+tri_x2_h	    res 1
+tri_x3_l	    res 1
+tri_x3_h	    res 1
+tri_colour          res 1          ; input 0 for purple box when boxes match
+              
+
 LCD code
 ;Scroll next layer
 Scroll
@@ -143,6 +163,10 @@ scrl
     call    Box_test
     call    LCD_ScrollY
     call    Decrement_dy
+    btfsc   Control, FLASH
+    bra	    Flash_goal
+
+scrl2
     movlw   scroll_speed
     call    Delay_ms
     decf    Scroll_d_l, F	; borrow when 0x00 -> 0xff
@@ -155,7 +179,53 @@ scrl
     call    LYEN2
 cly call    Clear_Layer
     return
-
+Flash_goal
+    dcfsnz  Flash_counter
+    call    Setup_goal
+    bra	    scrl2
+    
+Set_text_update
+    ;Write on layer 1
+    call    LYEN1
+    ;Flash goal
+    call    Goal_flash
+    ;Foreground colour to white
+    movlw   0x63
+    movwf   input_cmd
+    movlw   b'111'
+    movwf   input_data
+    call    SPI_writeREG
+    movlw   0x64
+    movwf   input_cmd
+    movlw   b'111'
+    movwf   input_data
+    call    SPI_writeREG
+    movlw   0x65
+    movwf   input_cmd
+    movlw   b'11'
+    movwf   input_data
+    call    SPI_writeREG
+    return
+    
+Goal_flash
+    ;;when box matches keypad output, immdeiately call the goal flash
+    movlw   .30
+    movwf   Flash_counter
+    swapf   INDF0, W
+    andlw   b'111'
+    clrf    tri_colour
+    call    Goal_Triangle_draw
+    
+    bsf	    Control, FLASH
+    return    
+Update_score
+    addlw   0x30
+    movwf   tmp1
+    call    Set_cursor
+    movf    tmp1, W
+    call    LCD_TextHelper
+    return
+    
 ;temporary subroutine
 ly1 call    LYEN1
     bra	    cly
@@ -184,14 +254,6 @@ LCD_ScrollY_layer2_h
     movlw   scroll_yend_h
     addwfc  Scroll_d_h, W
     movwf   input_data
-    return
-    
-Update_score
-    addlw   0x30
-    movwf   tmp1
-    call    Set_cursor
-    movf    tmp1, W
-    call    LCD_TextHelper
     return
 
 Clear_Layer
@@ -384,6 +446,12 @@ LCD_Initialisation
     ;call    Clear_Layer
     call    LYEN1
     
+    call    Setup_score
+    call    Setup_goal
+    return
+    
+    
+Setup_score
     ;CGROM select, ASCII Latin-1
     movlw   0x21
     movwf   input_cmd
@@ -432,6 +500,7 @@ LCD_Initialisation
     movwf   input_data
     call    SPI_writeREG    
     
+    ;Write text
     clrf    Text_offset
     call    Set_cursor
     movlw   0x53		;'S'
@@ -459,31 +528,13 @@ LCD_Initialisation
     call    LCD_TextHelper
     movlw   0x30
     call    LCD_TextHelper
-    
-    return   
-Set_colour_white
-    ;Foreground colour
-    movlw   0x63
-    movwf   input_cmd
-    movlw   b'111'
-    movwf   input_data
-    call    SPI_writeREG
-    movlw   0x64
-    movwf   input_cmd
-    movlw   b'111'
-    movwf   input_data
-    call    SPI_writeREG
-    movlw   0x65
-    movwf   input_cmd
-    movlw   b'11'
-    movwf   input_data
-    call    SPI_writeREG
     return
+   
 Set_cursor
     ;Horizontal cursor position
     movlw   0x2A
     movwf   input_cmd
-    movlw   .71
+    movlw   .87
     addwf   Text_offset, W
     movwf   input_data
     call    SPI_writeREG        
@@ -491,8 +542,7 @@ Set_cursor
     movwf   input_cmd
     clrf    input_data
     movlw   b'10'
-    addwf   input_data, F
-    movwf   input_data
+    addwfc  input_data, F
     call    SPI_writeREG  
     ;Vertical cursor position
     movlw   0x2C
@@ -508,11 +558,10 @@ Set_cursor
     return
     
 LCD_TextHelper
-    
     movwf   input_data
     movlw   0x02
     movwf   input_cmd
-    call    SPI_writeREG 
+    call    SPI_writeREG
     return
 
     
@@ -794,5 +843,145 @@ Wait_Transmit ; Wait for transmission to complete
     bra Wait_Transmit
     bcf PIR2, SSP2IF ; clear interrupt flag
     return    
-    end
+    
+LCD_TriHelper
+    ;/* Set X1 */
+    movlw   0x91
+    movwf   input_cmd
+    movff   tri_x1_l, input_data
+    call    SPI_writeREG
+    movlw   0x92
+    movwf   input_cmd
+    movff   tri_x1_h, input_data
+    call    SPI_writeREG
+    
+    ;/* Set Y1 */
+    movlw   0x93
+    movwf   input_cmd
+    movlw   tri_y1_l
+    movwf   input_data
+    call    SPI_writeREG
+    movlw   0x94
+    movwf   input_cmd
+    movlw   tri_y1_h
+    movwf   input_data
+    call    SPI_writeREG
 
+    ;/* Set X2 */
+    movlw   0x95
+    movwf   input_cmd
+    movff   tri_x2_l, input_data
+    call    SPI_writeREG
+    movlw   0x96
+    movwf   input_cmd
+    movff   tri_x2_h, input_data
+    call    SPI_writeREG
+
+    ;/* Set Y2 */
+    movlw   0x97
+    movwf   input_cmd
+    movlw   tri_y2_l
+    movwf   input_data
+    call    SPI_writeREG
+    movlw   0x98
+    movwf   input_cmd
+    movlw   tri_y2_h
+    movwf   input_data
+    call    SPI_writeREG
+    
+     ;/* Set X3 */
+    movlw   0xA9
+    movwf   input_cmd
+    movff   tri_x3_l, input_data
+    call    SPI_writeREG
+    movlw   0xAA
+    movwf   input_cmd
+    movff   tri_x3_h, input_data
+    call    SPI_writeREG
+    
+    
+     ;/* Set Y3 */
+    movlw   0xAB
+    movwf   input_cmd
+    movlw   tri_y3_l
+    movwf   input_data
+    call    SPI_writeREG
+    movlw   0xAC
+    movwf   input_cmd
+    movlw   tri_y3_h
+    movwf   input_data
+    call    SPI_writeREG
+    
+    ;/* Set Color */
+    movlw   0x63
+    movwf   input_cmd
+    movlw   .7                       ;0~7
+    movwf   input_data
+    call    SPI_writeREG
+    movlw   0x64                  
+    movwf   input_cmd
+    movff   tri_colour, input_data                       ;0~7
+    call    SPI_writeREG
+    movlw   0x65
+    movwf   input_cmd
+    movlw   .7                       ;0~3
+    movwf   input_data
+    call    SPI_writeREG
+
+    ;/* Draw! */
+    movlw   0x90
+    movwf   input_cmd
+    movlw   0xA1                    ;0xA1 for fill
+    movwf   input_data
+    call    SPI_writeREG
+
+    ;/* Wait for the command to finish */
+    movlw   .1
+    call    Delay_ms
+    return
+    
+
+    
+Setup_goal
+    bcf	    Control, FLASH
+    movlw   .7
+    movwf   tri_colour
+    movlw   .7
+    movwf   tmp1
+Setup_goal_loop
+    movf    tmp1, W
+    call    Goal_Triangle_draw
+    decf    tmp1
+    bc      Setup_goal_loop
+    return
+
+Goal_Triangle_draw
+    mullw   tri_xoffset
+    
+    movlw   tri_x1_start
+    addwf   PRODL, W
+    movwf   tri_x1_l
+    movwf   tri_x2_l
+    movlw   .0
+    addwfc  PRODH, W
+    movwf   tri_x1_h
+    movwf   tri_x2_h
+    
+    movlw   tri_base
+    addwf   tri_x2_l, F
+    movlw   .0
+    addwfc  tri_x2_h, F
+    
+    movlw   tri_x3_start
+    addwf   PRODL, W
+    movwf   tri_x3_l
+    movlw   .0
+    addwfc  PRODH, W
+    movwf   tri_x3_h
+    
+    call    LCD_TriHelper
+    return
+    
+
+
+    end
