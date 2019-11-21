@@ -192,7 +192,6 @@ box_test_loop
     movlw   low(converter)
     movwf   TBLPTRL
     call    Keypad_getKey
-    movlw   0xFF
     movwf   key
     ;move TBLPTR to the corresponding keypad value
     swapf   INDF0, W

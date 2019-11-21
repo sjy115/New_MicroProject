@@ -1,4 +1,4 @@
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE  1
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -57,7 +57,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000042                00040 Total_score_2       res 1
 000043                00041 Total_score_3       res 1
 000044                00042 tmp1                res 1
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE  2
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE  2
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -116,7 +116,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 00003A 0EF0           00090     movlw   0xF0                                
 00003C 14??           00091     andwf   current_Box, W                      ;x index[x0, x1, x2] : 0~7 and colour bit
 00003E 12EF           00092     iorwf   INDF0                               ;save in Box[12:15]
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE  3
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE  3
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -175,7 +175,7 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 000096 5E??           00143     subwf   tmp1, F
 000098 50F4           00144     movf    PRODH, W
 00009A 5A??           00145     subwfb  tmp2, F
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE  4
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE  4
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -230,203 +230,202 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
 0000E0 0E??           00192     movlw   low(converter)
 0000E2 6EF6           00193     movwf   TBLPTRL
 0000E4 EC?? F???      00194     call    Keypad_getKey
-0000E8 0EFF           00195     movlw   0xFF
-0000EA 6E??           00196     movwf   key
-                      00197     ;move TBLPTR to the corresponding keypad value
-0000EC 38EF           00198     swapf   INDF0, W
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE  5
+0000E8 6E??           00195     movwf   key
+                      00196     ;move TBLPTR to the corresponding keypad value
+0000EA 38EF           00197     swapf   INDF0, W
+0000EC 0B0F           00198     andlw   0x0F                                ;[x0, x1, x2, colour] : 0~15
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE  5
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-0000EE 0B0F           00199     andlw   0x0F                                ;[x0, x1, x2, colour] : 0~15
-0000F0 26F6           00200     addwf   TBLPTRL, F
-0000F2 0E00           00201     movlw   .0
-0000F4 22F7           00202     addwfc  TBLPTRH, F
-0000F6 22F8           00203     addwfc  TBLPTRU, F
-0000F8 0008           00204     tblrd*                                      
-0000FA 50F5           00205     movf    TABLAT, W                           ;load box value in W and tmp1
-0000FC 6E??           00206     movwf   tmp1
-0000FE 14??           00207     andwf   key, W
-000100 62??           00208     cpfseq  tmp1                                ;if box value is in keypad output
-000102 D???           00209     bra     box_test_next_box                   ;if not, try next box
-                      00210     
-000104                00211 here
-                      00212     ;correct button pressed
-000104 0E01           00213     movlw   .1                                  
-000106 CFEB F???      00214     movff   PLUSW0, tmp1                        ;load dy in tmp1
-00010A 0E0A           00215     movlw   score_great
-00010C 60??           00216     cpfslt  tmp1                                ;test for 'great'
-00010E D???           00217     bra     box_test_good                       ;if not, 'good'
-000110 0E05           00218     movlw   score_perfect                       
-000112 60??           00219     cpfslt  tmp1                                ;test for 'perfect'
-000114 D???           00220     bra     box_test_great                      ;if not, 'great'
-000116 D???           00221     bra     box_test_perfect                    ;if yes, 'perfect'
-                      00222     
-                      00223     ;add score in BCD
-000118                00224 box_test_add_score
-000118 24??           00225     addwf   Total_score_1, W
-00011A 0007           00226     DAW
-00011C 6E??           00227     movwf   Total_score_1
-00011E 0E00           00228     movlw   .0
-000120 20??           00229     addwfc  Total_score_2, W
-000122 0007           00230     DAW
-000124 6E??           00231     movwf   Total_score_2
-000126 0E00           00232     movlw   .0
-000128 20??           00233     addwfc  Total_score_3, W
-00012A 0007           00234     DAW
-00012C 6E??           00235     movwf   Total_score_3
-                      00236     
-00012E 0E60           00237     movlw   .96
-000130 6E??           00238     movwf   Text_offset
-000132 EC?? F???      00239     call    Set_text_update
-                      00240     
-000136 0EF0           00241     movlw   0xF0
-000138 14??           00242     andwf   Total_score_3, W
-00013A 38E8           00243     swapf   WREG, W
-00013C EC?? F???      00244     Call    Update_score
-                      00245     
-000140 0E10           00246     movlw   .16
-000142 26??           00247     addwf   Text_offset, F
-000144 0E0F           00248     movlw   0x0F
-000146 14??           00249     andwf   Total_score_3, W
-000148 EC?? F???      00250     Call    Update_score
-                      00251    
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE  6
+0000EE 26F6           00199     addwf   TBLPTRL, F
+0000F0 0E00           00200     movlw   .0
+0000F2 22F7           00201     addwfc  TBLPTRH, F
+0000F4 22F8           00202     addwfc  TBLPTRU, F
+0000F6 0008           00203     tblrd*                                      
+0000F8 50F5           00204     movf    TABLAT, W                           ;load box value in W and tmp1
+0000FA 6E??           00205     movwf   tmp1
+0000FC 14??           00206     andwf   key, W
+0000FE 62??           00207     cpfseq  tmp1                                ;if box value is in keypad output
+000100 D???           00208     bra     box_test_next_box                   ;if not, try next box
+                      00209     
+000102                00210 here
+                      00211     ;correct button pressed
+000102 0E01           00212     movlw   .1                                  
+000104 CFEB F???      00213     movff   PLUSW0, tmp1                        ;load dy in tmp1
+000108 0E0A           00214     movlw   score_great
+00010A 60??           00215     cpfslt  tmp1                                ;test for 'great'
+00010C D???           00216     bra     box_test_good                       ;if not, 'good'
+00010E 0E05           00217     movlw   score_perfect                       
+000110 60??           00218     cpfslt  tmp1                                ;test for 'perfect'
+000112 D???           00219     bra     box_test_great                      ;if not, 'great'
+000114 D???           00220     bra     box_test_perfect                    ;if yes, 'perfect'
+                      00221     
+                      00222     ;add score in BCD
+000116                00223 box_test_add_score
+000116 24??           00224     addwf   Total_score_1, W
+000118 0007           00225     DAW
+00011A 6E??           00226     movwf   Total_score_1
+00011C 0E00           00227     movlw   .0
+00011E 20??           00228     addwfc  Total_score_2, W
+000120 0007           00229     DAW
+000122 6E??           00230     movwf   Total_score_2
+000124 0E00           00231     movlw   .0
+000126 20??           00232     addwfc  Total_score_3, W
+000128 0007           00233     DAW
+00012A 6E??           00234     movwf   Total_score_3
+                      00235     
+00012C 0E60           00236     movlw   .96
+00012E 6E??           00237     movwf   Text_offset
+000130 EC?? F???      00238     call    Set_text_update
+                      00239     
+000134 0EF0           00240     movlw   0xF0
+000136 14??           00241     andwf   Total_score_3, W
+000138 38E8           00242     swapf   WREG, W
+00013A EC?? F???      00243     Call    Update_score
+                      00244     
+00013E 0E10           00245     movlw   .16
+000140 26??           00246     addwf   Text_offset, F
+000142 0E0F           00247     movlw   0x0F
+000144 14??           00248     andwf   Total_score_3, W
+000146 EC?? F???      00249     Call    Update_score
+                      00250    
+00014A 0E10           00251     movlw   .16
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE  6
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-00014C 0E10           00252     movlw   .16
-00014E 26??           00253     addwf   Text_offset, F
-000150 0EF0           00254     movlw   0xF0
-000152 14??           00255     andwf   Total_score_2, W
-000154 38E8           00256     swapf   WREG, W
-000156 EC?? F???      00257     Call    Update_score    
-                      00258     
-00015A 0E10           00259     movlw   .16
-00015C 26??           00260     addwf   Text_offset, F
-00015E 0E0F           00261     movlw   0x0F
-000160 14??           00262     andwf   Total_score_2, W
-000162 EC?? F???      00263     Call    Update_score
-                      00264     
-000166 0E10           00265     movlw   .16
-000168 26??           00266     addwf   Text_offset, F
-00016A 0EF0           00267     movlw   0xF0
-00016C 14??           00268     andwf   Total_score_1, W
-00016E 38E8           00269     swapf   WREG, W
-000170 EC?? F???      00270     Call    Update_score
-                      00271     
-000174 0E10           00272     movlw   .16
-000176 26??           00273     addwf   Text_offset, F
-000178 0E0F           00274     movlw   0x0F
-00017A 14??           00275     andwf   Total_score_1, W
-00017C EC?? F???      00276     Call    Update_score
-                      00277 
+00014C 26??           00252     addwf   Text_offset, F
+00014E 0EF0           00253     movlw   0xF0
+000150 14??           00254     andwf   Total_score_2, W
+000152 38E8           00255     swapf   WREG, W
+000154 EC?? F???      00256     Call    Update_score    
+                      00257     
+000158 0E10           00258     movlw   .16
+00015A 26??           00259     addwf   Text_offset, F
+00015C 0E0F           00260     movlw   0x0F
+00015E 14??           00261     andwf   Total_score_2, W
+000160 EC?? F???      00262     Call    Update_score
+                      00263     
+000164 0E10           00264     movlw   .16
+000166 26??           00265     addwf   Text_offset, F
+000168 0EF0           00266     movlw   0xF0
+00016A 14??           00267     andwf   Total_score_1, W
+00016C 38E8           00268     swapf   WREG, W
+00016E EC?? F???      00269     Call    Update_score
+                      00270     
+000172 0E10           00271     movlw   .16
+000174 26??           00272     addwf   Text_offset, F
+000176 0E0F           00273     movlw   0x0F
+000178 14??           00274     andwf   Total_score_1, W
+00017A EC?? F???      00275     Call    Update_score
+                      00276 
+                      00277     
                       00278     
-                      00279     
-                      00280     ;remove box from memory
-000180 EC?? F???      00281     call    Remove_box
-                      00282     
-                      00283     ;flash screen and display text and update score in display and other shit
-000184 0012           00284     return
-                      00285     
-                      00286     ;temporary subroutine
-000186                00287 box_test_next_box
+                      00279     ;remove box from memory
+00017E EC?? F???      00280     call    Remove_box
+                      00281     
+                      00282     ;flash screen and display text and update score in display and other shit
+000182 0012           00283     return
+                      00284     
+                      00285     ;temporary subroutine
+000184                00286 box_test_next_box
+000184 2AE9           00287     incf    FSR0L
 000186 2AE9           00288     incf    FSR0L
-000188 2AE9           00289     incf    FSR0L
-00018A 50??           00290     movf    Boxes_end, W
-00018C 62E9           00291     cpfseq  FSR0L
-00018E D???           00292     bra     box_test_loop
-000190 0012           00293     return
-000192                00294 box_test_good
-000192 0E10           00295     movlw   b'00010000'             ;10 in BCD
-000194 D???           00296     bra     box_test_add_score
-000196                00297 box_test_great
-000196 0E25           00298     movlw   b'00100101'             ;25 in BCD
-000198 D???           00299     bra     box_test_add_score
-00019A                00300 box_test_perfect
-00019A 0E50           00301     movlw   b'01010000'             ;50 in BCD
-00019C D???           00302     bra     box_test_add_score
+000188 50??           00289     movf    Boxes_end, W
+00018A 62E9           00290     cpfseq  FSR0L
+00018C D???           00291     bra     box_test_loop
+00018E 0012           00292     return
+000190                00293 box_test_good
+000190 0E10           00294     movlw   b'00010000'             ;10 in BCD
+000192 D???           00295     bra     box_test_add_score
+000194                00296 box_test_great
+000194 0E25           00297     movlw   b'00100101'             ;25 in BCD
+000196 D???           00298     bra     box_test_add_score
+000198                00299 box_test_perfect
+000198 0E50           00300     movlw   b'01010000'             ;50 in BCD
+00019A D???           00301     bra     box_test_add_score
+                      00302     
                       00303     
-                      00304     
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE  7
+                      00304 ;Decrement dy for all boxes
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE  7
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00305 ;Decrement dy for all boxes
-00019E                00306 Decrement_dy
-00019E EE?? F0??      00307     lfsr    0, Boxes
-0001A2                00308 decrement_dy_loop
-                      00309     ;test if memory is occupied
-0001A2 A6EF           00310     btfss   INDF0, Boxes_enable
-0001A4 D???           00311     bra     decrement_dy_next_box               ;if empty, try next memory location
-0001A6 0E01           00312     movlw   .1                                  ;if occupied, decrement lower byte of dy
-0001A8 06EB           00313     decf    PLUSW0
-0001AA E3??           00314     bnc     decrement_dy_higher_byte            ;if there was a borrow
-0001AC                00315 decrement_dy_next_box
+00019C                00305 Decrement_dy
+00019C EE?? F0??      00306     lfsr    0, Boxes
+0001A0                00307 decrement_dy_loop
+                      00308     ;test if memory is occupied
+0001A0 A6EF           00309     btfss   INDF0, Boxes_enable
+0001A2 D???           00310     bra     decrement_dy_next_box               ;if empty, try next memory location
+0001A4 0E01           00311     movlw   .1                                  ;if occupied, decrement lower byte of dy
+0001A6 06EB           00312     decf    PLUSW0
+0001A8 E3??           00313     bnc     decrement_dy_higher_byte            ;if there was a borrow
+0001AA                00314 decrement_dy_next_box
+0001AA 2AE9           00315     incf    FSR0L
 0001AC 2AE9           00316     incf    FSR0L
-0001AE 2AE9           00317     incf    FSR0L
-0001B0 50??           00318     movf    Boxes_end, W
-0001B2 62E9           00319     cpfseq  FSR0L
-0001B4 D???           00320     bra     decrement_dy_loop
-0001B6 0012           00321     return
-                      00322     ;temporary subroutine
-0001B8                00323 decrement_dy_higher_byte
-0001B8 06EF           00324     decf    INDF0
-0001BA B4EF           00325     btfsc   INDF0, Boxes_negative
-0001BC EC?? F???      00326     call    Remove_box                          ;if not, save dy and decrement next box
-0001C0 D???           00327     bra     decrement_dy_next_box
+0001AE 50??           00317     movf    Boxes_end, W
+0001B0 62E9           00318     cpfseq  FSR0L
+0001B2 D???           00319     bra     decrement_dy_loop
+0001B4 0012           00320     return
+                      00321     ;temporary subroutine
+0001B6                00322 decrement_dy_higher_byte
+0001B6 06EF           00323     decf    INDF0
+0001B8 B4EF           00324     btfsc   INDF0, Boxes_negative
+0001BA EC?? F???      00325     call    Remove_box                          ;if not, save dy and decrement next box
+0001BE D???           00326     bra     decrement_dy_next_box
+                      00327     
                       00328     
-                      00329     
-                      00330 ;Remove box from memory
-0001C2                00331 Remove_box
-0001C2 6AEF           00332     clrf    INDF0
-0001C4 0E01           00333     movlw   .1
-0001C6 6AEB           00334     clrf    PLUSW0
-0001C8 0012           00335     return
-                      00336 
-                      00337     
-                      00338 ;Delay ms given in W
-0001CA                00339 Delay_ms
-0001CA 6E??           00340         movwf   Delay_ms_cnt
-0001CC                00341 Delay_ms_loop
-0001CC 0EFA           00342         movlw   .250                ; 1 ms Delay
-0001CE EC?? F???      00343         call    Delay_x4us      
-0001D2 2E??           00344         decfsz  Delay_ms_cnt
-0001D4 D???           00345         bra     Delay_ms_loop
-0001D6 0012           00346         return
-                      00347 ;Delay x4 us given in W
-0001D8                00348 Delay_x4us
-0001D8 6E??           00349         movwf   Delay_x4us_cnt_l   ; now need to multiply by 16
-0001DA 3A??           00350         swapf   Delay_x4us_cnt_l,F ; swap nibbles
-0001DC 0E0F           00351         movlw   0x0f        
-0001DE 14??           00352         andwf   Delay_x4us_cnt_l,W ; move low nibble to W
-0001E0 6E??           00353         movwf   Delay_x4us_cnt_h   ; then to LCD_cnt_h
-0001E2 0EF0           00354         movlw   0xf0        
-0001E4 16??           00355         andwf   Delay_x4us_cnt_l,F ; keep high nibble in LCD_cnt_l
-0001E6 EC?? F???      00356         call    delay
-0001EA 0012           00357         return
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE  8
+                      00329 ;Remove box from memory
+0001C0                00330 Remove_box
+0001C0 6AEF           00331     clrf    INDF0
+0001C2 0E01           00332     movlw   .1
+0001C4 6AEB           00333     clrf    PLUSW0
+0001C6 0012           00334     return
+                      00335 
+                      00336     
+                      00337 ;Delay ms given in W
+0001C8                00338 Delay_ms
+0001C8 6E??           00339         movwf   Delay_ms_cnt
+0001CA                00340 Delay_ms_loop
+0001CA 0EFA           00341         movlw   .250                ; 1 ms Delay
+0001CC EC?? F???      00342         call    Delay_x4us      
+0001D0 2E??           00343         decfsz  Delay_ms_cnt
+0001D2 D???           00344         bra     Delay_ms_loop
+0001D4 0012           00345         return
+                      00346 ;Delay x4 us given in W
+0001D6                00347 Delay_x4us
+0001D6 6E??           00348         movwf   Delay_x4us_cnt_l   ; now need to multiply by 16
+0001D8 3A??           00349         swapf   Delay_x4us_cnt_l,F ; swap nibbles
+0001DA 0E0F           00350         movlw   0x0f        
+0001DC 14??           00351         andwf   Delay_x4us_cnt_l,W ; move low nibble to W
+0001DE 6E??           00352         movwf   Delay_x4us_cnt_h   ; then to LCD_cnt_h
+0001E0 0EF0           00353         movlw   0xf0        
+0001E2 16??           00354         andwf   Delay_x4us_cnt_l,F ; keep high nibble in LCD_cnt_l
+0001E4 EC?? F???      00355         call    delay
+0001E8 0012           00356         return
+                      00357     ;temporary subroutine
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE  8
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
   VALUE
 
-                      00358     ;temporary subroutine
-0001EC                00359 delay                           ; Delay routine 4 instruction loop == 250ns         
-0001EC 0E00           00360         movlw   0x00            ; W=0
-0001EE                00361 delay_loop
-0001EE 06??           00362         decf    Delay_x4us_cnt_l,F      ; no carry when 0x00 -> 0xff
-0001F0 5A??           00363         subwfb  Delay_x4us_cnt_h,F      ; no carry when 0x00 -> 0xff
-0001F2 E2??           00364         bc      delay_loop      ; carry, then loop again
-0001F4 0012           00365         return                  ; carry reset so return
-                      00366     end
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE  9
+0001EA                00358 delay                           ; Delay routine 4 instruction loop == 250ns         
+0001EA 0E00           00359         movlw   0x00            ; W=0
+0001EC                00360 delay_loop
+0001EC 06??           00361         decf    Delay_x4us_cnt_l,F      ; no carry when 0x00 -> 0xff
+0001EE 5A??           00362         subwfb  Delay_x4us_cnt_h,F      ; no carry when 0x00 -> 0xff
+0001F0 E2??           00363         bc      delay_loop      ; carry, then loop again
+0001F2 0012           00364         return                  ; carry reset so return
+                      00365     end
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE  9
 
 
 SYMBOL TABLE
@@ -485,7 +484,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 10
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 10
 
 
 SYMBOL TABLE
@@ -544,7 +543,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 11
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 11
 
 
 SYMBOL TABLE
@@ -603,7 +602,7 @@ C                                 00000000
 C10TSEL0                          00000004
 C1INA                             00000006
 C1INB                             00000005
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 12
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 12
 
 
 SYMBOL TABLE
@@ -662,7 +661,7 @@ CCP10OD                           00000007
 CCP10X                            00000005
 CCP10Y                            00000004
 CCP1CON                           00000FBB
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 13
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 13
 
 
 SYMBOL TABLE
@@ -721,7 +720,7 @@ CCP4Y                             00000004
 CCP5                              00000004
 CCP5CON                           00000F74
 CCP5IE                            00000002
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 14
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 14
 
 
 SYMBOL TABLE
@@ -780,7 +779,7 @@ CCP8Y                             00000004
 CCP8_PORTE                        00000004
 CCP8_PORTH                        00000005
 CCP9CON                           00000F43
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 15
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 15
 
 
 SYMBOL TABLE
@@ -839,7 +838,7 @@ CHS0                              00000002
 CHS1                              00000003
 CHS2                              00000004
 CHS3                              00000005
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 16
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 16
 
 
 SYMBOL TABLE
@@ -898,7 +897,7 @@ CTMUCONH                          00000F57
 CTMUCONL                          00000F56
 CTMUDS                            00000000
 CTMUEN                            00000007
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 17
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 17
 
 
 SYMBOL TABLE
@@ -956,17 +955,17 @@ DT1                               00000007
 DT2                               00000002
 D_A                               00000005
 D_NOT_A                           00000005
-Decrement_dy                      0000019E
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 18
+Decrement_dy                      0000019C
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 18
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
-Delay_ms                          000001CA
+Delay_ms                          000001C8
 Delay_ms_cnt                      00000000
-Delay_ms_loop                     000001CC
-Delay_x4us                        000001D8
+Delay_ms_loop                     000001CA
+Delay_x4us                        000001D6
 Delay_x4us_cnt_h                  00000001
 Delay_x4us_cnt_l                  00000002
 EBDIS                             00000007
@@ -1016,7 +1015,7 @@ FAST                              00000001
 FERR                              00000002
 FERR1                             00000002
 FERR2                             00000002
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 19
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 19
 
 
 SYMBOL TABLE
@@ -1075,7 +1074,7 @@ INT1IE                            00000003
 INT1IF                            00000000
 INT1IP                            00000006
 INT1P                             00000006
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 20
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 20
 
 
 SYMBOL TABLE
@@ -1134,7 +1133,7 @@ LATA2                             00000002
 LATA3                             00000003
 LATA4                             00000004
 LATA5                             00000005
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 21
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 21
 
 
 SYMBOL TABLE
@@ -1193,7 +1192,7 @@ LATG2                             00000002
 LATG3                             00000003
 LATG4                             00000004
 LATH                              00000F90
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 22
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 22
 
 
 SYMBOL TABLE
@@ -1252,7 +1251,7 @@ NOT_T1DONE                        00000003
 NOT_T1SYNC                        00000002
 NOT_T3DONE                        00000003
 NOT_T3SYNC                        00000002
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 23
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 23
 
 
 SYMBOL TABLE
@@ -1311,7 +1310,7 @@ P2DC2                             00000002
 P2DC3                             00000003
 P2DC4                             00000004
 P2DC5                             00000005
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 24
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 24
 
 
 SYMBOL TABLE
@@ -1370,7 +1369,7 @@ PLUSW1                            00000FE3
 PLUSW2                            00000FDB
 PMD0                              00000F19
 PMD1                              00000F18
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 25
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 25
 
 
 SYMBOL TABLE
@@ -1429,7 +1428,7 @@ PSS2AC0                           00000002
 PSS2AC1                           00000003
 PSS2BD0                           00000000
 PSS2BD1                           00000001
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 26
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 26
 
 
 SYMBOL TABLE
@@ -1488,7 +1487,7 @@ RCIDL                             00000006
 RCIE                              00000005
 RCIF                              00000005
 RCIP                              00000005
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 27
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 27
 
 
 SYMBOL TABLE
@@ -1547,7 +1546,7 @@ RH5                               00000005
 RH6                               00000006
 RH7                               00000007
 RI                                00000004
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 28
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 28
 
 
 SYMBOL TABLE
@@ -1599,14 +1598,14 @@ RX9D2                             00000000
 RXDTP                             00000005
 R_NOT_W                           00000002
 R_W                               00000002
-Remove_box                        000001C2
+Remove_box                        000001C0
 S                                 00000003
 SBOREN                            00000006
 SCK1                              00000003
 SCK2                              00000006
 SCKLI                             00000000
 SCL1                              00000003
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 29
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 29
 
 
 SYMBOL TABLE
@@ -1665,7 +1664,7 @@ SSP2ADD                           00000F69
 SSP2BUF                           00000F6A
 SSP2CON1                          00000F67
 SSP2CON2                          00000F66
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 30
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 30
 
 
 SYMBOL TABLE
@@ -1724,7 +1723,7 @@ T10CKPS0                          00000000
 T10CKPS1                          00000001
 T10CON                            00000F33
 T10OUTPS0                         00000003
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 31
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 31
 
 
 SYMBOL TABLE
@@ -1783,7 +1782,7 @@ T4OUTPS1                          00000004
 T4OUTPS2                          00000005
 T4OUTPS3                          00000006
 T5CKI                             00000001
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 32
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 32
 
 
 SYMBOL TABLE
@@ -1842,7 +1841,7 @@ TMR0IE                            00000005
 TMR0IF                            00000002
 TMR0IP                            00000002
 TMR0L                             00000FD6
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 33
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 33
 
 
 SYMBOL TABLE
@@ -1901,7 +1900,7 @@ TMR4IF                            00000000
 TMR4IP                            00000000
 TMR4MD                            00000004
 TMR4ON                            00000002
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 34
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 34
 
 
 SYMBOL TABLE
@@ -1960,7 +1959,7 @@ TRISA1                            00000001
 TRISA2                            00000002
 TRISA3                            00000003
 TRISA4                            00000004
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 35
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 35
 
 
 SYMBOL TABLE
@@ -2019,7 +2018,7 @@ TRISG1                            00000001
 TRISG2                            00000002
 TRISG3                            00000003
 TRISG4                            00000004
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 36
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 36
 
 
 SYMBOL TABLE
@@ -2078,7 +2077,7 @@ TXIP                              00000004
 TXREG                             00000FAD
 TXREG1                            00000FAD
 TXREG2                            00000F1C
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 37
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 37
 
 
 SYMBOL TABLE
@@ -2137,7 +2136,7 @@ _BORPWR_HIGH_2L                   000000DF
 _BORPWR_LOW_2L                    0000009F
 _BORPWR_MEDIUM_2L                 000000BF
 _BORPWR_ZPBORMV_2L                000000FF
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 38
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 38
 
 
 SYMBOL TABLE
@@ -2196,7 +2195,7 @@ _EBRT1_OFF_7L                     000000FF
 _EBRT1_ON_7L                      000000FD
 _EBRT2_OFF_7L                     000000FF
 _EBRT2_ON_7L                      000000FB
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 39
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 39
 
 
 SYMBOL TABLE
@@ -2255,7 +2254,7 @@ _PWRTEN_ON_2L                     000000FE
 _RETEN_OFF_1L                     000000FE
 _RETEN_ON_1L                      000000FF
 _RTCOSC_INTOSCREF_3L              000000FE
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 40
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 40
 
 
 SYMBOL TABLE
@@ -2314,7 +2313,7 @@ _WRTB_OFF_6H                      000000FF
 _WRTB_ON_6H                       000000BF
 _WRTC_OFF_6H                      000000FF
 _WRTC_ON_6H                       000000DF
-MPASM 5.81                          MAIN.ASM   11-20-2019  16:00:26         PAGE 41
+MPASM 5.81                          MAIN.ASM   11-21-2019  15:43:41         PAGE 41
 
 
 SYMBOL TABLE
@@ -2326,12 +2325,12 @@ _XINST_OFF_1L                     000000BF
 _XINST_ON_1L                      000000FF
 __18F87K22                        00000001
 box_height                        .10
-box_test_add_score                00000118
-box_test_good                     00000192
-box_test_great                    00000196
+box_test_add_score                00000116
+box_test_good                     00000190
+box_test_great                    00000194
 box_test_loop                     000000C0
-box_test_next_box                 00000186
-box_test_perfect                  0000019A
+box_test_next_box                 00000184
+box_test_perfect                  00000198
 box_width                         .80
 box_xoffset                       .100
 box_xstart                        .10
@@ -2339,12 +2338,12 @@ box_yoffset                       .50
 box_ystart                        .20
 converter                         00000000
 current_Box                       00000000
-decrement_dy_higher_byte          000001B8
-decrement_dy_loop                 000001A2
-decrement_dy_next_box             000001AC
-delay                             000001EC
-delay_loop                        000001EE
-here                              00000104
+decrement_dy_higher_byte          000001B6
+decrement_dy_loop                 000001A0
+decrement_dy_next_box             000001AA
+delay                             000001EA
+delay_loop                        000001EC
+here                              00000102
 key                               00000001
 max_boxes                         .20
 new_box_loop                      00000034

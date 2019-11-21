@@ -2,7 +2,7 @@
     
     global  LCD_Initialisation, Scroll, Scroll_d_l, Scroll_d_h, Text_offset, Update_score, Set_text_update
     global  LCD_RectHelper, rect_x1_l, rect_x1_h, rect_y1_l, rect_y1_h, rect_x2_l, rect_x2_h,rect_y2_l, rect_y2_h, rect_colour
-    extern  Delay_ms, Box_test, Decrement_dy
+    extern  Delay_ms, Delay_x4us, Box_test, Decrement_dy
 
 ;Data sheet definition (register array, pin, constant)
 
@@ -110,9 +110,10 @@
     
 #define	scroll_yend_l		.144
 #define	scroll_yend_h		.1
-#define	scroll_speed		.5
+#define	scroll_speed		.2
 #define	LYEN			7	;Control bit location, layer enable
 #define	FLASH			6
+#define flash_duration		.25
     
 #define	RST		0
 #define	MOSI		4
@@ -169,6 +170,8 @@ scrl
 scrl2
     movlw   scroll_speed
     call    Delay_ms
+    movlw   .60
+    call    Delay_x4us
     decf    Scroll_d_l, F	; borrow when 0x00 -> 0xff
     movlw   0x00		; W=0	
     subwfb  Scroll_d_h, F	; no carry when 0x00 -> 0xff
@@ -209,7 +212,7 @@ Set_text_update
     
 Goal_flash
     ;;when box matches keypad output, immdeiately call the goal flash
-    movlw   .30
+    movlw   flash_duration
     movwf   Flash_counter
     swapf   INDF0, W
     andlw   b'111'

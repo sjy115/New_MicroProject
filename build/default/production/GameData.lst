@@ -1,4 +1,4 @@
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE  1
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE  1
 
 
 LOC  OBJECT CODE     LINE SOURCE TEXT
@@ -16,46 +16,1606 @@ LOC  OBJECT CODE     LINE SOURCE TEXT
                       00009 
                       02986         LIST
                       00002     
-  0000                00003     extern  New_box, Scroll, Music_Avengers
+  0000                00003     extern  New_box, Scroll, Music_Avengers, Delay_ms
   0000                00004     global  Play_Avengers
                       00005     
                       00006 GameData    code
                       00007     
 000000                00008 Play_Avengers
 000000 EC?? F???      00009     call    Music_Avengers
-000004 EC?? F???      00010     call    Scroll
-000008 0E07           00011     movlw   b'00000111'
-00000A EC?? F???      00012     call    New_box
-00000E 0E02           00013     movlw   b'00000010'
-000010 EC?? F???      00014     call    New_box
-000014 0E01           00015     movlw   b'00000001'
-000016 EC?? F???      00016     call    New_box
-00001A 0E00           00017     movlw   b'00000000'
-00001C EC?? F???      00018     call    New_box
-000020 EC?? F???      00019     call    Scroll
-000024 0E07           00020     movlw   b'00000111'
-000026 EC?? F???      00021     call    New_box
-00002A 0E02           00022     movlw   b'00000010'
-00002C EC?? F???      00023     call    New_box
-000030 0E01           00024     movlw   b'00000001'
-000032 EC?? F???      00025     call    New_box
-000036 0E00           00026     movlw   b'00000000'
-000038 EC?? F???      00027     call    New_box
-00003C EC?? F???      00028     call    Scroll
-000040 0E07           00029     movlw   b'00000111'
-000042 EC?? F???      00030     call    New_box
-000046 0E02           00031     movlw   b'00000010'
-000048 EC?? F???      00032     call    New_box
-00004C 0E01           00033     movlw   b'00000001'
-00004E EC?? F???      00034     call    New_box
-000052 0E00           00035     movlw   b'00000000'
-000054 EC?? F???      00036     call    New_box
-000058 EC?? F???      00037     call    Scroll
-00005C EC?? F???      00038     call    Scroll
-000060 0012           00039     return
-                      00040     
-                      00041     end
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE  2
+                      00010         
+000004 EC?? F???      00011     call    Scroll
+000008 0E7D           00012     movlw   .125
+00000A EC?? F???      00013     call    Delay_ms
+                      00014 ;bar 1
+                      00015     ;Layer 1
+                      00016     
+00000E 0E47           00017     movlw   b'01000111'
+000010 EC?? F???      00018     call    New_box
+000014 0E06           00019     movlw   b'00000110'
+000016 EC?? F???      00020     call    New_box
+00001A 0E45           00021     movlw   b'01000101'
+00001C EC?? F???      00022     call    New_box
+000020 0E01           00023     movlw   b'00000001'
+000022 EC?? F???      00024     call    New_box
+000026 0E40           00025     movlw   b'01000000'
+000028 EC?? F???      00026     call    New_box
+00002C EC?? F???      00027         call    Scroll
+                      00028     
+                      00029     ;Layer 2
+                      00030     ;
+000030 0E07           00031     movlw   b'00000111'
+000032 EC?? F???      00032     call    New_box
+000036 0E43           00033     movlw   b'01000011'
+000038 EC?? F???      00034     call    New_box
+00003C 0E02           00035     movlw   b'00000010'
+00003E EC?? F???      00036     call    New_box
+000042 0E41           00037     movlw   b'01000001'
+000044 EC?? F???      00038     call    New_box
+000048 0E00           00039     movlw   b'00000000'
+00004A EC?? F???      00040     call    New_box
+                      00041     
+00004E EC?? F???      00042     call    Scroll
+                      00043     
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE  2
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00044 ;bar 2
+                      00045      ;Layer 1
+                      00046     ;
+000052 0E57           00047     movlw   b'01010111'
+000054 EC?? F???      00048     call    New_box
+000058 0E16           00049     movlw   b'00010110'
+00005A EC?? F???      00050     call    New_box
+00005E 0E55           00051     movlw   b'01010101'
+000060 EC?? F???      00052     call    New_box
+000064 0E11           00053     movlw   b'00010001'
+000066 EC?? F???      00054     call    New_box
+00006A 0E50           00055     movlw   b'01010000'
+00006C EC?? F???      00056     call    New_box
+                      00057     
+000070 EC?? F???      00058     call    Scroll
+000074 928E           00059         bcf         LATF, 1 
+                      00060     ;Layer 2
+                      00061     ;
+000076 0E07           00062     movlw   b'00000111'
+000078 EC?? F???      00063     call    New_box
+00007C 0E53           00064     movlw   b'01010011'
+00007E EC?? F???      00065     call    New_box
+000082 0E02           00066     movlw   b'00000010'
+000084 EC?? F???      00067     call    New_box
+000088 0E51           00068     movlw   b'01010001'
+00008A EC?? F???      00069     call    New_box
+00008E 0E00           00070     movlw   b'00000000'
+000090 EC?? F???      00071     call    New_box
+                      00072     
+000094 EC?? F???      00073     call    Scroll
+                      00074     
+                      00075 ;bar 3
+                      00076         ;Layer 1
+                      00077     ;
+000098 0E47           00078     movlw   b'01000111'
+00009A EC?? F???      00079     call    New_box
+00009E 0E06           00080     movlw   b'00000110'
+0000A0 EC?? F???      00081     call    New_box
+0000A4 0E45           00082     movlw   b'01000101'
+0000A6 EC?? F???      00083     call    New_box
+0000AA 0E01           00084     movlw   b'00000001'
+0000AC EC?? F???      00085     call    New_box
+0000B0 0E40           00086     movlw   b'01000000'
+0000B2 EC?? F???      00087     call    New_box
+                      00088     
+0000B6 EC?? F???      00089     call    Scroll
+                      00090 
+                      00091     ;Layer 2
+                      00092     ;
+0000BA 0E07           00093     movlw   b'00000111'
+0000BC EC?? F???      00094     call    New_box
+0000C0 0E43           00095     movlw   b'01000011'
+0000C2 EC?? F???      00096     call    New_box
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE  3
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0000C6 0E02           00097     movlw   b'00000010'
+0000C8 EC?? F???      00098     call    New_box
+0000CC 0E41           00099     movlw   b'01000001'
+0000CE EC?? F???      00100     call    New_box
+0000D2 0E00           00101     movlw   b'00000000'
+0000D4 EC?? F???      00102     call    New_box
+                      00103     
+0000D8 EC?? F???      00104     call    Scroll 
+                      00105 
+                      00106 ;bar 4
+                      00107     ;Layer 1
+0000DC 0E57           00108     movlw   b'01010111'
+0000DE EC?? F???      00109     call    New_box
+0000E2 0E16           00110     movlw   b'00010110'
+0000E4 EC?? F???      00111     call    New_box
+0000E8 0E55           00112     movlw   b'01010101'
+0000EA EC?? F???      00113     call    New_box
+0000EE 0E13           00114     movlw   b'00010011'
+0000F0 EC?? F???      00115     call    New_box
+0000F4 0E50           00116     movlw   b'01010000'
+0000F6 EC?? F???      00117     call    New_box
+                      00118     
+0000FA EC?? F???      00119     call    Scroll
+                      00120     
+                      00121     ;Layer 2
+0000FE 0E17           00122     movlw   b'00010111'
+000100 EC?? F???      00123     call    New_box
+000104 0E53           00124     movlw   b'01010011'
+000106 EC?? F???      00125     call    New_box
+00010A 0E13           00126     movlw   b'00010011'
+00010C EC?? F???      00127     call    New_box
+                      00128     
+000110 EC?? F???      00129     call    Scroll
+                      00130     
+                      00131 ;bar 5
+                      00132     ;Layer 1
+                      00133     ;
+000114 0E67           00134     movlw   b'01100111'
+000116 EC?? F???      00135     call    New_box
+00011A 0E26           00136     movlw   b'00100110'
+00011C EC?? F???      00137     call    New_box
+000120 0E65           00138     movlw   b'01100101'
+000122 EC?? F???      00139     call    New_box
+000126 0E21           00140     movlw   b'00100001'
+000128 EC?? F???      00141     call    New_box
+00012C 0E60           00142     movlw   b'01100000'
+00012E EC?? F???      00143     call    New_box
+                      00144     
+000132 EC?? F???      00145     call    Scroll
+                      00146     
+                      00147     ;Layer 2
+                      00148     ;
+000136 0E27           00149     movlw   b'00100111'
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE  4
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000138 EC?? F???      00150     call    New_box
+00013C 0E63           00151     movlw   b'01100011'
+00013E EC?? F???      00152     call    New_box
+000142 0E22           00153     movlw   b'00100010'
+000144 EC?? F???      00154     call    New_box
+000148 0E61           00155     movlw   b'01100001'
+00014A EC?? F???      00156     call    New_box
+00014E 0E20           00157     movlw   b'00100000'
+000150 EC?? F???      00158     call    New_box
+                      00159     
+000154 EC?? F???      00160     call    Scroll
+                      00161     
+                      00162 ;bar 6
+                      00163      ;Layer 1
+                      00164     ;
+000158 0E77           00165     movlw   b'01110111'
+00015A EC?? F???      00166     call    New_box
+00015E 0E36           00167     movlw   b'00110110'
+000160 EC?? F???      00168     call    New_box
+000164 0E75           00169     movlw   b'01110101'
+000166 EC?? F???      00170     call    New_box
+00016A 0E31           00171     movlw   b'00110001'
+00016C EC?? F???      00172     call    New_box
+000170 0E70           00173     movlw   b'01110000'
+000172 EC?? F???      00174     call    New_box
+                      00175     
+000176 EC?? F???      00176     call    Scroll
+                      00177     
+                      00178     ;Layer 2
+                      00179     ;
+00017A 0E37           00180     movlw   b'00110111'
+00017C EC?? F???      00181     call    New_box
+000180 0E73           00182     movlw   b'01110011'
+000182 EC?? F???      00183     call    New_box
+000186 0E32           00184     movlw   b'00110010'
+000188 EC?? F???      00185     call    New_box
+00018C 0E71           00186     movlw   b'01110001'
+00018E EC?? F???      00187     call    New_box
+000192 0E30           00188     movlw   b'00110000'
+000194 EC?? F???      00189     call    New_box
+                      00190     
+000198 EC?? F???      00191     call    Scroll
+                      00192     
+                      00193 ;bar 7
+                      00194         ;Layer 1
+                      00195     ;
+00019C 0E67           00196     movlw   b'01100111'
+00019E EC?? F???      00197     call    New_box
+0001A2 0E26           00198     movlw   b'00100110'
+0001A4 EC?? F???      00199     call    New_box
+0001A8 0E65           00200     movlw   b'01100101'
+0001AA EC?? F???      00201     call    New_box
+0001AE 0E21           00202     movlw   b'00100001'
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE  5
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0001B0 EC?? F???      00203     call    New_box
+0001B4 0E60           00204     movlw   b'01100000'
+0001B6 EC?? F???      00205     call    New_box
+                      00206     
+0001BA EC?? F???      00207     call    Scroll
+                      00208     
+                      00209     ;Layer 2
+                      00210     ;
+0001BE 0E27           00211     movlw   b'00100111'
+0001C0 EC?? F???      00212     call    New_box
+0001C4 0E63           00213     movlw   b'01100011'
+0001C6 EC?? F???      00214     call    New_box
+0001CA 0E22           00215     movlw   b'00100010'
+0001CC EC?? F???      00216     call    New_box
+0001D0 0E61           00217     movlw   b'01100001'
+0001D2 EC?? F???      00218     call    New_box
+0001D6 0E20           00219     movlw   b'00100000'
+0001D8 EC?? F???      00220     call    New_box
+                      00221     
+0001DC EC?? F???      00222     call    Scroll 
+                      00223 
+                      00224 ;bar 8
+                      00225     ;Layer 1
+0001E0 0E77           00226     movlw   b'01110111'
+0001E2 EC?? F???      00227     call    New_box
+0001E6 0E36           00228     movlw   b'00110110'
+0001E8 EC?? F???      00229     call    New_box
+0001EC 0E75           00230     movlw   b'01110101'
+0001EE EC?? F???      00231     call    New_box
+0001F2 0E33           00232     movlw   b'00110011'
+0001F4 EC?? F???      00233     call    New_box
+0001F8 0E70           00234     movlw   b'01110000'
+0001FA EC?? F???      00235     call    New_box
+                      00236     
+0001FE EC?? F???      00237     call    Scroll
+                      00238     
+                      00239     ;Layer 2
+000202 0E37           00240     movlw   b'00110111'
+000204 EC?? F???      00241     call    New_box
+000208 0E73           00242     movlw   b'01110011'
+00020A EC?? F???      00243     call    New_box
+00020E 0E33           00244     movlw   b'00110011'
+000210 EC?? F???      00245     call    New_box
+                      00246     
+000214 EC?? F???      00247     call    Scroll
+                      00248     
+                      00249 ;bar 9
+                      00250     
+000218 EC?? F???      00251     call    Scroll
+                      00252     
+00021C EC?? F???      00253     call    Scroll
+000220 0E7D           00254     movlw   .125
+000222 EC?? F???      00255     call    Delay_ms
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE  6
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00256 ;bar 10
+                      00257     ;Layer 1
+000226 0EC7           00258     movlw   b'11000111'
+000228 EC?? F???      00259     call    New_box
+00022C 0E93           00260     movlw   b'10010011'
+00022E EC?? F???      00261     call    New_box
+000232 0ED0           00262     movlw   b'11010000'
+000234 EC?? F???      00263     call    New_box
+                      00264     
+000238 EC?? F???      00265     call    Scroll
+                      00266     
+                      00267     ;Layer 2
+00023C 0ED7           00268     movlw   b'11010111'
+00023E EC?? F???      00269     call    New_box
+000242 0E93           00270     movlw   b'10010011'
+000244 EC?? F???      00271     call    New_box
+000248 0EC0           00272     movlw   b'11000000'
+00024A EC?? F???      00273     call    New_box
+                      00274     
+00024E EC?? F???      00275     call    Scroll
+                      00276     
+                      00277 ;bar 11
+                      00278     ;Layer 1
+000252 0EC7           00279     movlw   b'11000111'
+000254 EC?? F???      00280     call    New_box
+000258 0E93           00281     movlw   b'10010011'
+00025A EC?? F???      00282     call    New_box
+                      00283     
+00025E EC?? F???      00284     call    Scroll
+                      00285     
+                      00286     ;Layer 2
+000262 EC?? F???      00287     call    Scroll
+000266 0EFA           00288     movlw   .250
+000268 EC?? F???      00289     call    Delay_ms
+                      00290 ;bar 12
+                      00291     ;Layer 1
+00026C 0E97           00292     movlw   b'10010111'
+00026E EC?? F???      00293     call    New_box
+000272 0EE3           00294     movlw   b'11100011'
+000274 EC?? F???      00295     call    New_box
+000278 0EA0           00296     movlw   b'10100000'
+00027A EC?? F???      00297     call    New_box
+                      00298     
+00027E EC?? F???      00299     call    Scroll
+                      00300     
+                      00301     ;Layer 2
+000282 0EA7           00302     movlw   b'10100111'
+000284 EC?? F???      00303     call    New_box
+000288 0EE3           00304     movlw   b'11100011'
+00028A EC?? F???      00305     call    New_box
+00028E 0E90           00306     movlw   b'10010000'
+000290 EC?? F???      00307     call    New_box
+                      00308     
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE  7
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000294 EC?? F???      00309     call    Scroll
+                      00310     
+                      00311 ;bar 13
+                      00312     ;Layer 1
+                      00313     
+                      00314     
+000298 EC?? F???      00315     call    Scroll
+                      00316     
+                      00317     ;Layer 2
+00029C EC?? F???      00318     call    Scroll
+0002A0 0E7D           00319     movlw   .125
+0002A2 EC?? F???      00320     call    Delay_ms
+                      00321 ;bar 14
+                      00322     ;Layer 1
+0002A6 0EC7           00323     movlw   b'11000111'
+0002A8 EC?? F???      00324     call    New_box
+0002AC 0E93           00325     movlw   b'10010011'
+0002AE EC?? F???      00326     call    New_box
+0002B2 0ED0           00327     movlw   b'11010000'
+0002B4 EC?? F???      00328     call    New_box
+                      00329     
+0002B8 EC?? F???      00330     call    Scroll
+                      00331     
+                      00332     ;Layer 2
+0002BC 0ED7           00333     movlw   b'11010111'
+0002BE EC?? F???      00334     call    New_box
+0002C2 0E93           00335     movlw   b'10010011'
+0002C4 EC?? F???      00336     call    New_box
+                      00337     
+                      00338     
+0002C8 EC?? F???      00339     call    Scroll
+                      00340     
+                      00341 ;bar 15
+                      00342     ;Layer 1
+0002CC 0EC7           00343     movlw   b'11000111'
+0002CE EC?? F???      00344     call    New_box
+0002D2 0EC6           00345     movlw   b'11000110'
+0002D4 EC?? F???      00346     call    New_box
+0002D8 0E92           00347     movlw   b'10010010'
+0002DA EC?? F???      00348     call    New_box
+                      00349     
+0002DE EC?? F???      00350     call    Scroll
+                      00351     
+                      00352     ;Layer 2
+0002E2 EC?? F???      00353     call    Scroll
+0002E6 0E7D           00354     movlw   .125
+0002E8 EC?? F???      00355     call    Delay_ms
+                      00356 ;bar 16
+                      00357     ;Layer 1
+0002EC 0E96           00358     movlw   b'10010110'
+0002EE EC?? F???      00359     call    New_box
+0002F2 0EE3           00360     movlw   b'11100011'
+0002F4 EC?? F???      00361     call    New_box
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE  8
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00362     
+0002F8 EC?? F???      00363     call    Scroll
+                      00364     ;Layer 2
+0002FC 0EA7           00365     movlw   b'10100111'
+0002FE EC?? F???      00366     call    New_box
+000302 0EA6           00367     movlw   b'10100110'
+000304 EC?? F???      00368     call    New_box
+000308 0EE2           00369     movlw   b'11100010'
+00030A EC?? F???      00370     call    New_box
+                      00371 
+00030E EC?? F???      00372     call    Scroll
+                      00373     
+                      00374 ;bar 17
+                      00375     ;Layer 1
+000312 0EE7           00376     movlw   b'11100111'
+000314 EC?? F???      00377     call    New_box
+                      00378     
+000318 EC?? F???      00379     call    Scroll
+                      00380     
+                      00381     ;Layer 2
+00031C EC?? F???      00382     call    Scroll
+000320 0EFA           00383     movlw   .250
+000322 EC?? F???      00384     call    Delay_ms
+                      00385     
+                      00386 ;bar 18
+                      00387     ;Layer 1
+000326 0E57           00388     movlw   b'01010111'
+000328 EC?? F???      00389     call    New_box
+00032C 0E23           00390     movlw   b'00100011'
+00032E EC?? F???      00391     call    New_box
+000332 0E60           00392     movlw   b'01100000'
+000334 EC?? F???      00393     call    New_box
+                      00394     
+000338 EC?? F???      00395     call    Scroll
+                      00396     
+                      00397     ;Layer 2
+00033C 0E37           00398     movlw   b'00110111'
+00033E EC?? F???      00399     call    New_box
+000342 0E63           00400     movlw   b'01100011'
+000344 EC?? F???      00401     call    New_box
+000348 0E20           00402     movlw   b'00100000'
+00034A EC?? F???      00403     call    New_box
+                      00404     
+00034E EC?? F???      00405     call    Scroll
+000352 0EFA           00406     movlw   .250
+000354 EC?? F???      00407     call    Delay_ms
+                      00408 ;bar 19
+                      00409     ;Layer 1
+000358 0E57           00410     movlw   b'01010111'
+00035A EC?? F???      00411     call    New_box
+00035E 0E23           00412     movlw   b'00100011'
+000360 EC?? F???      00413     call    New_box
+                      00414     
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE  9
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000364 EC?? F???      00415     call    Scroll
+                      00416     
+                      00417     ;Layer 2
+000368 EC?? F???      00418     call    Scroll
+00036C 0EFA           00419     movlw   .250
+00036E EC?? F???      00420     call    Delay_ms
+                      00421 ;bar 20
+                      00422     ;Layer 1
+000372 0E27           00423     movlw   b'00100111'
+000374 EC?? F???      00424     call    New_box
+000378 0E73           00425     movlw   b'01110011'
+00037A EC?? F???      00426     call    New_box
+00037E 0EF0           00427     movlw   b'11110000'
+000380 EC?? F???      00428     call    New_box
+                      00429     
+000384 EC?? F???      00430     call    Scroll
+                      00431     
+                      00432     ;Layer 2
+000388 0EB7           00433     movlw   b'10110111'
+00038A EC?? F???      00434     call    New_box
+00038E 0E33           00435     movlw   b'00110011'
+000390 EC?? F???      00436     call    New_box
+                      00437     
+000394 EC?? F???      00438     call    Scroll
+                      00439     
+                      00440 ;bar 21
+                      00441     ;Layer 1
+000398 0E07           00442     movlw   b'00000111'
+00039A EC?? F???      00443     call    New_box
+00039E 0EE7           00444     movlw   b'11100111'
+0003A0 EC?? F???      00445     call    New_box
+                      00446     
+0003A4 EC?? F???      00447     call    Scroll
+                      00448     
+                      00449     ;Layer 2
+0003A8 EC?? F???      00450     call    Scroll
+                      00451 ;bar 22
+                      00452     ;Layer 1
+0003AC 0E47           00453     movlw   b'01000111'
+0003AE EC?? F???      00454     call    New_box
+0003B2 0E07           00455     movlw   b'00000111'
+0003B4 EC?? F???      00456     call    New_box
+0003B8 0E93           00457     movlw   b'10010011'
+0003BA EC?? F???      00458     call    New_box
+0003BE 0ED3           00459     movlw   b'11010011'
+0003C0 EC?? F???      00460     call    New_box
+0003C4 0EA0           00461     movlw   b'10100000'
+0003C6 EC?? F???      00462     call    New_box
+0003CA 0EE0           00463     movlw   b'11100000'
+0003CC EC?? F???      00464     call    New_box
+                      00465     
+0003D0 EC?? F???      00466     call    Scroll
+                      00467     
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 10
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00468     ;Layer 2
+0003D4 0EA7           00469     movlw   b'10100111'
+0003D6 EC?? F???      00470     call    New_box
+0003DA 0EE7           00471     movlw   b'11100111'
+0003DC EC?? F???      00472     call    New_box
+0003E0 0E93           00473     movlw   b'10010011'
+0003E2 EC?? F???      00474     call    New_box
+0003E6 0ED3           00475     movlw   b'11010011'
+0003E8 EC?? F???      00476     call    New_box
+0003EC 0E00           00477     movlw   b'00000000'
+0003EE EC?? F???      00478     call    New_box
+0003F2 0E40           00479     movlw   b'01000000'
+0003F4 EC?? F???      00480     call    New_box
+                      00481     
+0003F8 EC?? F???      00482     call    Scroll
+                      00483     
+                      00484 ;bar 23
+                      00485     ;Layer 1
+0003FC 0E07           00486     movlw   b'00000111'
+0003FE EC?? F???      00487     call    New_box
+000402 0E47           00488     movlw   b'01000111'
+000404 EC?? F???      00489     call    New_box
+000408 0E83           00490     movlw   b'10000011'
+00040A EC?? F???      00491     call    New_box
+00040E 0EC3           00492     movlw   b'11000011'
+000410 EC?? F???      00493     call    New_box
+                      00494     
+000414 EC?? F???      00495     call    Scroll
+                      00496     
+                      00497     ;Layer 2
+000418 EC?? F???      00498     call    Scroll
+                      00499   
+                      00500 ;bar 24
+                      00501     ;Layer 1
+00041C 0E87           00502     movlw   b'10000111'
+00041E EC?? F???      00503     call    New_box
+000422 0EC7           00504     movlw   b'11000111'
+000424 EC?? F???      00505     call    New_box
+000428 0E93           00506     movlw   b'10010011'
+00042A EC?? F???      00507     call    New_box
+00042E 0ED3           00508     movlw   b'11010011'
+000430 EC?? F???      00509     call    New_box
+000434 0EA0           00510     movlw   b'10100000'
+000436 EC?? F???      00511     call    New_box
+00043A 0EE0           00512     movlw   b'11100000'
+00043C EC?? F???      00513     call    New_box
+                      00514     
+000440 EC?? F???      00515     call    Scroll
+                      00516     ;Layer 2
+                      00517     
+000444 0EA7           00518     movlw   b'10100111'
+000446 EC?? F???      00519     call    New_box
+00044A 0EE7           00520     movlw   b'11100111'
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 11
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00044C EC?? F???      00521     call    New_box
+000450 0EB3           00522     movlw   b'10110011'
+000452 EC?? F???      00523     call    New_box
+000456 0EF3           00524     movlw   b'11110011'
+000458 EC?? F???      00525     call    New_box
+                      00526     
+00045C EC?? F???      00527     call    Scroll
+                      00528     
+                      00529 ;bar 25
+                      00530     ;Layer 1
+000460 0E47           00531     movlw   b'01000111'
+000462 EC?? F???      00532     call    New_box
+000466 0E06           00533     movlw   b'00000110'
+000468 EC?? F???      00534     call    New_box
+00046C 0E55           00535     movlw   b'01010101'
+00046E EC?? F???      00536     call    New_box
+000472 0E14           00537     movlw   b'00010100'
+000474 EC?? F???      00538     call    New_box
+000478 0E63           00539     movlw   b'01100011'
+00047A EC?? F???      00540     call    New_box
+00047E 0E22           00541     movlw   b'00100010'
+000480 EC?? F???      00542     call    New_box
+000484 0E71           00543     movlw   b'01110001'
+000486 EC?? F???      00544     call    New_box
+00048A 0E30           00545     movlw   b'00110000'
+00048C EC?? F???      00546     call    New_box
+                      00547     
+000490 EC?? F???      00548     call Scroll
+                      00549     
+                      00550     ;Layer 2
+000494 0EF7           00551     movlw   b'11110111'
+000496 EC?? F???      00552     call    New_box
+00049A 0EB6           00553     movlw   b'10110110'
+00049C EC?? F???      00554     call    New_box
+0004A0 0EE5           00555     movlw   b'11100101'
+0004A2 EC?? F???      00556     call    New_box
+0004A6 0EA4           00557     movlw   b'10100100'
+0004A8 EC?? F???      00558     call    New_box
+0004AC 0ED3           00559     movlw   b'11010011'
+0004AE EC?? F???      00560     call    New_box
+0004B2 0E92           00561     movlw   b'10010010'
+0004B4 EC?? F???      00562     call    New_box
+0004B8 0EC1           00563     movlw   b'11000001'
+0004BA EC?? F???      00564     call    New_box
+0004BE 0E80           00565     movlw   b'10000000'
+0004C0 EC?? F???      00566     call    New_box
+                      00567     
+0004C4 EC?? F???      00568     call Scroll
+                      00569     
+                      00570 ;bar 26
+                      00571     ;Layer 1
+0004C8 0E47           00572     movlw   b'01000111'
+0004CA EC?? F???      00573     call    New_box
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 12
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0004CE 0E06           00574     movlw   b'00000110'
+0004D0 EC?? F???      00575     call    New_box
+0004D4 0E55           00576     movlw   b'01010101'
+0004D6 EC?? F???      00577     call    New_box
+0004DA 0E14           00578     movlw   b'00010100'
+0004DC EC?? F???      00579     call    New_box
+0004E0 0E63           00580     movlw   b'01100011'
+0004E2 EC?? F???      00581     call    New_box
+0004E6 0E22           00582     movlw   b'00100010'
+0004E8 EC?? F???      00583     call    New_box
+0004EC 0E71           00584     movlw   b'01110001'
+0004EE EC?? F???      00585     call    New_box
+0004F2 0E30           00586     movlw   b'00110000'
+0004F4 EC?? F???      00587     call    New_box
+                      00588     
+0004F8 EC?? F???      00589     call Scroll
+                      00590     
+                      00591     ;Layer 2
+0004FC 0EF7           00592     movlw   b'11110111'
+0004FE EC?? F???      00593     call    New_box
+000502 0EB6           00594     movlw   b'10110110'
+000504 EC?? F???      00595     call    New_box
+000508 0EE5           00596     movlw   b'11100101'
+00050A EC?? F???      00597     call    New_box
+00050E 0EA4           00598     movlw   b'10100100'
+000510 EC?? F???      00599     call    New_box
+000514 0ED3           00600     movlw   b'11010011'
+000516 EC?? F???      00601     call    New_box
+00051A 0E92           00602     movlw   b'10010010'
+00051C EC?? F???      00603     call    New_box
+000520 0EC1           00604     movlw   b'11000001'
+000522 EC?? F???      00605     call    New_box
+000526 0E80           00606     movlw   b'10000000'
+000528 EC?? F???      00607     call    New_box
+                      00608     
+00052C EC?? F???      00609     call Scroll
+                      00610     
+                      00611 ;bar 27
+                      00612     ;Layer 1
+000530 0E47           00613     movlw   b'01000111'
+000532 EC?? F???      00614     call    New_box
+000536 0E06           00615     movlw   b'00000110'
+000538 EC?? F???      00616     call    New_box
+00053C 0E55           00617     movlw   b'01010101'
+00053E EC?? F???      00618     call    New_box
+000542 0E14           00619     movlw   b'00010100'
+000544 EC?? F???      00620     call    New_box
+000548 0E63           00621     movlw   b'01100011'
+00054A EC?? F???      00622     call    New_box
+00054E 0E22           00623     movlw   b'00100010'
+000550 EC?? F???      00624     call    New_box
+000554 0E71           00625     movlw   b'01110001'
+000556 EC?? F???      00626     call    New_box
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 13
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00055A 0E30           00627     movlw   b'00110000'
+00055C EC?? F???      00628     call    New_box
+                      00629     
+000560 EC?? F???      00630     call Scroll
+                      00631     
+                      00632     ;Layer 2
+000564 0EF7           00633     movlw   b'11110111'
+000566 EC?? F???      00634     call    New_box
+00056A 0EB6           00635     movlw   b'10110110'
+00056C EC?? F???      00636     call    New_box
+000570 0EE5           00637     movlw   b'11100101'
+000572 EC?? F???      00638     call    New_box
+000576 0EA4           00639     movlw   b'10100100'
+000578 EC?? F???      00640     call    New_box
+00057C 0ED3           00641     movlw   b'11010011'
+00057E EC?? F???      00642     call    New_box
+000582 0E92           00643     movlw   b'10010010'
+000584 EC?? F???      00644     call    New_box
+000588 0EC1           00645     movlw   b'11000001'
+00058A EC?? F???      00646     call    New_box
+00058E 0E80           00647     movlw   b'10000000'
+000590 EC?? F???      00648     call    New_box
+                      00649     
+000594 EC?? F???      00650     call Scroll
+                      00651     
+                      00652 ;bar 28
+                      00653     ;Layer 1
+000598 0EF7           00654     movlw   b'11110111'
+00059A EC?? F???      00655     call    New_box
+00059E 0EB6           00656     movlw   b'10110110'
+0005A0 EC?? F???      00657     call    New_box
+0005A4 0EE5           00658     movlw   b'11100101'
+0005A6 EC?? F???      00659     call    New_box
+0005AA 0EA4           00660     movlw   b'10100100'
+0005AC EC?? F???      00661     call    New_box
+0005B0 0ED3           00662     movlw   b'11010011'
+0005B2 EC?? F???      00663     call    New_box
+0005B6 0E92           00664     movlw   b'10010010'
+0005B8 EC?? F???      00665     call    New_box
+0005BC 0EC1           00666     movlw   b'11000001'
+0005BE EC?? F???      00667     call    New_box
+0005C2 0E80           00668     movlw   b'10000000'
+0005C4 EC?? F???      00669     call    New_box
+                      00670     
+0005C8 EC?? F???      00671     call Scroll
+                      00672     
+                      00673     ;Layer 2
+0005CC 0E47           00674     movlw   b'01000111'
+0005CE EC?? F???      00675     call    New_box
+0005D2 0E06           00676     movlw   b'00000110'
+0005D4 EC?? F???      00677     call    New_box
+0005D8 0E55           00678     movlw   b'01010101'
+0005DA EC?? F???      00679     call    New_box
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 14
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0005DE 0E14           00680     movlw   b'00010100'
+0005E0 EC?? F???      00681     call    New_box
+0005E4 0E63           00682     movlw   b'01100011'
+0005E6 EC?? F???      00683     call    New_box
+0005EA 0E22           00684     movlw   b'00100010'
+0005EC EC?? F???      00685     call    New_box
+0005F0 0E71           00686     movlw   b'01110001'
+0005F2 EC?? F???      00687     call    New_box
+0005F6 0E30           00688     movlw   b'00110000'
+0005F8 EC?? F???      00689     call    New_box
+                      00690     
+0005FC EC?? F???      00691     call Scroll
+                      00692     
+                      00693 ;bar 29
+                      00694     ;Layer 1
+000600 0EF7           00695     movlw   b'11110111'
+000602 EC?? F???      00696     call    New_box
+000606 0EB6           00697     movlw   b'10110110'
+000608 EC?? F???      00698     call    New_box
+00060C 0EE5           00699     movlw   b'11100101'
+00060E EC?? F???      00700     call    New_box
+000612 0EA4           00701     movlw   b'10100100'
+000614 EC?? F???      00702     call    New_box
+000618 0ED3           00703     movlw   b'11010011'
+00061A EC?? F???      00704     call    New_box
+00061E 0E92           00705     movlw   b'10010010'
+000620 EC?? F???      00706     call    New_box
+000624 0EC1           00707     movlw   b'11000001'
+000626 EC?? F???      00708     call    New_box
+00062A 0E80           00709     movlw   b'10000000'
+00062C EC?? F???      00710     call    New_box
+                      00711     
+000630 EC?? F???      00712     call Scroll
+                      00713     
+                      00714     ;Layer 2
+000634 0E47           00715     movlw   b'01000111'
+000636 EC?? F???      00716     call    New_box
+00063A 0E06           00717     movlw   b'00000110'
+00063C EC?? F???      00718     call    New_box
+000640 0E55           00719     movlw   b'01010101'
+000642 EC?? F???      00720     call    New_box
+000646 0E14           00721     movlw   b'00010100'
+000648 EC?? F???      00722     call    New_box
+00064C 0E63           00723     movlw   b'01100011'
+00064E EC?? F???      00724     call    New_box
+000652 0E22           00725     movlw   b'00100010'
+000654 EC?? F???      00726     call    New_box
+000658 0E71           00727     movlw   b'01110001'
+00065A EC?? F???      00728     call    New_box
+00065E 0E30           00729     movlw   b'00110000'
+000660 EC?? F???      00730     call    New_box
+                      00731     
+000664 EC?? F???      00732     call Scroll
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 15
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00733     
+                      00734 ;bar 30
+                      00735     ;Layer 1
+000668 0EF7           00736     movlw   b'11110111'
+00066A EC?? F???      00737     call    New_box
+00066E 0EB6           00738     movlw   b'10110110'
+000670 EC?? F???      00739     call    New_box
+000674 0EE5           00740     movlw   b'11100101'
+000676 EC?? F???      00741     call    New_box
+00067A 0EA4           00742     movlw   b'10100100'
+00067C EC?? F???      00743     call    New_box
+000680 0ED3           00744     movlw   b'11010011'
+000682 EC?? F???      00745     call    New_box
+000686 0E92           00746     movlw   b'10010010'
+000688 EC?? F???      00747     call    New_box
+00068C 0EC1           00748     movlw   b'11000001'
+00068E EC?? F???      00749     call    New_box
+000692 0E80           00750     movlw   b'10000000'
+000694 EC?? F???      00751     call    New_box
+                      00752     
+000698 EC?? F???      00753     call Scroll
+                      00754     
+                      00755     ;Layer 2
+00069C 0E47           00756     movlw   b'01000111'
+00069E EC?? F???      00757     call    New_box
+0006A2 0E06           00758     movlw   b'00000110'
+0006A4 EC?? F???      00759     call    New_box
+0006A8 0E55           00760     movlw   b'01010101'
+0006AA EC?? F???      00761     call    New_box
+0006AE 0E14           00762     movlw   b'00010100'
+0006B0 EC?? F???      00763     call    New_box
+0006B4 0E63           00764     movlw   b'01100011'
+0006B6 EC?? F???      00765     call    New_box
+0006BA 0E22           00766     movlw   b'00100010'
+0006BC EC?? F???      00767     call    New_box
+0006C0 0E71           00768     movlw   b'01110001'
+0006C2 EC?? F???      00769     call    New_box
+0006C6 0E30           00770     movlw   b'00110000'
+0006C8 EC?? F???      00771     call    New_box
+                      00772     
+0006CC EC?? F???      00773     call Scroll
+                      00774     
+                      00775 ;bar 31
+                      00776     ;Layer 1
+0006D0 0E37           00777     movlw   b'00110111'
+0006D2 EC?? F???      00778     call    New_box
+0006D6 0E76           00779     movlw   b'01110110'
+0006D8 EC?? F???      00780     call    New_box
+0006DC 0E25           00781     movlw   b'00100101'
+0006DE EC?? F???      00782     call    New_box
+0006E2 0E64           00783     movlw   b'01100100'
+0006E4 EC?? F???      00784     call    New_box
+0006E8 0E13           00785     movlw   b'00010011'
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 16
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0006EA EC?? F???      00786     call    New_box
+0006EE 0E52           00787     movlw   b'01010010'
+0006F0 EC?? F???      00788     call    New_box
+0006F4 0E01           00789     movlw   b'00000001'
+0006F6 EC?? F???      00790     call    New_box
+0006FA 0E40           00791     movlw   b'01000000'
+0006FC EC?? F???      00792     call    New_box
+                      00793     
+000700 EC?? F???      00794     call Scroll
+                      00795     
+                      00796     ;Layer 2
+000704 0EB7           00797     movlw   b'10110111'
+000706 EC?? F???      00798     call    New_box
+00070A 0EF6           00799     movlw   b'11110110'
+00070C EC?? F???      00800     call    New_box
+000710 0EA5           00801     movlw   b'10100101'
+000712 EC?? F???      00802     call    New_box
+000716 0EE4           00803     movlw   b'11100100'
+000718 EC?? F???      00804     call    New_box
+00071C 0E93           00805     movlw   b'10010011'
+00071E EC?? F???      00806     call    New_box
+000722 0ED2           00807     movlw   b'11010010'
+000724 EC?? F???      00808     call    New_box
+000728 0E81           00809     movlw   b'10000001'
+00072A EC?? F???      00810     call    New_box
+00072E 0EC0           00811     movlw   b'11000000'
+000730 EC?? F???      00812     call    New_box
+                      00813     
+000734 EC?? F???      00814     call Scroll
+                      00815     
+                      00816 ;bar 32
+                      00817     ;Layer 1
+000738 0E37           00818     movlw   b'00110111'
+00073A EC?? F???      00819     call    New_box
+00073E 0E76           00820     movlw   b'01110110'
+000740 EC?? F???      00821     call    New_box
+000744 0E25           00822     movlw   b'00100101'
+000746 EC?? F???      00823     call    New_box
+00074A 0E64           00824     movlw   b'01100100'
+00074C EC?? F???      00825     call    New_box
+000750 0E13           00826     movlw   b'00010011'
+000752 EC?? F???      00827     call    New_box
+000756 0E52           00828     movlw   b'01010010'
+000758 EC?? F???      00829     call    New_box
+00075C 0E01           00830     movlw   b'00000001'
+00075E EC?? F???      00831     call    New_box
+000762 0E40           00832     movlw   b'01000000'
+000764 EC?? F???      00833     call    New_box
+                      00834     
+000768 EC?? F???      00835     call Scroll
+                      00836     
+                      00837     ;Layer 2
+00076C 0E47           00838     movlw   b'01000111'
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 17
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+00076E EC?? F???      00839     call    New_box
+000772 0E57           00840     movlw   b'01010111'
+000774 EC?? F???      00841     call    New_box
+000778 0E67           00842     movlw   b'01100111'
+00077A EC?? F???      00843     call    New_box
+00077E 0E77           00844     movlw   b'01110111'
+000780 EC?? F???      00845     call    New_box
+                      00846     
+000784 EC?? F???      00847     call    Scroll
+                      00848     
+                      00849 ;bar 33
+                      00850     ;Layer 1
+000788 0E07           00851     movlw   b'00000111'
+00078A EC?? F???      00852     call    New_box
+00078E 0E85           00853     movlw   b'10000101'
+000790 EC?? F???      00854     call    New_box
+000794 0E83           00855     movlw   b'10000011'
+000796 EC?? F???      00856     call    New_box
+00079A 0E01           00857     movlw   b'00000001'
+00079C EC?? F???      00858     call    New_box
+                      00859     
+0007A0 EC?? F???      00860     call    Scroll
+                      00861     
+                      00862     ;Layer 2
+0007A4 0E07           00863     movlw   b'00000111'
+0007A6 EC?? F???      00864     call    New_box
+0007AA 0E85           00865     movlw   b'10000101'
+0007AC EC?? F???      00866     call    New_box
+0007B0 0E83           00867     movlw   b'10000011'
+0007B2 EC?? F???      00868     call    New_box
+0007B6 0E01           00869     movlw   b'00000001'
+0007B8 EC?? F???      00870     call    New_box
+                      00871     
+0007BC EC?? F???      00872     call    Scroll
+                      00873   
+                      00874 ;bar 34
+                      00875     ;Layer 1
+0007C0 0E57           00876     movlw   b'01010111'
+0007C2 EC?? F???      00877     call    New_box
+0007C6 0ED5           00878     movlw   b'11010101'
+0007C8 EC?? F???      00879     call    New_box
+0007CC 0ED3           00880     movlw   b'11010011'
+0007CE EC?? F???      00881     call    New_box
+0007D2 0E51           00882     movlw   b'01010001'
+0007D4 EC?? F???      00883     call    New_box
+                      00884     
+0007D8 EC?? F???      00885     call    Scroll
+                      00886     
+                      00887     ;Layer 2
+0007DC 0E57           00888     movlw   b'01010111'
+0007DE EC?? F???      00889     call    New_box
+0007E2 0ED5           00890     movlw   b'11010101'
+0007E4 EC?? F???      00891     call    New_box
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 18
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+0007E8 0ED3           00892     movlw   b'11010011'
+0007EA EC?? F???      00893     call    New_box
+0007EE 0E51           00894     movlw   b'01010001'
+0007F0 EC?? F???      00895     call    New_box
+                      00896     
+0007F4 EC?? F???      00897     call    Scroll
+                      00898     
+                      00899 ;bar 35
+                      00900     ;Layer 1
+0007F8 0E27           00901     movlw   b'00100111'
+0007FA EC?? F???      00902     call    New_box
+0007FE 0EA5           00903     movlw   b'10100101'
+000800 EC?? F???      00904     call    New_box
+000804 0EA3           00905     movlw   b'10100011'
+000806 EC?? F???      00906     call    New_box
+00080A 0E21           00907     movlw   b'00100001'
+00080C EC?? F???      00908     call    New_box
+                      00909     
+000810 EC?? F???      00910     call    Scroll
+                      00911     
+                      00912     ;Layer 2
+000814 0E27           00913     movlw   b'00100111'
+000816 EC?? F???      00914     call    New_box
+00081A 0EA5           00915     movlw   b'10100101'
+00081C EC?? F???      00916     call    New_box
+000820 0EA3           00917     movlw   b'10100011'
+000822 EC?? F???      00918     call    New_box
+000826 0E21           00919     movlw   b'00100001'
+000828 EC?? F???      00920     call    New_box
+                      00921     
+00082C EC?? F???      00922     call    Scroll
+                      00923     
+                      00924 ;bar 36
+                      00925     ;Layer 1
+000830 0E77           00926     movlw   b'01110111'
+000832 EC?? F???      00927     call    New_box
+000836 0EF5           00928     movlw   b'11110101'
+000838 EC?? F???      00929     call    New_box
+00083C 0EF3           00930     movlw   b'11110011'
+00083E EC?? F???      00931     call    New_box
+000842 0E71           00932     movlw   b'01110001'
+000844 EC?? F???      00933     call    New_box
+                      00934     
+000848 EC?? F???      00935     call    Scroll
+                      00936     
+                      00937     ;Layer 2
+00084C 0E77           00938     movlw   b'01110111'
+00084E EC?? F???      00939     call    New_box
+000852 0EF5           00940     movlw   b'11110101'
+000854 EC?? F???      00941     call    New_box
+000858 0EF3           00942     movlw   b'11110011'
+00085A EC?? F???      00943     call    New_box
+00085E 0E71           00944     movlw   b'01110001'
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 19
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000860 EC?? F???      00945     call    New_box
+                      00946     
+000864 EC?? F???      00947     call    Scroll
+                      00948  
+                      00949 ;bar 37
+                      00950     ;Layer 1
+000868 0E37           00951     movlw   b'00110111'
+00086A EC?? F???      00952     call    New_box
+00086E 0EB5           00953     movlw   b'10110101'
+000870 EC?? F???      00954     call    New_box
+000874 0EB3           00955     movlw   b'10110011'
+000876 EC?? F???      00956     call    New_box
+00087A 0E31           00957     movlw   b'00110001'
+00087C EC?? F???      00958     call    New_box
+                      00959     
+000880 EC?? F???      00960     call    Scroll
+                      00961     
+                      00962     ;Layer 2
+000884 0E37           00963     movlw   b'00110111'
+000886 EC?? F???      00964     call    New_box
+00088A 0EB5           00965     movlw   b'10110101'
+00088C EC?? F???      00966     call    New_box
+000890 0EB3           00967     movlw   b'10110011'
+000892 EC?? F???      00968     call    New_box
+000896 0E31           00969     movlw   b'00110001'
+000898 EC?? F???      00970     call    New_box
+                      00971     
+00089C EC?? F???      00972     call    Scroll
+                      00973     
+                      00974 ;bar 38
+                      00975     ;Layer 1
+0008A0 0E67           00976     movlw   b'01100111'
+0008A2 EC?? F???      00977     call    New_box
+0008A6 0EE5           00978     movlw   b'11100101'
+0008A8 EC?? F???      00979     call    New_box
+0008AC 0EE3           00980     movlw   b'11100011'
+0008AE EC?? F???      00981     call    New_box
+0008B2 0E61           00982     movlw   b'01100001'
+0008B4 EC?? F???      00983     call    New_box
+                      00984     
+0008B8 EC?? F???      00985     call    Scroll
+                      00986     
+                      00987     ;Layer 2
+0008BC 0E67           00988     movlw   b'01100111'
+0008BE EC?? F???      00989     call    New_box
+0008C2 0EE5           00990     movlw   b'11100101'
+0008C4 EC?? F???      00991     call    New_box
+0008C8 0EE3           00992     movlw   b'11100011'
+0008CA EC?? F???      00993     call    New_box
+0008CE 0E61           00994     movlw   b'01100001'
+0008D0 EC?? F???      00995     call    New_box
+                      00996     
+0008D4 EC?? F???      00997     call    Scroll
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 20
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      00998     
+                      00999 ;bar 39
+                      01000     ;Layer 1
+0008D8 0E17           01001     movlw   b'00010111'
+0008DA EC?? F???      01002     call    New_box
+0008DE 0E95           01003     movlw   b'10010101'
+0008E0 EC?? F???      01004     call    New_box
+0008E4 0E93           01005     movlw   b'10010011'
+0008E6 EC?? F???      01006     call    New_box
+0008EA 0E11           01007     movlw   b'00010001'
+0008EC EC?? F???      01008     call    New_box
+                      01009     
+0008F0 EC?? F???      01010     call    Scroll
+                      01011     
+                      01012     ;Layer 2
+0008F4 0E17           01013     movlw   b'00010111'
+0008F6 EC?? F???      01014     call    New_box
+0008FA 0E95           01015     movlw   b'10010101'
+0008FC EC?? F???      01016     call    New_box
+000900 0E93           01017     movlw   b'10010011'
+000902 EC?? F???      01018     call    New_box
+000906 0E11           01019     movlw   b'00010001'
+000908 EC?? F???      01020     call    New_box
+                      01021     
+00090C EC?? F???      01022     call    Scroll
+                      01023     
+                      01024 ;bar 40
+                      01025     ;Layer 1
+000910 0E47           01026     movlw   b'01000111'
+000912 EC?? F???      01027     call    New_box
+000916 0EC5           01028     movlw   b'11000101'
+000918 EC?? F???      01029     call    New_box
+00091C 0EC3           01030     movlw   b'11000011'
+00091E EC?? F???      01031     call    New_box
+000922 0E41           01032     movlw   b'01000001'
+000924 EC?? F???      01033     call    New_box
+                      01034     
+000928 EC?? F???      01035     call    Scroll
+                      01036     
+                      01037     ;Layer 2
+00092C 0E47           01038     movlw   b'01000111'
+00092E EC?? F???      01039     call    New_box
+000932 0EC5           01040     movlw   b'11000101'
+000934 EC?? F???      01041     call    New_box
+000938 0E43           01042     movlw   b'01000011'
+00093A EC?? F???      01043     call    New_box
+00093E 0EC1           01044     movlw   b'11000001'
+000940 EC?? F???      01045     call    New_box
+                      01046     
+000944 EC?? F???      01047     call    Scroll
+                      01048 
+                      01049 ;bar 41
+                      01050     ;Layer 1
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 21
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000948 0E27           01051     movlw   b'00100111'
+00094A EC?? F???      01052     call    New_box
+00094E 0E75           01053     movlw   b'01110101'
+000950 EC?? F???      01054     call    New_box
+000954 0E73           01055     movlw   b'01110011'
+000956 EC?? F???      01056     call    New_box
+00095A 0E22           01057     movlw   b'00100010'
+00095C EC?? F???      01058     call    New_box
+000960 0E51           01059     movlw   b'01010001'
+000962 EC?? F???      01060     call    New_box
+                      01061     
+000966 EC?? F???      01062     call    Scroll
+                      01063     
+                      01064     ;Layer 2
+00096A 0E17           01065     movlw   b'00010111'
+00096C EC?? F???      01066     call    New_box
+000970 0E97           01067     movlw   b'10010111'
+000972 EC?? F???      01068     call    New_box
+000976 0E55           01069     movlw   b'01010101'
+000978 EC?? F???      01070     call    New_box
+00097C 0E53           01071     movlw   b'01010011'
+00097E EC?? F???      01072     call    New_box
+000982 0E11           01073     movlw   b'00010001'
+000984 EC?? F???      01074     call    New_box
+                      01075     
+000988 EC?? F???      01076     call    Scroll
+                      01077  
+                      01078 ;bar 42
+                      01079     ;Layer 1
+00098C 0E07           01080     movlw   b'00000111'
+00098E EC?? F???      01081     call    New_box
+000992 0E87           01082     movlw   b'10000111'
+000994 EC?? F???      01083     call    New_box
+000998 0EC5           01084     movlw   b'11000101'
+00099A EC?? F???      01085     call    New_box
+00099E 0E45           01086     movlw   b'01000101'
+0009A0 EC?? F???      01087     call    New_box
+                      01088     
+0009A4 EC?? F???      01089     call    Scroll
+                      01090     
+                      01091     ;Layer 2
+0009A8 0EC7           01092     movlw   b'11000111'
+0009AA EC?? F???      01093     call    New_box
+0009AE 0E47           01094     movlw   b'01000111'
+0009B0 EC?? F???      01095     call    New_box
+0009B4 0E05           01096     movlw   b'00000101'
+0009B6 EC?? F???      01097     call    New_box
+0009BA 0E85           01098     movlw   b'10000101'
+0009BC EC?? F???      01099     call    New_box
+                      01100     
+0009C0 EC?? F???      01101     call    Scroll
+                      01102     
+                      01103 ;bar 43
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 22
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      01104     ;Layer 1
+0009C4 0E87           01105     movlw   b'10000111'
+0009C6 EC?? F???      01106     call    New_box
+0009CA 0EC7           01107     movlw   b'11000111'
+0009CC EC?? F???      01108     call    New_box
+                      01109     
+0009D0 EC?? F???      01110     call    Scroll
+                      01111     
+                      01112     ;Layer 2
+0009D4 EC?? F???      01113     call    Scroll
+                      01114     
+                      01115 ;bar 44
+                      01116     ;Layer 1
+0009D8 0E13           01117     movlw   b'00010011'
+0009DA EC?? F???      01118     call    New_box
+                      01119     
+0009DE EC?? F???      01120     call    Scroll
+                      01121     
+                      01122     ;Layer 2
+0009E2 0E17           01123     movlw   b'00010111'
+0009E4 EC?? F???      01124     call    New_box
+0009E8 0E51           01125     movlw   b'01010001'
+0009EA EC?? F???      01126     call    New_box
+                      01127     
+0009EE EC?? F???      01128     call    Scroll
+                      01129     
+                      01130 ;bar 45
+                      01131     ;Layer 1
+0009F2 0E97           01132     movlw   b'10010111'
+0009F4 EC?? F???      01133     call    New_box
+0009F8 0ED7           01134     movlw   b'11010111'
+0009FA EC?? F???      01135     call    New_box
+                      01136     
+0009FE EC?? F???      01137     call    Scroll
+                      01138     
+000A02 EC?? F???      01139     call    Scroll
+                      01140     
+                      01141 ;bar 46
+                      01142     ;Layer 1
+000A06 0E87           01143     movlw   b'10000111'
+000A08 EC?? F???      01144     call    New_box
+                      01145     
+000A0C EC?? F???      01146     call    Scroll
+                      01147     
+                      01148     ;Layer 2
+000A10 0E97           01149     movlw   b'10010111'
+000A12 EC?? F???      01150     call    New_box
+                      01151     
+000A16 EC?? F???      01152     call    Scroll
+                      01153     
+                      01154 ;bar 47
+                      01155     ;Layer 1
+000A1A 0EA7           01156     movlw   b'10100111'
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 23
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000A1C EC?? F???      01157     call    New_box
+000A20 0EE7           01158     movlw   b'11100111'
+000A22 EC?? F???      01159     call    New_box
+                      01160     
+000A26 EC?? F???      01161     call    Scroll
+                      01162     
+000A2A EC?? F???      01163     call    Scroll
+                      01164     
+                      01165 ;bar 48
+                      01166     ;Layer 1
+000A2E 0E13           01167     movlw   b'00010011'
+000A30 EC?? F???      01168     call    New_box
+                      01169     
+000A34 EC?? F???      01170     call    Scroll
+                      01171     
+                      01172     ;Layer 2
+000A38 0E17           01173     movlw   b'00010111'
+000A3A EC?? F???      01174     call    New_box
+000A3E 0E51           01175     movlw   b'01010001'
+000A40 EC?? F???      01176     call    New_box
+                      01177     
+000A44 EC?? F???      01178     call    Scroll
+                      01179     
+                      01180 ;bar 49
+                      01181     ;Layer 1
+000A48 0E87           01182     movlw   b'10000111'
+000A4A EC?? F???      01183     call    New_box
+                      01184     
+000A4E EC?? F???      01185     call    Scroll
+                      01186     
+                      01187     ;Layer 2
+000A52 0E97           01188     movlw   b'10010111'
+000A54 EC?? F???      01189     call    New_box
+                      01190     
+000A58 EC?? F???      01191     call    Scroll
+                      01192     
+                      01193 ;bar 50
+                      01194     ;Layer 1
+000A5C 0E47           01195     movlw   b'01000111'
+000A5E EC?? F???      01196     call    New_box
+000A62 0E06           01197     movlw   b'00000110'
+000A64 EC?? F???      01198     call    New_box
+000A68 0E55           01199     movlw   b'01010101'
+000A6A EC?? F???      01200     call    New_box
+000A6E 0E14           01201     movlw   b'00010100'
+000A70 EC?? F???      01202     call    New_box
+000A74 0E63           01203     movlw   b'01100011'
+000A76 EC?? F???      01204     call    New_box
+000A7A 0E22           01205     movlw   b'00100010'
+000A7C EC?? F???      01206     call    New_box
+000A80 0E71           01207     movlw   b'01110001'
+000A82 EC?? F???      01208     call    New_box
+000A86 0E30           01209     movlw   b'00110000'
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 24
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000A88 EC?? F???      01210     call    New_box
+                      01211     
+000A8C EC?? F???      01212     call Scroll
+                      01213     
+                      01214     ;Layer 2
+000A90 0EC7           01215     movlw   b'11000111'
+000A92 EC?? F???      01216     call    New_box
+000A96 0E86           01217     movlw   b'10000110'
+000A98 EC?? F???      01218     call    New_box
+000A9C 0ED5           01219     movlw   b'11010101'
+000A9E EC?? F???      01220     call    New_box
+000AA2 0E94           01221     movlw   b'10010100'
+000AA4 EC?? F???      01222     call    New_box
+000AA8 0EE3           01223     movlw   b'11100011'
+000AAA EC?? F???      01224     call    New_box
+000AAE 0EA2           01225     movlw   b'10100010'
+000AB0 EC?? F???      01226     call    New_box
+000AB4 0EF1           01227     movlw   b'11110001'
+000AB6 EC?? F???      01228     call    New_box
+000ABA 0EB0           01229     movlw   b'10110000'
+000ABC EC?? F???      01230     call    New_box
+                      01231     
+000AC0 EC?? F???      01232     call Scroll
+                      01233     
+                      01234 ;bar 51
+                      01235     ;Layer 1
+000AC4 0E07           01236     movlw   b'00000111'
+000AC6 EC?? F???      01237     call    New_box
+000ACA 0E87           01238     movlw   b'10000111'
+000ACC EC?? F???      01239     call    New_box
+000AD0 0EC7           01240     movlw   b'11000111'
+000AD2 EC?? F???      01241     call    New_box
+000AD6 0E47           01242     movlw   b'01000111'
+000AD8 EC?? F???      01243     call    New_box
+                      01244     
+000ADC EC?? F???      01245     call    Scroll
+                      01246     
+000AE0 EC?? F???      01247     call    Scroll
+                      01248     
+                      01249 ;bar 52
+                      01250     ;Layer 1
+000AE4 0E13           01251     movlw   b'00010011'
+000AE6 EC?? F???      01252     call    New_box
+                      01253     
+000AEA EC?? F???      01254     call    Scroll
+                      01255     
+                      01256     ;Layer 2
+000AEE 0E17           01257     movlw   b'00010111'
+000AF0 EC?? F???      01258     call    New_box
+000AF4 0E51           01259     movlw   b'01010001'
+000AF6 EC?? F???      01260     call    New_box
+                      01261     
+000AFA EC?? F???      01262     call    Scroll
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 25
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+                      01263     
+                      01264 ;bar 53
+                      01265     ;Layer 1
+000AFE 0E17           01266     movlw   b'00010111'
+000B00 EC?? F???      01267     call    New_box
+000B04 0E97           01268     movlw   b'10010111'
+000B06 EC?? F???      01269     call    New_box
+000B0A 0ED7           01270     movlw   b'11010111'
+000B0C EC?? F???      01271     call    New_box
+000B10 0E57           01272     movlw   b'01010111'
+000B12 EC?? F???      01273     call    New_box
+                      01274     
+000B16 EC?? F???      01275     call    Scroll
+                      01276     
+000B1A EC?? F???      01277     call    Scroll
+                      01278     
+                      01279 ;bar 54
+                      01280     ;Layer 1
+000B1E 0E97           01281     movlw   b'10010111'
+000B20 EC?? F???      01282     call    New_box
+000B24 0ED7           01283     movlw   b'11010111'
+000B26 EC?? F???      01284     call    New_box
+                      01285     
+000B2A EC?? F???      01286     call    Scroll
+                      01287     
+                      01288     ;Layer 2
+000B2E 0EA7           01289     movlw   b'10100111'
+000B30 EC?? F???      01290     call    New_box
+000B34 0EE7           01291     movlw   b'11100111'
+000B36 EC?? F???      01292     call    New_box
+                      01293     
+000B3A EC?? F???      01294     call    Scroll
+                      01295     
+                      01296 ;bar 55
+                      01297     ;Layer 1
+000B3E 0E27           01298     movlw   b'00100111'
+000B40 EC?? F???      01299     call    New_box
+000B44 0E67           01300     movlw   b'01100111'
+000B46 EC?? F???      01301     call    New_box
+000B4A 0E25           01302     movlw   b'00100101'
+000B4C EC?? F???      01303     call    New_box
+000B50 0E65           01304     movlw   b'01100101'
+000B52 EC?? F???      01305     call    New_box
+                      01306     
+000B56 EC?? F???      01307     call    Scroll
+                      01308     
+                      01309     ;Layer 2
+000B5A 0E17           01310     movlw   b'00010111'
+000B5C EC?? F???      01311     call    New_box
+000B60 0E57           01312     movlw   b'01010111'
+000B62 EC?? F???      01313     call    New_box
+000B66 0E15           01314     movlw   b'00010101'
+000B68 EC?? F???      01315     call    New_box
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 26
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000B6C 0E55           01316     movlw   b'01010101'
+000B6E EC?? F???      01317     call    New_box
+                      01318     
+000B72 EC?? F???      01319     call    Scroll
+                      01320     
+                      01321 ;bar 56
+                      01322     ;Layer 1
+000B76 0E07           01323     movlw   b'00000111'
+000B78 EC?? F???      01324     call    New_box
+000B7C 0E47           01325     movlw   b'01000111'
+000B7E EC?? F???      01326     call    New_box
+000B82 0E05           01327     movlw   b'00000101'
+000B84 EC?? F???      01328     call    New_box
+000B88 0E45           01329     movlw   b'01000101'
+000B8A EC?? F???      01330     call    New_box
+                      01331     
+000B8E EC?? F???      01332     call    Scroll
+                      01333     
+                      01334     ;Layer 2
+000B92 0E87           01335     movlw   b'10000111'
+000B94 EC?? F???      01336     call    New_box
+000B98 0E97           01337     movlw   b'10010111'
+000B9A EC?? F???      01338     call    New_box
+000B9E 0E85           01339     movlw   b'10000101'
+000BA0 EC?? F???      01340     call    New_box    
+000BA4 0E95           01341     movlw   b'10010101'
+000BA6 EC?? F???      01342     call    New_box
+                      01343     
+000BAA EC?? F???      01344     call    Scroll
+                      01345   
+                      01346 ;bar 57
+                      01347     ;Layer 1
+000BAE 0E07           01348     movlw   b'00000111'
+000BB0 EC?? F???      01349     call    New_box
+000BB4 0E46           01350     movlw   b'01000110'
+000BB6 EC?? F???      01351     call    New_box
+000BBA 0E15           01352     movlw   b'00010101'
+000BBC EC?? F???      01353     call    New_box
+000BC0 0E54           01354     movlw   b'01010100'
+000BC2 EC?? F???      01355     call    New_box
+000BC6 0E23           01356     movlw   b'00100011'
+000BC8 EC?? F???      01357     call    New_box
+000BCC 0E62           01358     movlw   b'01100010'
+000BCE EC?? F???      01359     call    New_box
+000BD2 0E31           01360     movlw   b'00110001'
+000BD4 EC?? F???      01361     call    New_box
+000BD8 0E70           01362     movlw   b'01110000'
+000BDA EC?? F???      01363     call    New_box
+                      01364     
+000BDE EC?? F???      01365     call Scroll
+                      01366     
+                      01367     ;Layer 2
+000BE2 0E87           01368     movlw   b'10000111'
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 27
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000BE4 EC?? F???      01369     call    New_box
+000BE8 0EC6           01370     movlw   b'11000110'
+000BEA EC?? F???      01371     call    New_box
+000BEE 0E95           01372     movlw   b'10010101'
+000BF0 EC?? F???      01373     call    New_box
+000BF4 0ED4           01374     movlw   b'11010100'
+000BF6 EC?? F???      01375     call    New_box
+000BFA 0EA3           01376     movlw   b'10100011'
+000BFC EC?? F???      01377     call    New_box
+000C00 0EE2           01378     movlw   b'11100010'
+000C02 EC?? F???      01379     call    New_box
+000C06 0EB1           01380     movlw   b'10110001'
+000C08 EC?? F???      01381     call    New_box
+000C0C 0EF0           01382     movlw   b'11110000'
+000C0E EC?? F???      01383     call    New_box
+                      01384     
+000C12 EC?? F???      01385     call Scroll
+                      01386   
+                      01387 ;bar 58
+                      01388     ;Layer 1
+000C16 0E37           01389     movlw   b'00110111'
+000C18 EC?? F???      01390     call    New_box
+000C1C 0E76           01391     movlw   b'01110110'
+000C1E EC?? F???      01392     call    New_box
+000C22 0EB5           01393     movlw   b'10110101'
+000C24 EC?? F???      01394     call    New_box
+000C28 0EF4           01395     movlw   b'11110100'
+000C2A EC?? F???      01396     call    New_box
+000C2E 0E23           01397     movlw   b'00100011'
+000C30 EC?? F???      01398     call    New_box
+000C34 0E62           01399     movlw   b'01100010'
+000C36 EC?? F???      01400     call    New_box
+000C3A 0EA1           01401     movlw   b'10100001'
+000C3C EC?? F???      01402     call    New_box
+000C40 0EE0           01403     movlw   b'11100000'
+000C42 EC?? F???      01404     call    New_box
+                      01405     
+000C46 EC?? F???      01406     call Scroll
+                      01407     
+                      01408     ;Layer 2
+000C4A 0E17           01409     movlw   b'00010111'
+000C4C EC?? F???      01410     call    New_box
+000C50 0E56           01411     movlw   b'01010110'
+000C52 EC?? F???      01412     call    New_box
+000C56 0E95           01413     movlw   b'10010101'
+000C58 EC?? F???      01414     call    New_box
+000C5C 0ED4           01415     movlw   b'11010100'
+000C5E EC?? F???      01416     call    New_box
+000C62 0E03           01417     movlw   b'00000011'
+000C64 EC?? F???      01418     call    New_box
+000C68 0E42           01419     movlw   b'01000010'
+000C6A EC?? F???      01420     call    New_box
+000C6E 0E81           01421     movlw   b'10000001'
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 28
+
+
+LOC  OBJECT CODE     LINE SOURCE TEXT
+  VALUE
+
+000C70 EC?? F???      01422     call    New_box
+000C74 0EC0           01423     movlw   b'11000000'
+000C76 EC?? F???      01424     call    New_box
+                      01425     
+000C7A EC?? F???      01426     call Scroll
+                      01427    
+                      01428 ;bar 59
+                      01429     ;Layer 1
+000C7E 0E97           01430     movlw   b'10010111'
+000C80 EC?? F???      01431     call    New_box
+                      01432     
+000C84 EC?? F???      01433     call    Scroll
+                      01434     
+000C88 EC?? F???      01435     call    Scroll
+                      01436     
+000C8C 0012           01437     return
+                      01438     
+                      01439     end
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 29
 
 
 SYMBOL TABLE
@@ -114,7 +1674,7 @@ ADMSK5                            00000005
 ADON                              00000000
 ADRES                             00000FC3
 ADRESH                            00000FC4
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE  3
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 30
 
 
 SYMBOL TABLE
@@ -173,7 +1733,7 @@ ANSEL16                           00000000
 ANSEL17                           00000001
 ANSEL18                           00000002
 ANSEL19                           00000003
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE  4
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 31
 
 
 SYMBOL TABLE
@@ -232,7 +1792,7 @@ C1TSEL0                           00000000
 C1TSEL1                           00000001
 C1TSEL2                           00000002
 C2INA                             00000004
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE  5
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 32
 
 
 SYMBOL TABLE
@@ -291,7 +1851,7 @@ CCP1IP                            00000001
 CCP1M0                            00000000
 CCP1M1                            00000001
 CCP1M2                            00000002
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE  6
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 33
 
 
 SYMBOL TABLE
@@ -350,7 +1910,7 @@ CCP5M0                            00000000
 CCP5M1                            00000001
 CCP5M2                            00000002
 CCP5M3                            00000003
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE  7
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 34
 
 
 SYMBOL TABLE
@@ -409,7 +1969,7 @@ CCP9IP                            00000006
 CCP9M0                            00000000
 CCP9M1                            00000001
 CCP9M2                            00000002
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE  8
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 35
 
 
 SYMBOL TABLE
@@ -468,7 +2028,7 @@ CHSN1                             00000001
 CHSN2                             00000002
 CK1                               00000006
 CK2                               00000001
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE  9
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 36
 
 
 SYMBOL TABLE
@@ -527,7 +2087,7 @@ CTMUIE                            00000003
 CTMUIF                            00000003
 CTMUIP                            00000003
 CTMUMD                            00000006
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 10
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 37
 
 
 SYMBOL TABLE
@@ -579,19 +2139,20 @@ DT1                               00000007
 DT2                               00000002
 D_A                               00000005
 D_NOT_A                           00000005
+Delay_ms                          00000000
 EBDIS                             00000007
 ECCP1AS                           00000FBF
 ECCP1AS0                          00000004
 ECCP1AS1                          00000005
 ECCP1AS2                          00000006
 ECCP1ASE                          00000007
-ECCP1CON                          00000FBB
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 11
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 38
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+ECCP1CON                          00000FBB
 ECCP1DEL                          00000FBE
 ECCP2AS                           00000F52
 ECCP2AS0                          00000004
@@ -644,13 +2205,13 @@ FSR2                              00000002
 FSR2H                             00000FDA
 FSR2L                             00000FD9
 GCEN                              00000007
-GIE                               00000007
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 12
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 39
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+GIE                               00000007
 GIEH                              00000007
 GIEL                              00000006
 GIE_GIEH                          00000007
@@ -703,13 +2264,13 @@ INT3E                             00000005
 INT3F                             00000002
 INT3IE                            00000005
 INT3IF                            00000002
-INT3IP                            00000001
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 13
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 40
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+INT3IP                            00000001
 INT3P                             00000001
 INTCON                            00000FF2
 INTCON2                           00000FF1
@@ -762,13 +2323,13 @@ LATB6                             00000006
 LATB7                             00000007
 LATC                              00000F8B
 LATC0                             00000000
-LATC1                             00000001
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 14
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 41
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+LATC1                             00000001
 LATC2                             00000002
 LATC3                             00000003
 LATC4                             00000004
@@ -821,13 +2382,13 @@ LATJ0                             00000000
 LATJ1                             00000001
 LATJ2                             00000002
 LATJ3                             00000003
-LATJ4                             00000004
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 15
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 42
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+LATJ4                             00000004
 LATJ5                             00000005
 LATJ6                             00000006
 LATJ7                             00000007
@@ -880,13 +2441,13 @@ ODCON1                            00000F29
 ODCON2                            00000F28
 ODCON3                            00000F27
 OE                                00000001
-OERR                              00000001
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 16
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 43
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+OERR                              00000001
 OERR1                             00000001
 OERR2                             00000001
 OSC1                              00000007
@@ -939,13 +2500,13 @@ P3DC5                             00000005
 P3DC6                             00000006
 P3M0                              00000006
 P3M1                              00000007
-P3RSEN                            00000007
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 17
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 44
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+P3RSEN                            00000007
 PA3                               00000000
 PADCFG1                           00000F53
 PB1                               00000007
@@ -998,13 +2559,13 @@ PORTJ                             00000F88
 POSTDEC0                          00000FED
 POSTDEC1                          00000FE5
 POSTDEC2                          00000FDD
-POSTINC0                          00000FEE
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 18
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 45
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+POSTINC0                          00000FEE
 POSTINC1                          00000FE6
 POSTINC2                          00000FDE
 PR10                              00000F34
@@ -1057,13 +2618,13 @@ RA0                               00000000
 RA1                               00000001
 RA2                               00000002
 RA3                               00000003
-RA4                               00000004
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 19
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 46
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+RA4                               00000004
 RA5                               00000005
 RA6                               00000006
 RA7                               00000007
@@ -1116,13 +2677,13 @@ RD2                               00000002
 RD3                               00000003
 RD4                               00000004
 RD5                               00000005
-RD6                               00000006
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 20
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 47
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+RD6                               00000006
 RD7                               00000007
 RDPU                              00000007
 RE0                               00000000
@@ -1175,13 +2736,13 @@ RODIV2                            00000002
 RODIV3                            00000003
 ROON                              00000007
 ROSEL                             00000004
-ROSSLP                            00000005
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 21
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 48
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+ROSSLP                            00000005
 RSEN                              00000001
 RTCC                              00000004
 RTCCAL                            00000F5E
@@ -1234,13 +2795,13 @@ SENDB2                            00000003
 SMP                               00000007
 SOSCEN                            00000003
 SOSCGO                            00000003
-SOSCI                             00000001
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 22
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 49
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+SOSCI                             00000001
 SOSCO                             00000000
 SOSCRUN                           00000006
 SP0                               00000000
@@ -1293,13 +2854,13 @@ SSPIF                             00000003
 SSPIP                             00000003
 SSPM0                             00000000
 SSPM1                             00000001
-SSPM2                             00000002
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 23
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 50
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+SSPM2                             00000002
 SSPM3                             00000003
 SSPOV                             00000006
 SSPSTAT                           00000FC7
@@ -1352,13 +2913,13 @@ T1G                               00000005
 T1GCON                            00000FAA
 T1GGO                             00000003
 T1GGO_NOT_T1DONE                  00000003
-T1GPOL                            00000006
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 24
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 51
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+T1GPOL                            00000006
 T1GSPM                            00000004
 T1GSS0                            00000000
 T1GSS1                            00000001
@@ -1411,13 +2972,13 @@ T6CKPS1                           00000001
 T6CON                             00000F39
 T6OUTPS0                          00000003
 T6OUTPS1                          00000004
-T6OUTPS2                          00000005
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 25
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 52
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+T6OUTPS2                          00000005
 T6OUTPS3                          00000006
 T7CKI                             00000004
 T7CKPS0                           00000004
@@ -1470,13 +3031,13 @@ TMR1CS0                           00000006
 TMR1CS1                           00000007
 TMR1GE                            00000007
 TMR1GIE                           00000002
-TMR1GIF                           00000002
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 26
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 53
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TMR1GIF                           00000002
 TMR1GIP                           00000002
 TMR1H                             00000FCF
 TMR1IE                            00000000
@@ -1529,13 +3090,13 @@ TMR6                              00000F3B
 TMR6IE                            00000002
 TMR6IF                            00000002
 TMR6IP                            00000002
-TMR6MD                            00000004
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 27
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 54
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TMR6MD                            00000004
 TMR6ON                            00000002
 TMR7                              00000F3E
 TMR7CS0                           00000006
@@ -1588,13 +3149,13 @@ TRISC1                            00000001
 TRISC2                            00000002
 TRISC3                            00000003
 TRISC4                            00000004
-TRISC5                            00000005
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 28
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 55
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TRISC5                            00000005
 TRISC6                            00000006
 TRISC7                            00000007
 TRISD                             00000F95
@@ -1647,13 +3208,13 @@ TRISJ4                            00000004
 TRISJ5                            00000005
 TRISJ6                            00000006
 TRISJ7                            00000007
-TRMT                              00000001
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 29
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 56
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+TRMT                              00000001
 TRMT1                             00000001
 TRMT2                             00000001
 TUN0                              00000000
@@ -1706,13 +3267,13 @@ VCFG1                             00000005
 VDIRMAG                           00000007
 VNCFG                             00000003
 VREF_MINUS                        00000002
-VREF_PLUS                         00000003
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 30
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 57
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+VREF_PLUS                         00000003
 W                                 00000000
 WAIT0                             00000004
 WAIT1                             00000005
@@ -1765,13 +3326,13 @@ _CONFIG7H                         0030000D
 _CONFIG7L                         0030000C
 _CP0_OFF_5L                       000000FF
 _CP0_ON_5L                        000000FE
-_CP1_OFF_5L                       000000FF
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 31
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 58
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_CP1_OFF_5L                       000000FF
 _CP1_ON_5L                        000000FD
 _CP2_OFF_5L                       000000FF
 _CP2_ON_5L                        000000FB
@@ -1824,13 +3385,13 @@ _FOSC_EC2_1H                      000000FB
 _FOSC_EC3IO_1H                    000000F4
 _FOSC_EC3_1H                      000000F5
 _FOSC_HS1_1H                      000000F3
-_FOSC_HS2_1H                      000000F2
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 32
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 59
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_FOSC_HS2_1H                      000000F2
 _FOSC_INTIO1_1H                   000000F9
 _FOSC_INTIO2_1H                   000000F8
 _FOSC_LP_1H                       000000F0
@@ -1883,13 +3444,13 @@ _WDTPS_2048_2H                    000000AF
 _WDTPS_256_2H                     000000A3
 _WDTPS_262144_2H                  000000CB
 _WDTPS_2_2H                       00000087
-_WDTPS_32768_2H                   000000BF
-MPASM 5.81                      GAMEDATA.ASM   11-20-2019  16:00:26         PAGE 33
+MPASM 5.81                      GAMEDATA.ASM   11-21-2019  15:36:27         PAGE 60
 
 
 SYMBOL TABLE
   LABEL                             VALUE 
 
+_WDTPS_32768_2H                   000000BF
 _WDTPS_32_2H                      00000097
 _WDTPS_4096_2H                    000000B3
 _WDTPS_4_2H                       0000008B
