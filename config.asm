@@ -1,3 +1,4 @@
+
 ; PIC18F87K22 Configuration Bit Settings
 
 ; Assembly source line config statements
@@ -7,12 +8,12 @@
 ; CONFIG1L
   CONFIG  RETEN = ON            ; VREG Sleep Enable bit (Enabled)
   CONFIG  INTOSCSEL = HIGH      ; LF-INTOSC Low-power Enable bit (LF-INTOSC in High-power mode during Sleep)
-  CONFIG  SOSCSEL = DIG         ; SOSC Power Selection and mode Configuration bits (Digital IO selected)
-  CONFIG  XINST = OFF           ; Extended Instruction Set (Disabled)
+  CONFIG  SOSCSEL = HIGH        ; SOSC Power Selection and mode Configuration bits (High Power SOSC circuit selected)
+  CONFIG  XINST = OFF            ; Extended Instruction Set (Enabled)
 
 ; CONFIG1H
-  CONFIG  FOSC = HS1            ; Oscillator (HS oscillator (Medium power, 4 MHz - 16 MHz))
-  CONFIG  PLLCFG = ON           ; PLL x4 Enable bit (Enabled)
+  CONFIG  FOSC = INTIO2         ; Oscillator (Internal RC oscillator)
+  CONFIG  PLLCFG = OFF          ; PLL x4 Enable bit (Disabled)
   CONFIG  FCMEN = OFF           ; Fail-Safe Clock Monitor (Disabled)
   CONFIG  IESO = OFF            ; Internal External Oscillator Switch Over Mode (Disabled)
 
@@ -84,5 +85,5 @@
 
 ; CONFIG7H
   CONFIG  EBRTB = OFF           ; Table Read Protect Boot (Disabled)
-
+  
   end
